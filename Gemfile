@@ -55,7 +55,8 @@ end
 
 group :test do
   gem 'capybara-screenshot'
-  gem 'simplecov', require: false
+  gem 'simplecov'
+  gem 'simplecov-lcov'
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
 end

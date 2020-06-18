@@ -254,6 +254,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
+    simplecov-lcov (0.8.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -320,6 +321,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   shoulda-matchers
   simplecov
+  simplecov-lcov
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
