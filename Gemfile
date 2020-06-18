@@ -59,4 +59,6 @@ group :test do
   gem 'simplecov-lcov'
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
+  gem 'selenium-webdriver'
+  gem 'webdrivers', '~>4.0'
 end
