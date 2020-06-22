@@ -47,6 +47,8 @@ jobs:
     - name: Run tests
       env:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
       run: |
         cp config/database.yml.github-actions config/database.yml
         pg_config --version
