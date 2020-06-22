@@ -18,13 +18,13 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y postgresql-client libpq-dev
-    - name: Configure Databases
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-      run: |
-        echo "Postgres"
-        psql -h localhost -c 'create database "theprotectionproject_test";' -U postgres
+    # - name: Configure Databases
+    #   env:
+    #     POSTGRES_USER: postgres
+    #     POSTGRES_PASSWORD: postgres
+    #   run: |
+    #     echo "Postgres"
+    #     psql -h localhost -c 'create database "theprotectionproject_test";' -U postgres
     - name: Checkout code
       uses: actions/checkout@v1
 
@@ -48,6 +48,7 @@ jobs:
       env:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
+        cp config/database.yml.github-actions config/database.yml
         pg_config --version
         # bin/rails db:setup RAILS_
         bin/rails db:schema:load RAILS_ENV=test
