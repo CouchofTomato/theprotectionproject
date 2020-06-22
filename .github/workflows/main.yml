@@ -54,7 +54,7 @@ jobs:
         pg_config --version
         bin/rails db:create RAILS_ENV=test
         bin/rails db:migrate RAILS_ENV=test
-        bin/rspec
+        bundle exec rspec
   rubocop:
     name: rubocop
     runs-on: ubuntu-latest
