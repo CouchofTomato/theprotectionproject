@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     services: 
       postgres:
-        image: postgres:12.3
+        image: postgres:10.12
         env:
           POSTGRES_PASSWORD: password
         ports:
@@ -36,6 +36,9 @@ jobs:
         bundle install --jobs 4 --retry 3
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
+    - name: Yarn Install
+      run: yarn --frozen-lockfile
 
     - name: Run tests
       run: |
