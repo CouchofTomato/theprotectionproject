@@ -41,6 +41,8 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Run tests
+      env:
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         pg_config --version
         # bin/rails db:setup RAILS_
