@@ -19,6 +19,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y postgresql-client libpq-dev
     - name: Configure Databases
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
       run: |
         echo "Postgres"
         psql -h localhost -c 'create database "theprotectionproject_test";' -U postgres
