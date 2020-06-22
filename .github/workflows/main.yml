@@ -17,10 +17,10 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y postgresql-client libpq-dev
-    # - name: Configure Databases
-    #   run: |
-    #     echo "Postgres"
-    #     psql -h localhost -c 'create database "test-database";' -U postgres
+    - name: Configure Databases
+      run: |
+        echo "Postgres"
+        psql -h localhost -c 'create database "theprotectionproject_test";' -U postgres
     - name: Checkout code
       uses: actions/checkout@v1
 
