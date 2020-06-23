@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :rack_test
@@ -9,4 +11,4 @@ RSpec.configure do |config|
 end
 
 require 'capybara-screenshot/rspec'
-Capybara.asset_host = "http://localhost:3000"
+Capybara.asset_host = 'http://localhost:3000'

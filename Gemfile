@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -32,36 +34,36 @@ gem 'undercover'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'database_cleaner'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rspec-rails', '~>4.0.0'
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-  gem 'database_cleaner'
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
+  gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'bullet', '~>6.1.0'
+  gem 'guard'
+  gem 'guard-bundler', require: false
+  gem 'guard-rails', require: false
+  gem 'guard-rspec', require: false
+  gem 'guard-rubocop'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'guard'
-  gem 'guard-rspec', require: false
-  gem 'guard-bundler', require: false
-  gem 'guard-rubocop'
-  gem 'guard-rails', require: false
-  gem 'bullet', '~>6.1.0'
 end
 
 group :test do
   gem 'capybara-screenshot'
-  gem 'simplecov'
-  gem 'simplecov-lcov'
-  gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
+  gem 'simplecov-lcov'
   gem 'webdrivers', '~>4.0'
 end

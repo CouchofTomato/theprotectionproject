@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 require 'simplecov-lcov'
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start do
-  add_filter(/^\/spec\//) # For RSpec
+  add_filter(%r{^/spec/}) # For RSpec
 end
 
 require 'undercover'
@@ -13,10 +15,10 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'capybara/rspec'
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -80,7 +82,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
+  config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
     end

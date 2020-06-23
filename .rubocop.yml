@@ -1,3 +1,7 @@
 require:
   - rubocop-rails
   - rubocop-rspec
+Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
