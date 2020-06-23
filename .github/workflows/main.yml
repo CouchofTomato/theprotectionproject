@@ -1,0 +1,75 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  specs:
+    name: specs
+    runs-on: ubuntu-latest
+    services: 
+      postgres:
+        image: postgres:10.12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+    - name: Install Libraries
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-client libpq-dev
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+
+    - name: Install Bundler and gems
+      run: |
+        gem install bundler --no-document
+        bundle config GITHUB__COM $GITHUB_ACCESS_TOKEN
+        bundle install --jobs 4 --retry 3
+      env:
+        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+
+    - name: Yarn Install
+      run: yarn --frozen-lockfile
+
+    - name: Run tests
+      env:
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      run: |
+        cp config/database.yml.github-actions config/database.yml
+        pg_config --version
+        bin/rails db:create RAILS_ENV=test
+        bin/rails db:migrate RAILS_ENV=test
+        bundle exec rspec
+  rubocop:
+    name: rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpq-dev
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.1
+
+      - uses: actions/checkout@v1
+
+      - name: Install bundler and rubocop
+        run: |
+          gem install bundler --no-document
+          bundle config GITHUB__COM $GITHUB_ACCESS_TOKEN
+          bundle install --jobs 4 --retry 3 --with=test
+        env:
+          GITHUB_ACCESS_TOKEN: $
+
+      - name: Run rubocop checks
+        run: bundle exec rubocop -D -c .rubocop.yml
