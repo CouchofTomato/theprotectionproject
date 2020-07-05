@@ -3,9 +3,9 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     admin { false }
-  end
 
-  factory :admin_user do
-    admin { true }
+    factory :admin_user do
+      admin { true }
+    end
   end
 end
