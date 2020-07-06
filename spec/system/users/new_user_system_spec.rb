@@ -6,10 +6,9 @@ RSpec.describe 'New User Creation', type: :system do
     login_as(user, scope: :user)
 
     visit new_user_invitation_path
-    click_on 'create new user'
 
-    fill_in 'email', with: 'test@test.com'
-    click_on 'invite'
+    fill_in 'user_email', with: 'test@test.com'
+    click_on 'Send an invitation'
 
     expect(page).to have_text 'invite sent!'
   end
