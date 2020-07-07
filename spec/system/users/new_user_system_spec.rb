@@ -10,6 +10,6 @@ RSpec.describe 'New User Creation', type: :system do
     fill_in 'user_email', with: 'test@test.com'
     click_on 'Send an invitation'
 
-    expect(page).to have_text 'invite sent!'
+    expect(page).to have_text 'An invitation email has been sent to test@test.com'
   end
 end
