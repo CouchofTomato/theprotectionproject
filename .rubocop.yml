@@ -8,3 +8,9 @@ Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/system/**/*.rb'
