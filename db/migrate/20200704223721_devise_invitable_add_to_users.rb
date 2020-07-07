@@ -1,6 +1,6 @@
 class DeviseInvitableAddToUsers < ActiveRecord::Migration[6.0]
   def up
-    change_table :users do |t|
+    change_table :users do |t| # rubocop:disable Rails/BulkChangeTable
       t.string     :invitation_token
       t.datetime   :invitation_created_at
       t.datetime   :invitation_sent_at

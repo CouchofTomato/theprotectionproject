@@ -8,9 +8,19 @@ Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/StringLiterals:
+  Exclude:
+    - 'db/migrate/*.rb'
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*.rb'
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+    - 'config/environments/*.rb'
+Metrics/LineLength:
+  Exclude:
+    - 'db/migrate/*.rb'
 RSpec/ExampleLength:
   Exclude:
     - 'spec/system/**/*.rb'
