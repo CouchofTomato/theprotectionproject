@@ -5,7 +5,8 @@ RSpec.describe 'New User Creation', type: :system do
     user = create(:admin_user)
     login_as(user, scope: :user)
 
-    visit new_user_invitation_path
+    visit root_path
+    click_on 'Invite user'
 
     fill_in 'user_email', with: 'test@test.com'
     click_on 'Send an invitation'
