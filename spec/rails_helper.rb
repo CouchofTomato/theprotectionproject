@@ -9,6 +9,7 @@ SimpleCov.start do
 end
 
 require 'undercover'
+require 'cancan/matchers'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
