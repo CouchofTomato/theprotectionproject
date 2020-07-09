@@ -13,4 +13,13 @@ RSpec.describe 'New User Creation', type: :system do
 
     expect(page).to have_text 'An invitation email has been sent to test@test.com'
   end
+
+  it 'does not allow non-admin users to create new accounts' do
+    user = create(:user)
+    login_as(user, scope: :user)
+
+    visit new_user_invitation_path
+
+    expect(page).to have_current_path(root_path)
+  end
 end
