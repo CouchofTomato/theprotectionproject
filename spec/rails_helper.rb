@@ -5,10 +5,11 @@ require 'simplecov-lcov'
 SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
 SimpleCov.start do
-  add_filter(%r{^/spec/}) # For RSpec
+  add_filter(%r{^\/spec\/})
 end
 
 require 'undercover'
+require 'cancan/matchers'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'

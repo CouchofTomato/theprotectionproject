@@ -30,6 +30,9 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'cancancan'
+gem 'devise'
+gem 'devise_invitable', '~> 2.0.0'
 gem 'undercover'
 
 group :development, :test do
@@ -37,6 +40,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'database_cleaner'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rspec-rails', '~>4.0.0'

@@ -1,0 +1,5 @@
+<% flash.each do |type, message| %>
+  <div class="notification <%= bulma_class_for(type) %>">
+    <%= message.html_safe %>
+  </div>
+<% end %>
