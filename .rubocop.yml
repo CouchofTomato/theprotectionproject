@@ -1,0 +1,28 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+AllCops:
+  NewCops: enable
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/StringLiterals:
+  Exclude:
+    - 'db/migrate/*.rb'
+Metrics/MethodLength:
+  Exclude:
+    - 'db/migrate/*.rb'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'config/environments/*.rb'
+Layout/LineLength:
+  Exclude:
+    - 'db/migrate/*.rb'
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/system/**/*.rb'

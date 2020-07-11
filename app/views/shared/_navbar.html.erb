@@ -1,0 +1,12 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <%= render 'shared/admin_navbar' %>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <% if current_user %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'button is-link' %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path, class: 'button is-link' %>
+      <% end %>
+    </div>
+  </div>
+</nav>
