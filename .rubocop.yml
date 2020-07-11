@@ -4,7 +4,9 @@ require:
   - rubocop-rails
   - rubocop-rspec
   - rubocop-performance
-Documentation:
+AllCops:
+  NewCops: enable
+Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -18,7 +20,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
     - 'config/environments/*.rb'
-Metrics/LineLength:
+Layout/LineLength:
   Exclude:
     - 'db/migrate/*.rb'
 RSpec/ExampleLength:
