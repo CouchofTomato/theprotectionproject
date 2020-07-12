@@ -1,5 +1,4 @@
 RailsAdmin.config do |config|
-
   ### Popular gems integration
 
   ## == Devise ==
@@ -39,9 +38,12 @@ RailsAdmin.config do |config|
     # history_show
   end
 
-  #devise integration
+  # devise integration
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
   config.current_user_method(&:current_user)
+
+  # cancancan integration
+  config.authorize_with :cancancan
 end
