@@ -5,7 +5,8 @@ RSpec.describe 'navgiating to /admin', type: :system do
     user = create(:admin_user)
     login_as(user, scope: :user)
 
-    visit rails_admin_path
+    visit root_path
+    click_on 'Dashboard'
     expect(page).to have_current_path(rails_admin_path)
   end
 
