@@ -8,6 +8,7 @@ class Ability
     user ||= User.new
 
     if user.admin?
+      can :manage, :all
       can :invite, User
       can :access, :rails_admin
       can :read, :dashboard
