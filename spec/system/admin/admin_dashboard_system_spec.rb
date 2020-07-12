@@ -15,5 +15,6 @@ RSpec.describe 'navgiating to /admin', type: :system do
 
     visit rails_admin_path
     expect(page).to have_current_path(root_path)
+    expect(page).to have_content('You are not authorized to access this page.')
   end
 end
