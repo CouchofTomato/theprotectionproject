@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cancancan'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
+gem 'rails_admin', '~> 2.0'
 gem 'undercover'
 
 group :development, :test do

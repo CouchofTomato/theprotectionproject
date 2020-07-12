@@ -26,3 +26,6 @@ Layout/LineLength:
 RSpec/ExampleLength:
   Exclude:
     - 'spec/system/**/*.rb'
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/system/**/*.rb'
