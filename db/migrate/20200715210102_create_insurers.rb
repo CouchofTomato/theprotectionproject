@@ -5,5 +5,6 @@ class CreateInsurers < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+    add_index :insurers, :name, unique: true
   end
 end
