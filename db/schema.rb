@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_07_20_204903) do
     t.string "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "category"], name: "index_benefits_on_name_and_category", unique: true
   end
 
   create_table "insurers", force: :cascade do |t|

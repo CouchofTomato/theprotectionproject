@@ -6,5 +6,6 @@ class CreateBenefits < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+    add_index :benefits, %i[name category], unique: true
   end
 end
