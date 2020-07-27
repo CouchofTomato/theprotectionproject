@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :product do
-    name { 'Lifeline' }
+    name { Faker::Company.name }
     insurer
   end
 end
