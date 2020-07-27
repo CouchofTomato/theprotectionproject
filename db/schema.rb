@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_205642) do
+ActiveRecord::Schema.define(version: 2020_07_27_212421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "benefits", force: :cascade do |t|
     t.string "name", null: false
-    t.string "category", null: false
+    t.integer "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name", "category"], name: "index_benefits_on_name_and_category", unique: true

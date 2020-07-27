@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :benefit do
-    name { 'surgery' }
+    name { Faker::Commerce.product_name }
     category { 'inpatient' }
   end
 end
