@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :insurer do
-    name { 'BUPA Global' }
+    name { Faker::Company.name }
   end
 end

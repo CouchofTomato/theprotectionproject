@@ -10,16 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_212652) do
+ActiveRecord::Schema.define(version: 2020_07_27_221826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "benefits", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "category", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "category"], name: "index_benefits_on_name_and_category", unique: true
+  end
 
   create_table "insurers", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_insurers_on_name", unique: true
+  end
+
+  create_table "product_modules", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "category", null: false
+    t.string "sum_assured", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name", "category"], name: "index_product_modules_on_name_and_category", unique: true
+    t.index ["product_id"], name: "index_product_modules_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -56,5 +75,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_212652) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "product_modules", "products"
   add_foreign_key "products", "insurers"
 end
