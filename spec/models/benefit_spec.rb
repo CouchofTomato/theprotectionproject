@@ -11,7 +11,8 @@ RSpec.describe Benefit, type: :model do
 
   it do
     expect(benefit).to define_enum_for(:category)
-      .with_values(%w[inpatient outpatient therapists medicines_and_appliances wellness
-                      evacuation_and_repatriation maternity dental optical additional])
+      .with_values(['inpatient', 'outpatient', 'therapists', 'medicines and appliances',
+                    'wellness', 'evacuation and repatriation', 'maternity', 'dental',
+                    'optical', 'additional'])
   end
 end
