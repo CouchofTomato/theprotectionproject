@@ -1,10 +1,18 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
+version: 2
+updates:
+
+  - package-ecosystem: "npm"
     directory: "/"
-    update_schedule: "weekly"
-    target_branch: "develop"
-  - package_manager: "ruby:bundler"
+    schedule:
+      interval: "daily"
+    target-branch: "master"
+    commit-message:
+      prefix: "chore"
+
+  - package-ecosystem: "bundler"
     directory: "/"
-    update_schedule: "weekly"
-    target_branch: "develop"
+    schedule:
+      interval: "daily"
+    target-branch: "master"
+    commit-message:
+      prefix: "chore"
