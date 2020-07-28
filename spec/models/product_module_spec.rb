@@ -14,7 +14,7 @@ RSpec.describe ProductModule, type: :model do
 
   it do
     expect(product_module).to define_enum_for(:category)
-      .with_values(%w[core outpatient medicines_and_appliances wellness
-                      maternity dental_and_optical evacuation_and_repatriation])
+      .with_values(['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity',
+                    'dental and optical', 'evacuation and repatriation'])
   end
 end
