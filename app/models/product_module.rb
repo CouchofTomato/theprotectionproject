@@ -8,10 +8,14 @@ class ProductModule < ApplicationRecord
                    /ix.freeze
 
   belongs_to :product
+  has_many :product_module_benefits, dependent: :destroy, inverse_of: :product_module
+
   validates :name, presence: true, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, presence: true
   validates :sum_assured,
             presence: true,
             format: { with: VALID_CURRENCY,
                       message: 'Please write the sum assured in the format "USD X,XXX,XXX | GBP X,XXX,XXX | EUR X,XXX,XXX"' }
+
+  accepts_nested_attributes_for :product_module_benefits
 end
