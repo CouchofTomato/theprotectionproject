@@ -7,4 +7,5 @@ RSpec.describe Insurer, type: :model do
 
   it { expect(insurer).to validate_presence_of :name }
   it { expect(insurer).to validate_uniqueness_of(:name).case_insensitive }
+  it { expect(insurer).to have_many(:products).dependent(:destroy) }
 end
