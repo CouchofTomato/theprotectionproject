@@ -8,7 +8,7 @@ class ProductModule < ApplicationRecord
                    /ix.freeze
 
   belongs_to :product
-  has_many :product_module_benefits, dependent: :destroy
+  has_many :product_module_benefits, dependent: :destroy, inverse_of: :product_module
 
   validates :name, presence: true, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, presence: true
