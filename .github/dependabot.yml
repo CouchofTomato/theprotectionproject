@@ -3,16 +3,22 @@ updates:
 
   - package-ecosystem: "npm"
     directory: "/"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "daily"
     target-branch: "master"
     commit-message:
       prefix: "chore"
+    open-pull-requests-limit: 10
 
   - package-ecosystem: "bundler"
     directory: "/"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "daily"
     target-branch: "master"
     commit-message:
       prefix: "chore"
+    open-pull-requests-limit: 10
