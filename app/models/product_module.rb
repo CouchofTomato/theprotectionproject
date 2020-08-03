@@ -16,4 +16,6 @@ class ProductModule < ApplicationRecord
             presence: true,
             format: { with: VALID_CURRENCY,
                       message: 'Please write the sum assured in the format "USD X,XXX,XXX | GBP X,XXX,XXX | EUR X,XXX,XXX"' }
+
+  accepts_nested_attributes_for :product_module_benefits
 end
