@@ -17,4 +17,6 @@ RSpec.describe ProductModule, type: :model do
       .with_values(['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity',
                     'dental and optical', 'evacuation and repatriation'])
   end
+
+  it { expect(product_module).to have_many(:product_module_benefits).dependent(:destroy) }
 end
