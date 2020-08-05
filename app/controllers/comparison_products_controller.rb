@@ -1,0 +1,2 @@
+class ComparisonProductsController < ApplicationController
+end
