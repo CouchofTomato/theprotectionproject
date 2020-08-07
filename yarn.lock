@@ -919,10 +919,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@fortawesome/fontawesome-free@^5.13.1":
-  version "5.13.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.13.1.tgz#c53b4066edae16cd1fd669f687baf031b45fb9d6"
-  integrity sha512-D819f34FLHeBN/4xvw0HR0u7U2G7RqjPSggXqf7LktsxWQ48VAfGwvMrhcVuaZV2fF069c/619RdgCCms0DHhw==
+"@fortawesome/fontawesome-free@^5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.14.0.tgz#a371e91029ebf265015e64f81bfbf7d228c9681f"
+  integrity sha512-OfdMsF+ZQgdKHP9jUbmDcRrP0eX90XXrsXIdyjLbkmSBzmMXPABB8eobUJtivaupucYaByz6WNe1PI1JuYm3qA==
 
 "@rails/actioncable@^6.0.0":
   version "6.0.3"
@@ -1653,15 +1653,15 @@ browserify-rsa@^4.0.0, browserify-rsa@^4.0.1:
     randombytes "^2.0.1"
 
 browserify-sign@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/browserify-sign/-/browserify-sign-4.2.0.tgz#545d0b1b07e6b2c99211082bf1b12cce7a0b0e11"
-  integrity sha512-hEZC1KEeYuoHRqhGhTy6gWrpJA3ZDjFWv0DE61643ZnOXAKJb3u7yWcrU0mMc9SwAqK1n7myPGndkp0dFG7NFA==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/browserify-sign/-/browserify-sign-4.2.1.tgz#eaf4add46dd54be3bb3b36c0cf15abbeba7956c3"
+  integrity sha512-/vrA5fguVAKKAVTNJjgSm1tRQDHUU6DbwO9IROu/0WAzC8PKhucDSh18J0RMvVeHAn5puMd+QHC2erPRNf8lmg==
   dependencies:
     bn.js "^5.1.1"
     browserify-rsa "^4.0.1"
     create-hash "^1.2.0"
     create-hmac "^1.1.7"
-    elliptic "^6.5.2"
+    elliptic "^6.5.3"
     inherits "^2.0.4"
     parse-asn1 "^5.1.5"
     readable-stream "^3.6.0"
