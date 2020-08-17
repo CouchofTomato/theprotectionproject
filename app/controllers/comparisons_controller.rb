@@ -1,4 +1,3 @@
 class ComparisonsController < ApplicationController
-  def new
-  end
+  def new; end
 end

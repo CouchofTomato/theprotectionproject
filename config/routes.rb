@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   resources :comparisons
   resources :comparison_products, only: %i[index new]
+  resources :insurers do
+    resources :products
+  end
 end
