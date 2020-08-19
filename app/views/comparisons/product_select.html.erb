@@ -1,1 +1,0 @@
-<%= select_tag "comparison_product[product]", options_from_collection_for_select(@products, "id", "name"), {prompt: 'Select Product...'}, data: {target: 'health-comparison-product-select.product', action: 'change->health-comparison-product-select#getProductModules'}, id: 'product-select' %>
