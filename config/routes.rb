@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { invitations: 'users/invitations' }
 
   resources :comparisons, only: %i[new]
-  resources :comparison_products, only: %i[index new]
+  resources :comparison_products, only: %i[new create]
 
   resources :insurers do
     resources :products, only: [:index]
