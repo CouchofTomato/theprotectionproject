@@ -41,9 +41,14 @@ export default class extends Controller {
   }
 
   addProductModules(productModules) {
-    for (const [category, productModules] of Object.entries(this.groupProductModules(productModules))) {
+    const productModuleCategories = ['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity', 'dental and optical', 'evacuation and repatriation']
+    const groupedProductModules = this.groupProductModules(productModules)
+    productModuleCategories.forEach(category => {
+      let productModules = groupedProductModules[category]
+      if (!productModules) return;
+
       const fieldDiv = this.createElement("div", { "class": ["field"] })
-      const title = this.createElement("h5", { "class": ["title", "is-5"], "textContent": `${category}` })
+      const title = this.createElement("h5", { "class": ["title", "is-5"], "textContent": `${this.titleize(category)}` })
       const inputDiv = this.createElement("inputDiv", { "class": ["control"] })
       fieldDiv.appendChild(title)
       productModules.forEach(productModule => {
@@ -62,7 +67,7 @@ export default class extends Controller {
       })
       fieldDiv.appendChild(inputDiv)
       this.productModulesTarget.append(fieldDiv)
-    }
+    })
   }
 
   groupProductModules(productModules) {
@@ -89,6 +94,13 @@ export default class extends Controller {
     this.insurerTarget.value = ''
     this.productTarget.length = 1
     this.productModulesTarget.innerHTML = ''
+  }
+
+  titleize(phrase) {
+    return phrase
+      .split(' ')
+      .map(word => word[0].toUpperCase() + word.slice(1, word.length))
+      .join(' ')
   }
 }
 

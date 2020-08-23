@@ -1,3 +1,5 @@
 class ComparisonsController < ApplicationController
-  def new; end
+  def new
+    @benefits = Benefit.all
+  end
 end
