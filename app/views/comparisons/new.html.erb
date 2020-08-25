@@ -30,5 +30,42 @@
         <% end %>
       </div>
     </div>
+    <div class="column">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th colspan="100%">Product Details</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th>Insurer</th>
+          </tr>
+          <tr>
+            <th>Product</th>
+          </tr>
+          <tr>
+            <th>Chosen Cover</th>
+          </tr>
+          <tr>
+            <th>Overall Sum Assured</th>
+          </tr>
+        </tbody>
+          <% @benefit_categories.each do |category| %>
+            <tbody>
+              <tr>
+                <th colspan="100%"><%= category.titleize %></th>
+              </tr>
+            </tbody>
+            <tbody>
+              <% @benefits[category].each do |benefit| %>
+                <tr>
+                  <td><%= benefit.name.titleize %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          <% end %>
+      </table>
+    </div>
   </div>
 </section>
