@@ -21,16 +21,18 @@ RSpec.describe Benefit, type: :model do
       create(:benefit, name: 'evacuation', category: 'evacuation and repatriation')
     end
 
-    it 'returns a hash of benefits grouped by their category' do
-      expect(described_class.grouped_by_category).to match(
-        'inpatient' => a_collection_including(
-          an_object_having_attributes(name: 'accomodation'),
-          an_object_having_attributes(name: 'surgery')
-        ),
+    let(:grouped_benefits) do
+      { 'inpatient' => a_collection_including(
+        an_object_having_attributes(name: 'accomodation'),
+        an_object_having_attributes(name: 'surgery')
+      ),
         'evacuation and repatriation' => a_collection_including(
           an_object_having_attributes(name: 'evacuation')
-        )
-      )
+        ) }
+    end
+
+    it 'returns a hash of benefits grouped by their category' do
+      expect(described_class.grouped_by_category).to match(grouped_benefits)
     end
   end
 

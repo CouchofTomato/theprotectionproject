@@ -1,30 +1,30 @@
 <section class="section">
-  <div class="columns">
+  <div class="columns" data-controller="comparison-product">
     <div class="column is-one-fifth">
       <h3 class="title is-3">Product Picker</h3>
       <div data-controller="health-comparison-product-select">
-        <%= form_with(url: comparison_products_path) do |form| %>
+        <%= form_with url: comparison_products_path, format: 'json' do |form| %>
           <div class="field">
             <div class="control">
               <div class="select">
-                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(Insurer.order(:name), "id", "name"), {prompt: 'Select Insurer...'}, data: {target: 'health-comparison-product-select.insurer', action: 'change->health-comparison-product-select#getProducts'}, id: 'insurer-select' %>
+                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(Insurer.order(:name), "id", "name"), {prompt: 'Select Insurer...'}, data: {target: 'health-comparison-product-select.insurer comparison-product.insurer', action: 'change->health-comparison-product-select#getProducts'}, id: 'insurer-select' %>
               </div>
             </div>
           </div>
           <div class="field">
             <div class="control">
               <div class="select product-select">
-                <%= form.select "comparison_product[product]", options_for_select([]), {prompt: 'Select Product'}, data: { target: 'health-comparison-product-select.product', action: 'change->health-comparison-product-select#getProductModules' }, id: 'product-select' %>
+                <%= form.select "comparison_product[product]", options_for_select([]), {prompt: 'Select Product'}, data: { target: 'health-comparison-product-select.product comparison-product.product', action: 'change->health-comparison-product-select#getProductModules' }, id: 'product-select' %>
               </div>
             </div>
           </div>
           <div class="field">
-            <div id="product-modules" data-target="health-comparison-product-select.productModules">
+            <div id="product-modules" data-target="health-comparison-product-select.productModules comparison-product.productModules">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <%= form.submit "Load Benefits", class: 'button is-primary', data: { action: 'click->comparison-select#loadBenefits' } %>
+              <%= form.submit "Load Benefits", class: 'button is-primary', data: { target: 'comparison-product.comparisonProductSubmit', action: 'click->comparison-product#addComparisonProduct' } %>
             </div>
           </div>
         <% end %>
@@ -38,16 +38,16 @@
           </tr>
         </tbody>
         <tbody>
-          <tr>
+          <tr data-target="comparison-product.insurerTableRow">
             <th>Insurer</th>
           </tr>
-          <tr>
+          <tr data-target="comparison-product.productTableRow">
             <th>Product</th>
           </tr>
-          <tr>
+          <tr data-target="comparison-product.chosenCoverRow">
             <th>Chosen Cover</th>
           </tr>
-          <tr>
+          <tr data-target="comparison-product.overallSumAssured">
             <th>Overall Sum Assured</th>
           </tr>
         </tbody>
@@ -59,7 +59,7 @@
             </tbody>
             <tbody>
               <% @benefits[category].each do |benefit| %>
-                <tr>
+                <tr data-target="comparison-product.benefitRow" id=<%= benefit.id %>>
                   <td><%= benefit.name.titleize %></td>
                 </tr>
               <% end %>
