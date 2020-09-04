@@ -47,31 +47,36 @@ export default class extends Controller {
   }
 
   addInsurer() {
-    this.insurerTableRowTarget.insertCell()
-      .textContent = this.comparisonProduct.insurerName()
+    const cell = this.insurerTableRowTarget.insertCell()
+    cell.classList.add("table--fixed-col-width")
+    cell.textContent = this.comparisonProduct.insurerName()
   }
 
   addProduct() {
-    this.productTableRowTarget.insertCell()
-      .textContent = this.comparisonProduct.productName()
+    const cell = this.productTableRowTarget.insertCell()
+    cell.classList.add("table--fixed-col-width")
+    cell.textContent = this.comparisonProduct.productName()
   }
 
   addChosenCover() {
-    this.chosenCoverRowTarget.insertCell()
-      .textContent = this.comparisonProduct.chosenCovers()
+    const cell = this.chosenCoverRowTarget.insertCell()
+    cell.classList.add("table--fixed-col-width")
+    cell.textContent = this.comparisonProduct.chosenCovers()
   }
 
   addOverallSumAssured() {
-    this.overallSumAssuredTarget.insertCell()
-      .textContent = this.comparisonProduct.overallSumAssured()
+    const cell = this.overallSumAssuredTarget.insertCell()
+    cell.classList.add("table--fixed-col-width")
+    cell.textContent = this.comparisonProduct.overallSumAssured()
   } 
 
   addBenefits(product_modules) {
     const nullProductModuleBenefit = new NullProductModuleBenefit()
     this.benefitRowTargets.forEach(benefitRow => {
       const productModuleBenefit = this.comparisonProduct.productModuleBenefit(benefitRow.id) || nullProductModuleBenefit
-      benefitRow.insertCell()
-        .innerHTML = productModuleBenefit.benefit_icon
+      const cell = benefitRow.insertCell()
+      cell.classList.add("table--fixed-col-width")
+      cell.innerHTML = productModuleBenefit.benefit_icon
     })
   }
 }

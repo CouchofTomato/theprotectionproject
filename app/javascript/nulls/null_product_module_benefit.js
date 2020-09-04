@@ -1,6 +1,6 @@
 class NullProductModuleBenefit {
   constructor() {
-    this.benefit_icon = "<span class='icon'><i class='fa fa-times red-cross'></i></span>"
+    this.benefit_icon = "<span class='icon'><i class='fa fa-times icon--not-covered'></i></span>"
   }
 }
 
