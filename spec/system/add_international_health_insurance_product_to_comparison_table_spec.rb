@@ -4,7 +4,7 @@ RSpec.describe 'Add a plan to the comparison table', type: :system, js: true do
   before do
     insurer = create(:insurer, name: 'BUPA Global')
     product = create(:product, name: 'Lifeline', insurer: insurer)
-    product_module = create(:product_module, name: 'Gold', product: product)
+    create(:product_module, name: 'Gold', product: product)
   end
 
   it 'adds selected product details to the comparison table' do
