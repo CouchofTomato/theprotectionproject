@@ -72,4 +72,4 @@ jobs:
           GITHUB_ACCESS_TOKEN: $
 
       - name: Run rubocop checks
-        run: bundle exec rubocop -D -c .rubocop.yml
+        run: bundle exec rubocop -D

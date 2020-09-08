@@ -5,5 +5,15 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   devise_for :users, controllers: { invitations: 'users/invitations' }
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :comparisons, only: %i[new]
+  resources :comparison_products, only: %i[new create]
+
+  resources :insurers do
+    resources :products, only: [:index]
+  end
+
+  resources :products do
+    resources :product_modules, only: %i[index]
+  end
 end
