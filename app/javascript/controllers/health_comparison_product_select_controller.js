@@ -1,14 +1,16 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["insurer", "product", "productModules"];
+  static targets = ["insurer", "product", "productModules", "comparisonProductSubmit"];
 
   connect() {
     this.resetForm()
   }
 
   getProducts(event) {
-    this.productTarget.length = 1
+    this.clearProductTarget()
+    this.disableSubmitButton()
+    this.clearProductModuleTarget()
     if (this.insurerTarget.value == '') return;
 
     fetch(`/insurers/${this.insurerTarget.value}/products`, {
@@ -21,6 +23,8 @@ export default class extends Controller {
   }
 
   getProductModules(event) {
+    this.disableSubmitButton()
+    this.clearProductModuleTarget()
     if (this.productTarget.value == '') return;
 
     fetch(`/products/${this.productTarget.value}/product_modules`, {
@@ -40,33 +44,18 @@ export default class extends Controller {
   }
 
   addProductModules(productModules) {
-    const productModuleCategories = ['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity', 'dental and optical', 'evacuation and repatriation']
     const groupedProductModules = this.groupProductModules(productModules)
-    productModuleCategories.forEach(category => {
+    const groupedModuleCategories = Object.keys(groupedProductModules)
+    const availableCategories = this.productModuleCategories().filter(category => groupedModuleCategories.includes(category))
+    const productModulesHTML = availableCategories.map(category => {
       let productModules = groupedProductModules[category]
-      if (!productModules) return;
-
-      const fieldDiv = this.createElement("div", { "class": ["field"] })
-      const title = this.createElement("h5", { "class": ["title", "is-5"], "textContent": `${this.titleize(category)}` })
-      const inputDiv = this.createElement("inputDiv", { "class": ["control"] })
-      fieldDiv.appendChild(title)
-      productModules.forEach(productModule => {
-        const label = this.createElement("label", { "class": ["radio"] })
-        const input = this.createElement(
-          "input",
-          {
-            "name": `comparison_product[product_modules][${productModule.category}]`,
-            "value": productModule.id,
-            "type": "radio"
-          }
-        )
-        label.appendChild(input)
-        label.appendChild(document.createTextNode(`${productModule.name}`))
-        inputDiv.append(label)
-      })
-      fieldDiv.appendChild(inputDiv)
-      this.productModulesTarget.append(fieldDiv)
+      return this.productModuleRadioButtonTemplate(productModules, category)
     })
+    this.productModulesTarget.innerHTML = productModulesHTML.join("\n")
+  }
+
+  productModuleCategories() {
+    return ['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity', 'dental and optical', 'evacuation and repatriation']
   }
 
   groupProductModules(productModules) {
@@ -77,22 +66,11 @@ export default class extends Controller {
     }, {})
   }
 
-  createElement(type, attributes) {
-    const element = document.createElement(type)
-    for (let key in attributes) {
-      if (key == "class") {
-        element.classList.add.apply(element.classList, attributes[key])
-      } else {
-        element[key] = attributes[key]
-      }
-    }
-    return element
-  }
-
   resetForm(event) {
-    this.insurerTarget.value = ''
-    this.productTarget.length = 1
-    this.productModulesTarget.innerHTML = ''
+    this.clearInsurerTarget()
+    this.clearProductTarget()
+    this.clearProductModuleTarget()
+    this.disableSubmitButton()
   }
 
   titleize(phrase) {
@@ -101,5 +79,42 @@ export default class extends Controller {
       .map(word => word[0].toUpperCase() + word.slice(1, word.length))
       .join(' ')
   }
-}
 
+  productModuleRadioButtonTemplate(productModules, category) {
+    return `
+      <div class="field">
+        <h5 class="title is-5">${this.titleize(category)}</h5>
+        <div class="control">
+          ${productModules.map(module => {
+            return `
+              <label class="radio">
+                <input type="radio" name="comparison_product[product_modules][${module.category}]" value="${module.id}" data-action="change->health-comparison-product-select#enableSubmitButton">
+                ${module.name}
+              </label>
+            `
+          }).join("")}
+        </div>
+      </div>
+    `
+  }
+
+  enableSubmitButton() {
+    this.comparisonProductSubmitTarget.disabled = false
+  }
+
+  disableSubmitButton() {
+    this.comparisonProductSubmitTarget.disabled = true
+  }
+
+  clearProductModuleTarget() {
+    this.productModulesTarget.innerHTML = ''
+  }
+
+  clearInsurerTarget() {
+    this.insurerTarget.value = ''
+  }
+
+  clearProductTarget() {
+    this.productTarget.length = 1
+  }
+}

@@ -8,6 +8,21 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
   end
+
+  config.after(:each, type: :system, js: true) do
+    errors = page.driver.browser.manage.logs.get(:browser)
+    if errors.present?
+      aggregate_failures 'javascript errrors' do
+        errors.each do |error|
+          expect(error.level).not_to eq('SEVERE'), error.message
+          next unless error.level == 'WARNING'
+
+          STDERR.warn 'WARN: javascript warning'
+          STDERR.warn error.message
+        end
+      end
+    end
+  end
 end
 
 require 'capybara-screenshot/rspec'

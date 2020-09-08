@@ -30,6 +30,8 @@ export default class extends Controller {
   }
 
   crsfToken() {
+    let csrfTokenElement = document.querySelector("[name='csrf-token']")
+    if(!csrfTokenElement) return ''
     return document.querySelector("[name='csrf-token']").content
   }
 
