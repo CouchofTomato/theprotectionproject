@@ -1,0 +1,8 @@
+<% if current_user %>
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">User Menu</a>
+    <div class="navbar-dropdown">
+      <%= link_to "New Comparison", new_comparison_path, class: 'navbar-item' %>
+    </div>
+  </div>
+<% end %>

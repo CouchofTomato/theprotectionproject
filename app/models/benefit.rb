@@ -6,4 +6,10 @@ class Benefit < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, presence: true
+
+  scope :ordered_by_name, -> { order(name: :asc) }
+
+  def self.grouped_by_category
+    ordered_by_name.group_by(&:category)
+  end
 end
