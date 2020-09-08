@@ -3,10 +3,11 @@ import ComparisonProduct from "../services/comparison_product"
 import NullProductModuleBenefit from "../nulls/null_product_module_benefit"
 
 export default class extends Controller {
-  static targets = ["insurer", "product", "productModules", "comparisonProductSubmit", "insurerTableRow", "productTableRow", "chosenCoverRow", "overallSumAssured", "benefitRow"]
+  static targets = ["insurer", "product", "productModules", "comparisonProductSubmit", "insurerTableRow", "productTableRow", "chosenCoverRow", "overallSumAssured", "benefitRow", "productDetailsJSON"]
 
   addComparisonProduct(event) {
     event.preventDefault()
+    this.selectedProductDetails = JSON.stringify(this.submissionData())
 
     fetch(`/comparison_products`, {
       method: 'POST',
@@ -14,7 +15,7 @@ export default class extends Controller {
         'X-CSRF-Token': this.crsfToken(),
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.submissionData()),
+      body: this.selectedProductDetails,
     })
       .then(response => response.json())
       .then(data => this.addSelectedProductToComparison(data)) 
@@ -22,6 +23,7 @@ export default class extends Controller {
 
   addSelectedProductToComparison(data) {
     this.comparisonProduct = new ComparisonProduct(data['insurer'], data['product'], data['product_modules'])
+    this.addSelectedProductDetails()
     this.addInsurer()
     this.addProduct()
     this.addChosenCover()
@@ -46,6 +48,11 @@ export default class extends Controller {
   selectedProductModules() {
     let productModules = Array.from(this.productModulesTarget.querySelectorAll("input[type=radio]:checked"))
     return productModules.map(module => module.value)
+  }
+
+  addSelectedProductDetails() {
+    const cell = this.productDetailsJSONTarget.insertCell()
+    cell.dataset.productDetails = this.selectedProductDetails
   }
 
   addInsurer() {
