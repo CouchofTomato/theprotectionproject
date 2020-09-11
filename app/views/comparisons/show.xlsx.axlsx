@@ -7,42 +7,25 @@ category_end = nil
 category_positions = []
 
 # styles
-center_text = { alignment: { horizontal: :center, vertical: :center } }
-
-# cell styles indicating cell coverage
-paid_in_full_style = wb.styles.add_style(bg_color: '7dcea0')
-capped_benefit_style = wb.styles.add_style(bg_color: 'f0b27a')
-not_covered_style = wb.styles.add_style(bg_color: 'ec7063')
-
-# cell styles for benefit categories
-inpatient = wb.styles.add_style(bg_color: 'b7ede6')
-outpatient = wb.styles.add_style(bg_color: 'b7d7ed')
-therapists = wb.styles.add_style(bg_color: 'b7bced')
-medicines_and_appliances = wb.styles.add_style(bg_color: 'd3da6a')
-wellness = wb.styles.add_style(bg_color: 'daa76a')
-evacuation_and_repatriation = wb.styles.add_style(bg_color: 'e29bd1')
-maternity = wb.styles.add_style(bg_color: 'a2b6a9')
-dental = wb.styles.add_style(bg_color: 'c9e1fa')
-optical = wb.styles.add_style(bg_color: 'fae7c9')
-additional = wb.styles.add_style(bg_color: 'cac9fa')
+center_text = { alignment: { horizontal: :center, vertical: :center, wrap_text: true } }
 
 benefit_coverage_styles = {
-  'paid in full' => paid_in_full_style,
-  'capped benefit' => capped_benefit_style,
-  'not covered' => not_covered_style
+  'paid in full' => wb.styles.add_style(bg_color: '7dcea0'),
+  'capped benefit' => wb.styles.add_style(bg_color: 'f0b27a'),
+  'not covered' => wb.styles.add_style(bg_color: 'ec7063')
 }
 
 benefit_category_styles = {
-  'inpatient' => inpatient,
-  'outpatient' => outpatient,
-  'therapists' => therapists,
-  'medicines and appliances' => medicines_and_appliances,
-  'wellness' => wellness,
-  'evacuation and repatriation' => evacuation_and_repatriation,
-  'maternity' => maternity,
-  'dental' => dental,
-  'optical' => optical,
-  'additional' => additional
+  'inpatient' => wb.styles.add_style(bg_color: 'b7ede6'),
+  'outpatient' => wb.styles.add_style(bg_color: 'b7d7ed'),
+  'therapists' => wb.styles.add_style(bg_color: 'b7bced'),
+  'medicines and appliances' => wb.styles.add_style(bg_color: 'd3da6a'),
+  'wellness' => wb.styles.add_style(bg_color: 'daa76a'),
+  'evacuation and repatriation' => wb.styles.add_style(bg_color: 'e29bd1'),
+  'maternity' => wb.styles.add_style(bg_color: 'a2b6a9'),
+  'dental' => wb.styles.add_style(bg_color: 'c9e1fa'),
+  'optical' => wb.styles.add_style(bg_color: 'fae7c9'),
+  'additional' => wb.styles.add_style(bg_color: 'cac9fa')
 }
 
 wb.add_worksheet(name: 'Comparison') do |sheet|
@@ -64,7 +47,8 @@ wb.add_worksheet(name: 'Comparison') do |sheet|
         matched_benefit = product.module_benefits
                                  .find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new
         row_styles << benefit_coverage_styles[matched_benefit.benefit_status]
-        matched_benefit.explanation_of_benefit
+
+        matched_benefit.full_benefit_coverage
       end
       sheet.add_row [category.titleize, benefit.name.titleize, *selected_product_benefits], style: row_styles
     end

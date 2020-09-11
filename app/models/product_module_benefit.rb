@@ -7,4 +7,12 @@ class ProductModuleBenefit < ApplicationRecord
   validates :benefit_status, presence: true
   validates :benefit_limit, presence: true
   validates :product_module_id, uniqueness: { scope: :benefit_id }
+
+  def full_benefit_coverage
+    <<~BENEFIT.strip
+      #{benefit_limit}
+
+      #{explanation_of_benefit}
+    BENEFIT
+  end
 end
