@@ -1,0 +1,75 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+category_start = 5
+category_end = nil
+category_positions = []
+
+# styles
+center_text = { alignment: { horizontal: :center, vertical: :center, wrap_text: true } }
+
+benefit_coverage_styles = {
+  'paid in full' => wb.styles.add_style(bg_color: '7dcea0'),
+  'capped benefit' => wb.styles.add_style(bg_color: 'f0b27a'),
+  'not covered' => wb.styles.add_style(bg_color: 'ec7063')
+}
+
+benefit_category_styles = {
+  'inpatient' => wb.styles.add_style(bg_color: 'b7ede6'),
+  'outpatient' => wb.styles.add_style(bg_color: 'b7d7ed'),
+  'therapists' => wb.styles.add_style(bg_color: 'b7bced'),
+  'medicines and appliances' => wb.styles.add_style(bg_color: 'd3da6a'),
+  'wellness' => wb.styles.add_style(bg_color: 'daa76a'),
+  'evacuation and repatriation' => wb.styles.add_style(bg_color: 'e29bd1'),
+  'maternity' => wb.styles.add_style(bg_color: 'a2b6a9'),
+  'dental' => wb.styles.add_style(bg_color: 'c9e1fa'),
+  'optical' => wb.styles.add_style(bg_color: 'fae7c9'),
+  'additional' => wb.styles.add_style(bg_color: 'cac9fa')
+}
+
+wb.add_worksheet(name: 'Comparison') do |sheet|
+  # headers
+  sheet.add_row [nil, nil, *@comparison_products.map { |product| product.insurer.name }]
+  sheet.add_row [nil, nil, *@comparison_products.map { |product| product.product.name }]
+  sheet.add_row [nil, nil, *@comparison_products.map(&:product_module_names)]
+  sheet.add_row [nil, nil, *@comparison_products.map(&:overall_sum_assured)]
+
+  # benefits
+  category_starting_row = category_start
+
+  @benefit_categories.each do |category|
+    category_length = @grouped_benefits[category].length
+    @grouped_benefits[category].each do |benefit|
+      category_colour = benefit_category_styles[category]
+      row_styles = [category_colour, category_colour]
+      selected_product_benefits = @comparison_products.map do |product|
+        matched_benefit = product.module_benefits
+                                 .find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new
+        row_styles << benefit_coverage_styles[matched_benefit.benefit_status]
+
+        matched_benefit.full_benefit_coverage
+      end
+      sheet.add_row [category.titleize, benefit.name.titleize, *selected_product_benefits], style: row_styles
+    end
+
+    # merge category cells
+    next_category_start = category_starting_row + category_length
+    category_end = next_category_start - 1
+    category_cells = "A#{category_starting_row}:A#{category_end}"
+    category_positions << [category_starting_row, category_end]
+    sheet.merge_cells(category_cells)
+    category_starting_row = next_category_start
+  end
+
+  # columns widths
+  number_of_selected_products = @comparison_products.length
+  product_column_widths = Array.new(number_of_selected_products) { 40 }
+  sheet.column_widths 25, 25, *product_column_widths
+
+  # apply styles
+  last_col = Axlsx.col_ref(sheet.cols.size - 1)
+  sheet.add_style "A1:#{last_col}#{category_end}", center_text
+  sheet.add_style "A#{category_start}:#{last_col}#{category_end}", center_text, border: { style: :thin, color: '000000' }
+  sheet.add_style "C1:#{last_col}4", border: { style: :thin, color: '000000', edges: %i[left right] }, b: true
+end

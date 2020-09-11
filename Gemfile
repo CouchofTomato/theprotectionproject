@@ -30,10 +30,14 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'axlsx_styler'
 gem 'cancancan'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.0'
 gem 'rails_admin', '~> 2.0'
+gem 'rubyzip'
 gem 'undercover'
 
 group :development, :test do
@@ -61,6 +65,7 @@ group :development do
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
+  gem 'guard-webpacker', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

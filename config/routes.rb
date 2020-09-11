@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { invitations: 'users/invitations' }
 
+  get '/comparisons/show', to: 'comparisons#show'
+
   resources :comparisons, only: %i[new]
   resources :comparison_products, only: %i[new create]
 
