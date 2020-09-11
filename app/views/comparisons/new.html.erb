@@ -1,5 +1,5 @@
 <section class="section">
-  <div class="columns" data-controller="comparison-product">
+  <div class="columns" data-controller="comparison-product comparison-export">
     <div class="column is-one-fifth">
       <h3 class="title is-3">Product Picker</h3>
       <div data-controller="health-comparison-product-select">
@@ -33,7 +33,7 @@
     <div class="table-container column columns__column--no-padding-left">
       <table class="table">
         <tbody class="table__tbody--hidden">
-          <tr data-target="comparison-product.productDetailsJSON">
+          <tr data-target="comparison-product.productDetailsJSON comparison-export.productDetailsJSON">
             <td></td>
           </tr>
         </tbody>
@@ -63,7 +63,7 @@
               </tr>
             </tbody>
             <tbody>
-              <% @benefits[category].each do |benefit| %>
+              <% @grouped_benefits[category].each do |benefit| %>
                 <tr data-target="comparison-product.benefitRow" id=<%= benefit.id %>>
                   <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
                 </tr>
@@ -74,7 +74,7 @@
     </div>
     <div class="column is-2 has-text-centered">
       <h3 class="subtitle is-3">Export</h3>
-      <button class="button is-large">
+      <button class="button is-large" data-action="click->comparison-export#excelExport">
         <span class="icon is-medium"><i class="fas fa-file-excel"></i></span>
       </button>
     </div>
