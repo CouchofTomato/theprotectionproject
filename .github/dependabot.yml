@@ -1,6 +1,5 @@
 version: 2
 updates:
-
   - package-ecosystem: "npm"
     directory: "/"
     allow:
@@ -11,7 +10,6 @@ updates:
     commit-message:
       prefix: "chore"
     open-pull-requests-limit: 10
-
   - package-ecosystem: "bundler"
     directory: "/"
     allow:
