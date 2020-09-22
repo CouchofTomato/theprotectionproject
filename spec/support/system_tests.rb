@@ -17,8 +17,8 @@ RSpec.configure do |config|
           expect(error.level).not_to eq('SEVERE'), error.message
           next unless error.level == 'WARNING'
 
-          STDERR.warn 'WARN: javascript warning'
-          STDERR.warn error.message
+          $stderr.warn 'WARN: javascript warning'
+          $stderr.warn error.message
         end
       end
     end

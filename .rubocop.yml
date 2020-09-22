@@ -29,3 +29,6 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Exclude:
     - 'spec/system/**/*.rb'
+RSpec/EmptyExampleGroup:
+  Exclude:
+    - 'spec/helpers/**/*.rb'
