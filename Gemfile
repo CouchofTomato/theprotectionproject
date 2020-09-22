@@ -61,7 +61,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'bullet', '~>6.1.0'
   gem 'guard'
-  gem 'guard-bundler', require: false
+  gem 'guard-bundler', '~>2.2.1', require: false
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
