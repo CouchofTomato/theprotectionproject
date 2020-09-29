@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  enum customer_type: { 'individual' => 0, 'corporate' => 1 }
+
   belongs_to :insurer
   has_many :product_modules, dependent: :destroy
 

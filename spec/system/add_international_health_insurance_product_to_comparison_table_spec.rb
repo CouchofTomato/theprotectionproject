@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-def create_complete_health_insurance_product
+def create_individual_health_product
   create(:insurer, name: 'BUPA Global') do |insurer|
     create(:product, name: 'Lifeline', insurer: insurer) do |product|
       create(:product_module, name: 'Gold', product: product) do |product_module|
@@ -11,18 +11,29 @@ def create_complete_health_insurance_product
   end
 end
 
+def create_corporate_health_product
+  create(:insurer, name: 'Allianz') do |insurer|
+    create(:product, name: 'International Health', customer_type: 'corporate', insurer: insurer) do |product|
+      create(:product_module, name: 'Core Pro', product: product) do |product_module|
+        create_list(:product_module_benefit, 3, product_module: product_module)
+        create_list(:product_module_benefit, 2, benefit_status: 'capped benefit', product_module: product_module)
+      end
+    end
+  end
+end
+
 RSpec.describe 'Add a plan to the comparison table', type: :system, js: true do
   before do
-    create_complete_health_insurance_product
-    create(:benefit, name: 'eye test', category: 'optical', id: 6)
+    create_individual_health_product
+    create_corporate_health_product
+    create(:benefit, name: 'eye test', category: 'optical', id: 206)
+    user = create :user
+    login_as user, scope: :user
   end
 
   it 'adds selected product details to the comparison table' do
-    user = create :user
-    login_as user, scope: :user
-
     visit root_path
-    click_on 'New Comparison'
+    click_on 'New Individual Comparison'
 
     select 'BUPA Global', from: 'insurer-select'
     select 'Lifeline', from: 'product-select'
