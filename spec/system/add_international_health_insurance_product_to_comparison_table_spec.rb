@@ -26,7 +26,6 @@ RSpec.describe 'Add a plan to the comparison table', type: :system, js: true do
   before do
     create_individual_health_product
     create_corporate_health_product
-    create(:benefit, name: 'eye test', category: 'optical', id: 206)
     user = create :user
     login_as user, scope: :user
   end
@@ -34,6 +33,9 @@ RSpec.describe 'Add a plan to the comparison table', type: :system, js: true do
   it 'adds selected product details to the comparison table' do
     visit root_path
     click_on 'New Individual Comparison'
+
+    find('#insurer-select')
+    expect(page).not_to have_select('insurer-select', with_options: ['Allianz'])
 
     select 'BUPA Global', from: 'insurer-select'
     select 'Lifeline', from: 'product-select'
@@ -47,6 +49,6 @@ RSpec.describe 'Add a plan to the comparison table', type: :system, js: true do
       .to have_content 'USD 3,000,000 | EUR 3,200,000 | GBP 2,500,000'
     expect(page).to have_css('i.icon--full-cover', count: 3)
     expect(page).to have_css('i.icon--capped-cover', count: 2)
-    expect(page).to have_css('i.icon--not-covered', count: 1)
+    expect(page).to have_css('i.icon--not-covered', count: 5)
   end
 end
