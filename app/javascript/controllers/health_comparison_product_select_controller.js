@@ -13,7 +13,9 @@ export default class extends Controller {
     this.clearProductModuleTarget()
     if (this.insurerTarget.value == '') return;
 
-    fetch(`/insurers/${this.insurerTarget.value}/products`, {
+    const queryString = window.location.search
+
+    fetch(`/insurers/${this.insurerTarget.value}/products${queryString}`, {
       headers: {
         'Content-Type': 'application/json'
       }

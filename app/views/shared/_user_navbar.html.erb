@@ -3,6 +3,7 @@
     <a class="navbar-link">User Menu</a>
     <div class="navbar-dropdown">
       <%= link_to "New Individual Comparison", new_comparison_path(customer_type: 'individual'), class: 'navbar-item' %>
+      <%= link_to "New Corporate Comparison", new_comparison_path(customer_type: 'corporate'), class: 'navbar-item' %>
     </div>
   </div>
 <% end %>
