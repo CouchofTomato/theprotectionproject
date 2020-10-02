@@ -48,7 +48,7 @@ wb.add_worksheet(name: 'Comparison') do |sheet|
                                  .find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new
         row_styles << benefit_coverage_styles[matched_benefit.benefit_status]
 
-        matched_benefit.full_benefit_coverage
+        matched_benefit.benefit_limit
       end
       sheet.add_row [category.titleize, benefit.name.titleize, *selected_product_benefits], style: row_styles
     end
