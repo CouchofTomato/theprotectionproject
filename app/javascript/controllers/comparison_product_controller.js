@@ -22,7 +22,7 @@ export default class extends Controller {
   }
 
   addSelectedProductToComparison(data) {
-    this.comparisonProduct = new ComparisonProduct(data['insurer'], data['product'], data['product_modules'])
+    this.comparisonProduct = new ComparisonProduct(data['insurer'], data['product'], data['product_modules'], data['module_benefits'])
     this.addSelectedProductDetails()
     this.addInsurer()
     this.addProduct()
