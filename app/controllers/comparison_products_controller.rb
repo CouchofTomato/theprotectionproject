@@ -5,5 +5,6 @@ class ComparisonProductsController < ApplicationController
     @product_modules = ProductModule
                        .includes(product_module_benefits: :benefit)
                        .where(id: params[:comparison_product][:product_modules])
+    @comparison_product = ComparisonProduct.new(@insurer, @product, @product_modules)
   end
 end

@@ -70,5 +70,42 @@ RSpec.describe ComparisonProduct do
     it('returns all the product modules benefits of the selected product modules in one array') do
       expect(comparison_product.module_benefits).to match(module_benefits)
     end
+
+    context('when multiple module benefits have the same benefit association') do
+      let(:benefit) { create(:benefit, name: 'accomodation', category: 'inpatient') }
+      let(:product_modules) do
+        [
+          create(:product_module, name: 'Gold', product: product) do |product_module|
+            create(:product_module_benefit, benefit_status: 'paid in full',
+                                            explanation_of_benefit: 'Paid in full',
+                                            product_module: product_module,
+                                            benefit_weighting: 0,
+                                            benefit: benefit)
+          end,
+          create(:product_module, name: 'Silver', product: product) do |product_module|
+            create(:product_module_benefit, benefit_status: 'capped benefit',
+                                            explanation_of_benefit: 'Paid in full for 30 days',
+                                            product_module: product_module,
+                                            benefit_weighting: 1,
+                                            benefit: benefit)
+          end
+        ]
+      end
+
+      it 'keeps the module benefit with the higher weighting' do
+        expect(comparison_product.module_benefits).to include(
+          an_object_having_attributes(benefit_status: 'capped benefit',
+                                      benefit_limit: 'USD 1,000,000 | EUR 1,000,000 | GBP 850,000',
+                                      explanation_of_benefit: 'Paid in full for 30 days')
+        )
+      end
+
+      it 'removes the module benefit with the lower weighting' do
+        expect(comparison_product.module_benefits).not_to include(
+          an_object_having_attributes(benefit_status: 'paid in full',
+                                      explanation_of_benefit: 'Paid in full')
+        )
+      end
+    end
   end
 end

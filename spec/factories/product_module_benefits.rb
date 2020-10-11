@@ -5,5 +5,6 @@ FactoryBot.define do
     benefit_status { 'paid in full' }
     benefit_limit { 'USD 1,000,000 | EUR 1,000,000 | GBP 850,000' }
     explanation_of_benefit { 'Within overall limit' }
+    benefit_weighting { 0 }
   end
 end
