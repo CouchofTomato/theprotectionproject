@@ -90,7 +90,7 @@ export default class extends Controller {
           ${productModules.map(module => {
             return `
               <label class="radio">
-                <input type="radio" name="comparison_product[product_modules][${module.category}]" value="${module.id}" data-action="change->health-comparison-product-select#enableSubmitButton">
+                <input class="${category}" type="radio" name="comparison_product[product_modules][${module.category}]" value="${module.id}" data-action="change->health-comparison-product-select#submitButtonCheck">
                 ${module.name}
               </label>
             `
@@ -98,6 +98,22 @@ export default class extends Controller {
         </div>
       </div>
     `
+  }
+
+  submitButtonCheck(event) {
+    if(this.submitButtonEnabled()) return;
+    
+    this.enableSubmitIfCoreModuleSelected(event.target)
+  }
+
+  submitButtonEnabled() {
+    this.comparisonProductSubmitTarget.disabled === false
+  }
+
+  enableSubmitIfCoreModuleSelected(module) {
+    if(module.classList.contains('core')) {
+      this.enableSubmitButton()
+    }
   }
 
   enableSubmitButton() {
