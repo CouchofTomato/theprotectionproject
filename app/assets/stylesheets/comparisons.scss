@@ -1,3 +1,23 @@
 // Place all the styles related to the comparisons controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.table__tbody--hidden {
+  display: none;
+}
+
+.table--sticky-col {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: white;
+}
+
+.table--fixed-col-width {
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  left: 0px;
+}
+
+.columns__column--no-padding-left {
+  padding-left: 0;
+}

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Product, type: :model do
   subject(:product) { create(:product) }
 
-  before { create(:product) }
+  before { create(:product, name: 'BUPA') }
 
   it { expect(product).to belong_to :insurer }
   it { expect(product).to validate_presence_of :name }
