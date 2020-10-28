@@ -4801,9 +4801,9 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
     postcss "^7.0.14"
 
 ieee754@^1.1.4:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
-  integrity sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"
+  integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
 iferr@^0.1.5:
   version "0.1.5"
@@ -7734,16 +7734,6 @@ pretty-format@^26.6.0, pretty-format@^26.6.1:
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
 
-pretty-format@^26.6.1:
-  version "26.6.1"
-  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-26.6.1.tgz#af9a2f63493a856acddeeb11ba6bcf61989660a8"
-  integrity sha512-MeqqsP5PYcRBbGMvwzsyBdmAJ4EFX7pWFyl7x4+dMVg5pE0ZDdBIvEH2ergvIO+Gvwv1wh64YuOY9y5LuyY/GA==
-  dependencies:
-    "@jest/types" "^26.6.1"
-    ansi-regex "^5.0.0"
-    ansi-styles "^4.0.0"
-    react-is "^17.0.1"
-
 private@^0.1.6:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -7914,11 +7904,6 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
-
-react-is@^17.0.1:
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
-  integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
 react-is@^17.0.1:
   version "17.0.1"
