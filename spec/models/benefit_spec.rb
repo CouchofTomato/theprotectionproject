@@ -14,29 +14,7 @@ RSpec.describe Benefit, type: :model do
                     'optical', 'additional'])
   end
 
-  describe '.grouped_by_category' do
-    before do
-      create(:benefit, name: 'surgery', category: 'inpatient')
-      create(:benefit, name: 'accomodation', category: 'inpatient')
-      create(:benefit, name: 'evacuation', category: 'evacuation and repatriation')
-    end
-
-    let(:grouped_benefits) do
-      { 'inpatient' => a_collection_including(
-        an_object_having_attributes(name: 'accomodation'),
-        an_object_having_attributes(name: 'surgery')
-      ),
-        'evacuation and repatriation' => a_collection_including(
-          an_object_having_attributes(name: 'evacuation')
-        ) }
-    end
-
-    it 'returns a hash of benefits grouped by their category' do
-      expect(described_class.grouped_by_category).to match(grouped_benefits)
-    end
-  end
-
-  describe '.ordered_by_name' do
+  describe '.by_name' do
     let(:first_benefit) { described_class.find_by(name: 'accomodation') }
 
     before do
@@ -46,7 +24,7 @@ RSpec.describe Benefit, type: :model do
     end
 
     it 'returns all benefits ordered by name' do
-      expect(described_class.ordered_by_name.first).to eq first_benefit
+      expect(described_class.by_name.first).to eq first_benefit
     end
   end
 end
