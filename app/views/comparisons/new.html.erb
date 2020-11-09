@@ -73,6 +73,11 @@
       </table>
     </div>
     <div class="column is-2 has-text-centered">
+      <h3 class="subtitle is-3">Options</h3>
+      <label class="checkbox">
+        <%= check_box_tag "covered_benefits", "covered_benefits", false, data: { target: 'comparison-export.option' } %>
+        Show only covered benefits
+      </label>
       <h3 class="subtitle is-3">Export</h3>
       <button class="button is-large" data-action="click->comparison-export#excelExport">
         <span class="icon is-medium"><i class="fas fa-file-excel"></i></span>
