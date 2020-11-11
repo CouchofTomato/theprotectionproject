@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :product do
-    name { Faker::Company.name }
+    name { Faker::Company.unique.name }
     customer_type { 'individual' }
     insurer
   end
