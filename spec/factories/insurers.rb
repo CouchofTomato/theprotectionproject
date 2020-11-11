@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :insurer do
-    name { Faker::Company.name }
+    name { Faker::Company.unique.name }
   end
 
   trait :with_individual_product do
