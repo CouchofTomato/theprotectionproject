@@ -180,7 +180,7 @@ GEM
     kaminari-core (1.2.1)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.2.1)
+    listen (3.3.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.7.0)
@@ -416,7 +416,7 @@ DEPENDENCIES
   guard-rubocop
   guard-webpacker
   jbuilder (~> 2.7)
-  listen (~> 3.2)
+  listen (~> 3.3)
   pg (>= 0.18, < 2.0)
   pry
   pry-byebug
