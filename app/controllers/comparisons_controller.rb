@@ -1,7 +1,8 @@
 class ComparisonsController < ApplicationController
+  before_action :set_grouped_benefits, only: %i[new show]
+  before_action :set_benefit_categories, only: %i[new show]
+
   def new
-    @grouped_benefits = OrderedBenefitsQuery.all.group_by(&:category)
-    @benefit_categories = benefit_categories
     @insurers = Insurer
                 .offers_products_with_customer_type(params[:customer_type])
                 .order(:name)
@@ -9,8 +10,6 @@ class ComparisonsController < ApplicationController
 
   def show
     @comparison_products = comparison_products(params[:selected_products])
-    @grouped_benefits = OrderedBenefitsQuery.all(covered_benefits).group_by(&:category)
-    @benefit_categories = benefit_categories
 
     respond_to do |format|
       format.xlsx do
@@ -21,8 +20,12 @@ class ComparisonsController < ApplicationController
 
   private
 
-  def benefit_categories
-    Benefit.categories.keys.select { @grouped_benefits.key? _1 }
+  def set_grouped_benefits
+    @grouped_benefits = OrderedBenefitsQuery.all(covered_benefits).group_by(&:category)
+  end
+
+  def set_benefit_categories
+    @benefit_categories = Benefit.categories.keys.select { @grouped_benefits.key? _1 }
   end
 
   def comparison_products(selected_products)
@@ -42,10 +45,6 @@ class ComparisonsController < ApplicationController
   end
 
   def covered_benefits
-    CoveredBenefits.all(@comparison_products, options)
-  end
-
-  def options
-    params[:options] || []
+    CoveredBenefits.all(@comparison_products, params[:options])
   end
 end
