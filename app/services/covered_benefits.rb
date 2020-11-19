@@ -2,14 +2,14 @@ class CoveredBenefits
   attr_accessor :comparison_products, :options, :benefits
 
   class << self
-    def all(comparison_products, options = [])
+    def all(comparison_products, options)
       new(comparison_products, options).all
     end
   end
 
   def initialize(comparison_products, options, benefits = Benefit.all)
     @comparison_products = comparison_products
-    @options = options
+    @options = options || []
     @benefits = benefits
   end
 

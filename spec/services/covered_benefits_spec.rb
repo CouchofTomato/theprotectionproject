@@ -15,8 +15,10 @@ RSpec.describe CoveredBenefits do
 
   describe '.all' do
     context 'with no options' do
+      let(:options) { nil }
+
       it 'returns all benefits' do
-        expect(covered_benefits.all(comparison_products)).to eq Benefit.all
+        expect(covered_benefits.all(comparison_products, options)).to eq Benefit.all
       end
     end
 
