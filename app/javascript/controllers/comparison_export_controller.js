@@ -22,8 +22,9 @@ export default class extends Controller {
 
   selectedProductQueryString(dataParams) {
     return Object.entries(dataParams).map(([key, val]) => {
-      if(typeof val === "object") {
-        return Object.entries(val).map(([key2, val2]) => encodeURI(`selected_products[][${key}][${key2}]=${val2}`)).join('&')
+      if(Array.isArray(val)) {
+        const product_modules = val.map(val2 => `selected_products[][${key}][]=${val2}`)
+        return encodeURI(product_modules.join('&'))
       } else {
         return(encodeURI(`selected_products[][${key}]=${val}`))
       }
