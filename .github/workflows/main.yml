@@ -48,6 +48,16 @@ jobs:
         bin/rails db:create RAILS_ENV=test
         bin/rails db:migrate RAILS_ENV=test
         bundle exec rspec
+  jest:
+    name: js-tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install modules
+      run: yarn
+    - name: Run tests
+      run: yarn test
   rubocop:
     name: rubocop
     runs-on: ubuntu-latest
