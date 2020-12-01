@@ -26,6 +26,14 @@ jobs:
       with:
         ruby-version: 2.7
 
+    - name: Cache gems
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: bundle-use-ruby-${{ runner.os }}-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          bundle-use-ruby-${{ runner.os }}-${{ hashFiles('.ruby-version') }}-
+
     - name: Install Bundler and gems
       run: |
         gem install bundler --no-document
@@ -34,8 +42,21 @@ jobs:
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
 
-    - name: Yarn Install
-      run: yarn --frozen-lockfile
+    - name: Get Yarn cache directory
+      id: yarn-cache-dir
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache node modules
+      id: yarn-cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-js-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-js-
+
+    - name: yarn install
+      run:  yarn install --dev
 
     - name: Run tests
       env:
@@ -54,8 +75,23 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Install modules
-      run: yarn
+
+    - name: Get Yarn cache directory
+      id: yarn-cache-dir
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache node modules
+      id: yarn-cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-js-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-js-
+
+    - name: yarn install
+      run:  yarn install --dev
+
     - name: Run tests
       run: yarn test
   rubocop:
@@ -72,6 +108,14 @@ jobs:
           ruby-version: 2.7
 
       - uses: actions/checkout@v2.3.4
+
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: bundle-use-ruby-${{ runner.os }}-${{ hashFiles('.ruby-version') }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            bundle-use-ruby-${{ runner.os }}-${{ hashFiles('.ruby-version') }}-
 
       - name: Install bundler and rubocop
         run: |
