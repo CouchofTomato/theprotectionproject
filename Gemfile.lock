@@ -87,7 +87,7 @@ GEM
     capybara-screenshot (1.0.25)
       capybara (>= 1.0, < 4)
       launchy
-    caxlsx (3.0.2)
+    caxlsx (3.0.3)
       htmlentities (~> 4.3, >= 4.3.4)
       mimemagic (~> 0.3)
       nokogiri (~> 1.10, >= 1.10.4)
