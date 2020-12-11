@@ -5,7 +5,7 @@ class ProductModule < ApplicationRecord
   belongs_to :product
   has_many :product_module_benefits, dependent: :destroy, inverse_of: :product_module
 
-  validates :name, presence: true, uniqueness: { scope: :category, case_sensitive: false }
+  validates :name, presence: true, uniqueness: { scope: %i[category product_id], case_sensitive: false }
   validates :category, presence: true
   validates :sum_assured, presence: true
 
