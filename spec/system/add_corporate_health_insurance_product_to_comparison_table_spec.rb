@@ -37,10 +37,10 @@ RSpec.describe 'Add a corporate plan to the comparison table', type: :system, js
     page.choose 'Gold'
     click_button 'Load Benefits'
 
-    expect(find('tr[data-target="comparison-product.insurerTableRow"] > td:nth-of-type(1)')).to have_content 'BUPA Global'
-    expect(find('tr[data-target="comparison-product.productTableRow"] > td:nth-of-type(1)')).to have_content 'Lifeline'
-    expect(find('tr[data-target="comparison-product.chosenCoverRow"] > td:nth-of-type(1)')).to have_content 'Gold'
-    expect(find('tr[data-target="comparison-product.overallSumAssured"] > td:nth-of-type(1)'))
+    expect(find('tr[data-comparison-product-target="insurerTableRow"] > td:nth-of-type(1)')).to have_content 'BUPA Global'
+    expect(find('tr[data-comparison-product-target="productTableRow"] > td:nth-of-type(1)')).to have_content 'Lifeline'
+    expect(find('tr[data-comparison-product-target="chosenCoverRow"] > td:nth-of-type(1)')).to have_content 'Gold'
+    expect(find('tr[data-comparison-product-target="overallSumAssured"] > td:nth-of-type(1)'))
       .to have_content 'USD 3,000,000 | EUR 3,200,000 | GBP 2,500,000'
     expect(page).to have_css('i.icon--full-cover', count: 3)
     expect(page).to have_css('i.icon--capped-cover', count: 2)
