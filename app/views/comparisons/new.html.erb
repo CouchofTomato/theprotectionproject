@@ -7,24 +7,24 @@
           <div class="field">
             <div class="control">
               <div class="select">
-                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"), {prompt: 'Select Insurer...'}, data: {target: 'health-comparison-product-select.insurer comparison-product.insurer', action: 'change->health-comparison-product-select#getProducts'}, id: 'insurer-select' %>
+                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"), {prompt: 'Select Insurer...'}, data: {"health-comparison-product-select-target": 'insurer', "comparison-product-target": 'insurer', action: 'change->health-comparison-product-select#getProducts'}, id: 'insurer-select' %>
               </div>
             </div>
           </div>
           <div class="field">
             <div class="control">
               <div class="select product-select">
-                <%= form.select "comparison_product[product]", options_for_select([]), {prompt: 'Select Product'}, data: { target: 'health-comparison-product-select.product comparison-product.product', action: 'change->health-comparison-product-select#getProductModules' }, id: 'product-select' %>
+                <%= form.select "comparison_product[product]", options_for_select([]), {prompt: 'Select Product'}, data: { "health-comparison-product-select-target": 'product', "comparison-product-target": 'product', action: 'change->health-comparison-product-select#getProductModules' }, id: 'product-select' %>
               </div>
             </div>
           </div>
           <div class="field">
-            <div id="product-modules" data-target="health-comparison-product-select.productModules comparison-product.productModules">
+            <div id="product-modules" data-health-comparison-product-select-target="productModules" data-comparison-product-target="productModules">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <%= form.submit "Load Benefits", class: 'button is-primary', data: { target: 'health-comparison-product-select.comparisonProductSubmit comparison-product.comparisonProductSubmit', action: 'click->comparison-product#addComparisonProduct' } %>
+              <%= form.submit "Load Benefits", class: 'button is-primary', data: { "health-comparison-product-select-target": 'comparisonProductSubmit', "comparison-product-target": 'comparisonProductSubmit', action: 'click->comparison-product#addComparisonProduct' } %>
             </div>
           </div>
         <% end %>
@@ -33,7 +33,7 @@
     <div class="table-container column columns__column--no-padding-left">
       <table class="table">
         <tbody class="table__tbody--hidden">
-          <tr data-target="comparison-product.productDetailsJSON comparison-export.productDetailsJSON">
+          <tr data-comparison-product-target="productDetailsJSON" data-comparison-export-target="productDetailsJSON">
             <td></td>
           </tr>
         </tbody>
@@ -43,16 +43,16 @@
           </tr>
         </tbody>
         <tbody>
-          <tr data-target="comparison-product.insurerTableRow">
+          <tr data-comparison-product-target="insurerTableRow">
             <th class="table--sticky-col table--fixed-col-width">Insurer</th>
           </tr>
-          <tr data-target="comparison-product.productTableRow">
+          <tr data-comparison-product-target="productTableRow">
             <th class="table--sticky-col table--fixed-col-width">Product</th>
           </tr>
-          <tr data-target="comparison-product.chosenCoverRow">
+          <tr data-comparison-product-target="chosenCoverRow">
             <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
           </tr>
-          <tr data-target="comparison-product.overallSumAssured">
+          <tr data-comparison-product-target="overallSumAssured">
             <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
           </tr>
         </tbody>
@@ -64,7 +64,7 @@
             </tbody>
             <tbody>
               <% @grouped_benefits[category].each do |benefit| %>
-                <tr data-target="comparison-product.benefitRow" id=<%= benefit.id %>>
+                <tr data-comparison-product-target="benefitRow" id=<%= benefit.id %>>
                   <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
                 </tr>
               <% end %>
@@ -75,7 +75,7 @@
     <div class="column is-2 has-text-centered">
       <h3 class="subtitle is-3">Options</h3>
       <label class="checkbox">
-        <%= check_box_tag "covered_benefits", "covered_benefits", false, data: { target: 'comparison-export.option' } %>
+        <%= check_box_tag "covered_benefits", "covered_benefits", false, data: { "comparison-export-target": 'option' } %>
         Show only covered benefits
       </label>
       <h3 class="subtitle is-3">Export</h3>
