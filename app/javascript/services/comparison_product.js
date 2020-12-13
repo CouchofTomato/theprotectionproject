@@ -5,8 +5,8 @@ class ComparisonProduct {
     this._productModules = productModules
     this._moduleBenefits = moduleBenefits
     this._benefitIcons = {
-      "paid in full": "<span class='icon'><i class='fa fa-check icon--full-cover'></i></span>",
-      "capped benefit": "<span class='icon'><i class='fa fa-circle-notch icon--capped-cover'></i></span>",
+      "paid_in_full": "<span class='icon'><i class='fa fa-check icon--full-cover'></i></span>",
+      "capped_benefit": "<span class='icon'><i class='fa fa-circle-notch icon--capped-cover'></i></span>",
     }
   }
 

@@ -1,6 +1,6 @@
 class ProductModule < ApplicationRecord
-  enum category: { 'core' => 0, 'outpatient' => 1, 'medicines and appliances' => 2, 'wellness' => 3,
-                   'maternity' => 4, 'dental and optical' => 5, 'evacuation and repatriation' => 6 }
+  enum category: { core: 0, outpatient: 1, medicines_and_appliances: 2, wellness: 3,
+                   maternity: 4, dental_and_optical: 5, evacuation_and_repatriation: 6 }
 
   belongs_to :product
   has_many :product_module_benefits, dependent: :destroy, inverse_of: :product_module

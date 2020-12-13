@@ -10,18 +10,18 @@ category_positions = []
 center_text = { alignment: { horizontal: :center, vertical: :center, wrap_text: true } }
 
 benefit_coverage_styles = {
-  'paid in full' => wb.styles.add_style(bg_color: '7dcea0'),
-  'capped benefit' => wb.styles.add_style(bg_color: 'f0b27a'),
-  'not covered' => wb.styles.add_style(bg_color: 'ec7063')
+  'paid_in_full' => wb.styles.add_style(bg_color: '7dcea0'),
+  'capped_benefit' => wb.styles.add_style(bg_color: 'f0b27a'),
+  'not_covered' => wb.styles.add_style(bg_color: 'ec7063')
 }
 
 benefit_category_styles = {
   'inpatient' => wb.styles.add_style(bg_color: 'b7ede6'),
   'outpatient' => wb.styles.add_style(bg_color: 'b7d7ed'),
   'therapists' => wb.styles.add_style(bg_color: 'b7bced'),
-  'medicines and appliances' => wb.styles.add_style(bg_color: 'd3da6a'),
+  'medicines_and_appliances' => wb.styles.add_style(bg_color: 'd3da6a'),
   'wellness' => wb.styles.add_style(bg_color: 'daa76a'),
-  'evacuation and repatriation' => wb.styles.add_style(bg_color: 'e29bd1'),
+  'evacuation_and_repatriation' => wb.styles.add_style(bg_color: 'e29bd1'),
   'maternity' => wb.styles.add_style(bg_color: 'a2b6a9'),
   'dental' => wb.styles.add_style(bg_color: 'c9e1fa'),
   'optical' => wb.styles.add_style(bg_color: 'fae7c9'),

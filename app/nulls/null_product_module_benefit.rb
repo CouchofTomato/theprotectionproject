@@ -14,7 +14,7 @@ class NullProductModuleBenefit
   end
 
   def benefit_status
-    'not covered'
+    'not_covered'
   end
 
   alias full_benefit_coverage explanation_of_benefit

@@ -53,7 +53,7 @@ export default class extends Controller {
   addSelectedProductDetails() {
     const cell = this.productDetailsJSONTarget.insertCell()
     cell.dataset.productDetails = this.selectedProductDetails
-    cell.dataset.target = "comparison-export.productDetailJSON"
+    cell.dataset.comparisonExportTarget = "productDetailJSON"
   }
 
   addInsurer() {
