@@ -8,7 +8,7 @@ RSpec.describe ProductModuleBenefit, type: :model do
   it { expect(product_module_benefit).to validate_presence_of :benefit_status }
   it { expect(product_module_benefit).to validate_presence_of :benefit_limit }
   it { expect(product_module_benefit).to validate_uniqueness_of(:product_module_id).scoped_to(:benefit_id) }
-  it { expect(product_module_benefit).to define_enum_for(:benefit_status).with_values(['paid in full', 'capped benefit']) }
+  it { expect(product_module_benefit).to define_enum_for(:benefit_status).with_values(paid_in_full: 0, capped_benefit: 1) }
 
   describe('#full_benefit_coverage') do
     subject(:product_module_benefit) do

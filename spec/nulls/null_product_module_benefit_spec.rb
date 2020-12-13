@@ -23,7 +23,7 @@ RSpec.describe NullProductModuleBenefit do
 
   describe 'benefit_status' do
     it 'returns not covered' do
-      expect(null_product_module_benefit.benefit_status).to eq 'not covered'
+      expect(null_product_module_benefit.benefit_status).to eq 'not_covered'
     end
   end
 

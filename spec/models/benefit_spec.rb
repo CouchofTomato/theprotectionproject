@@ -9,9 +9,10 @@ RSpec.describe Benefit, type: :model do
 
   it do
     expect(benefit).to define_enum_for(:category)
-      .with_values(['inpatient', 'outpatient', 'therapists', 'medicines and appliances',
-                    'wellness', 'evacuation and repatriation', 'maternity', 'dental',
-                    'optical', 'additional'])
+      .with_values(inpatient: 0, outpatient: 1, therapists: 2,
+                   medicines_and_appliances: 3, wellness: 4,
+                   evacuation_and_repatriation: 5, maternity: 6,
+                   dental: 7, optical: 8, additional: 9)
   end
 
   describe '.by_name' do
@@ -20,7 +21,7 @@ RSpec.describe Benefit, type: :model do
     before do
       create(:benefit, name: 'surgery', category: 'inpatient')
       create(:benefit, name: 'accomodation', category: 'inpatient')
-      create(:benefit, name: 'evacuation', category: 'evacuation and repatriation')
+      create(:benefit, name: 'evacuation', category: 'evacuation_and_repatriation')
     end
 
     it 'returns all benefits ordered by name' do

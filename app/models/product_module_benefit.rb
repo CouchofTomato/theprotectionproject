@@ -2,7 +2,7 @@ class ProductModuleBenefit < ApplicationRecord
   belongs_to :product_module, inverse_of: :product_module_benefits
   belongs_to :benefit
 
-  enum benefit_status: { 'paid in full' => 0, 'capped benefit' => 1 }
+  enum benefit_status: { paid_in_full: 0, capped_benefit: 1 }
 
   validates :benefit_status, presence: true
   validates :benefit_limit, presence: true

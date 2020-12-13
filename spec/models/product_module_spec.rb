@@ -12,8 +12,8 @@ RSpec.describe ProductModule, type: :model do
 
   it do
     expect(product_module).to define_enum_for(:category)
-      .with_values(['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity',
-                    'dental and optical', 'evacuation and repatriation'])
+      .with_values(core: 0, outpatient: 1, medicines_and_appliances: 2, wellness: 3,
+                   maternity: 4, dental_and_optical: 5, evacuation_and_repatriation: 6)
   end
 
   it { expect(product_module).to have_many(:product_module_benefits).dependent(:destroy) }
