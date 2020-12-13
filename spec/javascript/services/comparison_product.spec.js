@@ -16,7 +16,7 @@ const data = {
   ],
   "module_benefits": [
     {
-      "benefit_status": "paid in full",
+      "benefit_status": "paid_in_full",
       "benefit_limit": "Within overall limit",
       "explanation_of_benefit": "a test explanation",
       "benefit": {
@@ -57,7 +57,7 @@ describe('ComparisonProduct', () => {
   describe('productModuleBenefit', () => {
     it('returns the product module benefit for the provided id', () => {
       expect(product.productModuleBenefit(2)).toMatchObject({
-        "benefit_status": "paid in full",
+        "benefit_status": "paid_in_full",
         "benefit_limit": "Within overall limit",
         "explanation_of_benefit": "a test explanation",
         "benefit": {

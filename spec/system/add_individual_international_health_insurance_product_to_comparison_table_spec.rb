@@ -6,7 +6,7 @@ RSpec.describe 'Add an individual plan to the comparison table', type: :system, 
       create(:product, name: 'Lifeline', insurer: insurer) do |product|
         create(:product_module, name: 'Gold', product: product) do |product_module|
           create_list(:product_module_benefit, 3, product_module: product_module)
-          create_list(:product_module_benefit, 2, benefit_status: 'capped benefit', product_module: product_module)
+          create_list(:product_module_benefit, 2, benefit_status: 'capped_benefit', product_module: product_module)
         end
       end
       create(:product, name: 'Company', customer_type: 'corporate', insurer: insurer)
@@ -15,7 +15,7 @@ RSpec.describe 'Add an individual plan to the comparison table', type: :system, 
       create(:product, name: 'International Health', customer_type: 'corporate', insurer: insurer) do |product|
         create(:product_module, name: 'Core Pro', product: product) do |product_module|
           create_list(:product_module_benefit, 3, product_module: product_module)
-          create_list(:product_module_benefit, 2, benefit_status: 'capped benefit', product_module: product_module)
+          create_list(:product_module_benefit, 2, benefit_status: 'capped_benefit', product_module: product_module)
         end
       end
     end
