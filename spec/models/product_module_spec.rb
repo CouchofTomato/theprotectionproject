@@ -6,7 +6,7 @@ RSpec.describe ProductModule, type: :model do
   before { create(:product_module) }
 
   it { expect(product_module).to validate_presence_of :name }
-  it { expect(product_module).to validate_uniqueness_of(:name).case_insensitive.scoped_to(:category) }
+  it { expect(product_module).to validate_uniqueness_of(:name).case_insensitive.scoped_to(%i[category product_id]) }
   it { expect(product_module).to validate_presence_of :category }
   it { expect(product_module).to validate_presence_of :sum_assured }
 
