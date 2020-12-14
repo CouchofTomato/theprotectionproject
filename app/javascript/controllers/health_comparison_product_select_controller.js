@@ -57,7 +57,7 @@ export default class extends Controller {
   }
 
   productModuleCategories() {
-    return ['core', 'outpatient', 'medicines and appliances', 'wellness', 'maternity', 'dental and optical', 'evacuation and repatriation']
+    return ['core', 'outpatient', 'medicines_and_appliances', 'wellness', 'maternity', 'dental_and_optical', 'evacuation_and_repatriation']
   }
 
   groupProductModules(productModules) {
@@ -77,7 +77,7 @@ export default class extends Controller {
 
   titleize(phrase) {
     return phrase
-      .split(' ')
+      .split('_')
       .map(word => word[0].toUpperCase() + word.slice(1, word.length))
       .join(' ')
   }
