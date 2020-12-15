@@ -1,45 +1,51 @@
 class ComparisonProduct {
   constructor(insurer, product, productModules, moduleBenefits) {
-    this._insurer = insurer
-    this._product = product
-    this._productModules = productModules
-    this._moduleBenefits = moduleBenefits
-    this._benefitIcons = {
-      "paid_in_full": "<span class='icon'><i class='fa fa-check icon--full-cover'></i></span>",
-      "capped_benefit": "<span class='icon'><i class='fa fa-circle-notch icon--capped-cover'></i></span>",
-    }
+    this.insurer = insurer;
+    this.product = product;
+    this.productModules = productModules;
+    this.moduleBenefits = moduleBenefits;
+    this.benefitIcons = {
+      paid_in_full:
+        "<span class='icon'><i class='fa fa-check icon--full-cover'></i></span>",
+      capped_benefit:
+        "<span class='icon'><i class='fa fa-circle-notch icon--capped-cover'></i></span>",
+    };
   }
 
   insurerName() {
-    return this._insurer.name
+    return this.insurer.name;
   }
 
   productName() {
-    return this._product.name
+    return this.product.name;
   }
 
   chosenCovers() {
-    return this._productModules
-      .map(productModule => productModule.name)
-      .join(" + ")
+    return this.productModules
+      .map((productModule) => productModule.name)
+      .join(" + ");
   }
 
   overallSumAssured() {
-    return this._productModules
-      .find(productModule => productModule.category == "core")
-      .sum_assured
+    return this.productModules.find(
+      (productModule) => productModule.category === "core"
+    ).sum_assured;
   }
 
   productModuleBenefit(id) {
-    const productModuleBenefit = this._moduleBenefits.find(productModule => productModule.benefit.id == id)
-    if(!productModuleBenefit) return undefined
-    productModuleBenefit.benefit_icon = this.benefitIcon(productModuleBenefit.benefit_status)
-    return productModuleBenefit
+    const productModuleBenefit = this.moduleBenefits.find(
+      (productModule) => productModule.benefit.id === Number(id)
+    );
+    if (!productModuleBenefit) return undefined;
+    productModuleBenefit.benefit_icon = this.benefitIcon(
+      productModuleBenefit.benefit_status
+    );
+    return productModuleBenefit;
   }
 
-  benefitIcon(benefit_status) {
-    return this._benefitIcons[benefit_status]
+  benefitIcon(benefitStatus) {
+    return this.benefitIcons[benefitStatus];
   }
 }
 
-export default ComparisonProduct
+export default ComparisonProduct;
