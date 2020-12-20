@@ -1,16 +1,5 @@
 import { Controller } from "stimulus";
-
-function productModuleCategories() {
-  return [
-    "core",
-    "outpatient",
-    "medicines_and_appliances",
-    "wellness",
-    "maternity",
-    "dental_and_optical",
-    "evacuation_and_repatriation",
-  ];
-}
+import productModuleCategories from "utilities/categories";
 
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["obj"] }] */
 
@@ -102,7 +91,7 @@ export default class extends Controller {
   addProductModules(productModules) {
     const groupedProductModules = groupProductModules(productModules);
     const groupedModuleCategories = Object.keys(groupedProductModules);
-    const availableCategories = productModuleCategories().filter((category) =>
+    const availableCategories = productModuleCategories.filter((category) =>
       groupedModuleCategories.includes(category)
     );
     const productModulesHTML = availableCategories.map((category) => {
