@@ -30,7 +30,7 @@ class ComparisonsController < ApplicationController
   end
 
   def product_modules(product_modules)
-    ProductModule.includes(:product_module_benefits).find(product_modules)
+    ProductModule.includes(product_module_benefits: :benefit).find(product_modules)
   end
 
   def covered_benefits

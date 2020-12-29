@@ -1,16 +1,6 @@
 import { Controller } from "stimulus";
-
-function productModuleCategories() {
-  return [
-    "core",
-    "outpatient",
-    "medicines_and_appliances",
-    "wellness",
-    "maternity",
-    "dental_and_optical",
-    "evacuation_and_repatriation",
-  ];
-}
+import productModuleCategories from "utilities/categories";
+import titleize from "utilities/string_helpers";
 
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["obj"] }] */
 
@@ -20,13 +10,6 @@ function groupProductModules(productModules) {
     obj[productModule.category].push(productModule);
     return obj;
   }, {});
-}
-
-function titleize(phrase) {
-  return phrase
-    .split("_")
-    .map((word) => word[0].toUpperCase() + word.slice(1, word.length))
-    .join(" ");
 }
 
 function productModuleRadioButtonTemplate(productModules, category) {
@@ -102,7 +85,7 @@ export default class extends Controller {
   addProductModules(productModules) {
     const groupedProductModules = groupProductModules(productModules);
     const groupedModuleCategories = Object.keys(groupedProductModules);
-    const availableCategories = productModuleCategories().filter((category) =>
+    const availableCategories = productModuleCategories.filter((category) =>
       groupedModuleCategories.includes(category)
     );
     const productModulesHTML = availableCategories.map((category) => {
