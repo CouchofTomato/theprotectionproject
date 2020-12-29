@@ -1,5 +1,6 @@
 import { Controller } from "stimulus";
 import productModuleCategories from "utilities/categories";
+import titleize from "utilities/string_helpers";
 
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["obj"] }] */
 
@@ -9,13 +10,6 @@ function groupProductModules(productModules) {
     obj[productModule.category].push(productModule);
     return obj;
   }, {});
-}
-
-function titleize(phrase) {
-  return phrase
-    .split("_")
-    .map((word) => word[0].toUpperCase() + word.slice(1, word.length))
-    .join(" ");
 }
 
 function productModuleRadioButtonTemplate(productModules, category) {

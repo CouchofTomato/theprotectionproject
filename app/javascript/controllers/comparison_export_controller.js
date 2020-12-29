@@ -18,8 +18,7 @@ export default class extends Controller {
   static targets = ["option", "productDetailsJSON", "productDetailJSON"];
 
   excelExport() {
-    const queryParams = this.parameterise();
-    const url = `/comparisons/show.xlsx?${queryParams}`;
+    const url = `/comparisons/show.xlsx?${this.parameterise()}`;
     window.location = url;
   }
 
