@@ -1,2 +1,53 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<section class="section">
+  <div class="container">
+    <h1 class="title is-1">Comparing the plans of...</h1>
+    <div class="columns is-vcentered">
+      <div class="column">
+        <div class="card has-background-primary-light">
+          <div class="card-content">
+            <p class="title"><%= @insurers %></p>
+            <p class="subtitle">Different Insurers</p>
+          </div>
+        </div>
+      </div>
+      <h5 class="title is-5">with</h5>
+      <div class="column">
+        <div class="card has-background-primary-light">
+          <div class="card-content">
+            <p class="title"><%= @products %></p>
+            <p class="subtitle">Different Products</p>
+          </div>
+        </div>
+      </div>
+      <h5 class="title is-5">containing</h5>
+      <div class="column">
+        <div class="card has-background-primary-light">
+          <div class="card-content">
+            <p class="title"><%= @product_modules %></p>
+            <p class="subtitle">Product Modules</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="title is-3">Using...</h3>
+    <div class="columns is-vcentered">
+      <div class="column">
+        <div class="card has-background-primary-dark">
+          <div class="card-content">
+            <p class="title has-text-primary-light"><%= @benefits %></p>
+            <p class="subtitle has-text-primary-light">Unique Benefits</p>
+          </div>
+        </div>
+      </div>
+      <h5 class="title is-5">To compare</h5>
+      <div class="column">
+        <div class="card has-background-primary-dark">
+          <div class="card-content">
+            <p class="title has-text-primary-light"><%= @product_module_benefits %></p>
+            <p class="subtitle has-text-primary-light">Benefits in total</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
