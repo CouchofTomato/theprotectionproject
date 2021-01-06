@@ -91,7 +91,7 @@ GEM
     capybara-screenshot (1.0.25)
       capybara (>= 1.0, < 4)
       launchy
-    caxlsx (3.0.3)
+    caxlsx (3.0.4)
       htmlentities (~> 4.3, >= 4.3.4)
       mimemagic (~> 0.3)
       nokogiri (~> 1.10, >= 1.10.4)
@@ -204,7 +204,7 @@ GEM
     nenv (0.3.0)
     nested_form (0.3.2)
     nio4r (2.5.4)
-    nokogiri (1.11.0)
+    nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     notiffany (0.1.3)
