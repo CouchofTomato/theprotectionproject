@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
     @insurers = Insurer.all.size
     @products = Product.all.size
     @product_modules = ProductModule.all.size
-    @product_module_benefits = ProductModule.all.size
+    @product_module_benefits = ProductModuleBenefit.all.size
     @benefits = Benefit.all.size
   end
 end
