@@ -34,7 +34,6 @@ function productModuleRadioButtonTemplate(productModules, category) {
 
 export default class extends Controller {
   static targets = [
-    "insurer",
     "product",
     "productModules",
     "comparisonProductSubmit",
@@ -42,23 +41,6 @@ export default class extends Controller {
 
   connect() {
     this.resetForm();
-  }
-
-  getProducts() {
-    this.clearProductTarget();
-    this.disableSubmitButton();
-    this.clearProductModuleTarget();
-    if (this.insurerTarget.value === "") return;
-
-    const queryString = window.location.search;
-
-    fetch(`/insurers/${this.insurerTarget.value}/products${queryString}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => this.addProductsToSelect(data));
   }
 
   getProductModules() {
@@ -96,7 +78,6 @@ export default class extends Controller {
   }
 
   resetForm() {
-    this.clearInsurerTarget();
     this.clearProductTarget();
     this.clearProductModuleTarget();
     this.disableSubmitButton();
@@ -128,10 +109,6 @@ export default class extends Controller {
 
   clearProductModuleTarget() {
     this.productModulesTarget.innerHTML = "";
-  }
-
-  clearInsurerTarget() {
-    this.insurerTarget.value = "";
   }
 
   clearProductTarget() {

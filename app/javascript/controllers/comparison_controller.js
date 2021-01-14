@@ -1,4 +1,4 @@
-import ApplicationController from './application_controller'
+import ApplicationController from "./application_controller";
 
 /* This is the custom StimulusReflex controller for the Comparison Reflex.
  * Learn more at: https://docs.stimulusreflex.com
@@ -14,11 +14,17 @@ export default class extends ApplicationController {
    * Important:
    * By default, StimulusReflex overrides the -connect- method so make sure you
    * call super if you intend to do anything else when this controller connects.
-  */
+   */
 
-  connect () {
-    super.connect()
+  connect() {
+    super.connect();
     // add your code here, if applicable
+  }
+
+  static targets = ["insurer"];
+
+  loadProducts() {
+    this.stimulate("Comparison#products", this.insurerTarget.value);
   }
 
   /* Reflex specific lifecycle methods.
