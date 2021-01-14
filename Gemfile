@@ -78,3 +78,5 @@ group :test do
   gem 'simplecov-lcov'
   gem 'webdrivers', '~>4.4'
 end
+
+gem "stimulus_reflex", "~> 3.4"
