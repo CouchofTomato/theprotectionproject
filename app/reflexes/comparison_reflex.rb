@@ -32,7 +32,11 @@ class ComparisonReflex < ApplicationReflex
   #
   # Learn more at: https://docs.stimulusreflex.com/reflexes#reflex-classes
 
-  def products(insurer_id)
-    @products = Insurer.find(insurer_id).products
+  def products(insurer_id, customer_type)
+    @products = Insurer.find(insurer_id).products.where(customer_type: customer_type)
+  end
+
+  def product_modules(product_id)
+    @product_modules = Product.find(product_id).product_modules
   end
 end

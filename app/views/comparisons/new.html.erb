@@ -7,24 +7,51 @@
           <div class="field">
             <div class="control">
               <div class="select">
-                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"), {prompt: 'Select Insurer...'}, data: {"health-comparison-product-select-target": 'insurer', "comparison-product-target": 'insurer', 'comparison-target': 'insurer', action: 'change->comparison#loadProducts'}, id: 'insurer-select' %>
+                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"),
+                    { prompt: 'Select Insurer...' },
+                    data: { comparison_product_target: 'insurer',
+                            comparison_target: 'insurer',
+                            action: 'change->comparison#loadProducts' },
+                    id: 'insurer-select' 
+                %>
               </div>
             </div>
           </div>
           <div class="field">
             <div class="control">
               <div class="select product-select">
-                <%= form.select "comparison_product[product]", options_from_collection_for_select(@products || [], "id", "name"), {prompt: 'Select Product'}, data: { "health-comparison-product-select-target": 'product', "comparison-product-target": 'product', action: 'change->health-comparison-product-select#getProductModules' }, id: 'product-select' %>
+                <%= form.select "comparison_product[product]", options_from_collection_for_select(@products || [], "id", "name"),
+                    { prompt: 'Select Product...' },
+                    data: { comparison_product_target: 'product',
+                            comparison_target: 'product',
+                            action: 'change->comparison#loadProductModules' },
+                    id: 'product-select'
+                %>
               </div>
             </div>
           </div>
-          <div class="field">
-            <div id="product-modules" data-health-comparison-product-select-target="productModules" data-comparison-product-target="productModules">
-            </div>
+          <div id="product-modules" data-comparison-product-target="productModules">
+            <% active_product_module_categories(@product_module_categories, @product_modules || []).each do |category| %>
+              <div class="field">
+                <h5 class="title is-5"><%= category.titleize %></h5>
+                <div class="control">
+                  <%= form.collection_radio_buttons "product_modules[#{category}]", @product_modules.group_by(&:category)[category], :id, :name do |button| %>
+                    <label class="radio">
+                      <%= button.radio_button %>
+                      <%= button.label %>
+                    </label>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
           <div class="field">
             <div class="control">
-              <%= form.submit "Load Benefits", class: 'button is-primary', data: { "health-comparison-product-select-target": 'comparisonProductSubmit', "comparison-product-target": 'comparisonProductSubmit', action: 'click->comparison-product#addComparisonProduct' } %>
+              <%= form.submit "Load Benefits", class: 'button is-primary',
+                  data: { health_comparison_product_select_target: 'comparisonProductSubmit',
+                          comparison_product_target: 'comparisonProductSubmit',
+                          action: 'click->comparison-product#addComparisonProduct' }
+              %>
             </div>
           </div>
         <% end %>

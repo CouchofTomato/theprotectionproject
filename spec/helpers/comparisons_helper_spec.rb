@@ -1,15 +1,30 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the ComparisonsHelper. For example:
-#
-# describe ComparisonsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
+TestProductModule = Struct.new(:category)
+
 RSpec.describe ComparisonsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#active_product_module_categories' do
+    let(:categories) { %w[core outpatient wellness] }
+
+    context 'when product_modules is empty' do
+      let(:product_modules) { [] }
+
+      it 'returns an empty array' do
+        expect(helper.active_product_module_categories(categories, product_modules)).to match_array([])
+      end
+    end
+
+    context 'when product_modules is not empty' do
+      let(:product_modules) { [TestProductModule.new('core'), TestProductModule.new('wellness')] }
+
+      it 'returns an array of categories where at least one product_module has that category' do
+        expect(helper.active_product_module_categories(categories, product_modules))
+          .to match_array(%w[core wellness])
+      end
+
+      it 'does not include categories that are not included in at least one product_module' do
+        expect(helper.active_product_module_categories(categories, product_modules)).not_to include('outpatient')
+      end
+    end
+  end
 end

@@ -5,6 +5,7 @@ class ComparisonsController < ApplicationController
     @insurers = Insurer
                 .offers_products_with_customer_type(params[:customer_type])
                 .order(:name)
+    @product_module_categories = ProductModule.categories.keys
   end
 
   def show

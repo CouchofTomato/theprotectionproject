@@ -21,10 +21,20 @@ export default class extends ApplicationController {
     // add your code here, if applicable
   }
 
-  static targets = ["insurer"];
+  static targets = ["insurer", "product"];
 
   loadProducts() {
-    this.stimulate("Comparison#products", this.insurerTarget.value);
+    const params = new URLSearchParams(window.location.search);
+    const customerType = params.get("customer_type");
+    this.stimulate(
+      "Comparison#products",
+      this.insurerTarget.value,
+      customerType
+    );
+  }
+
+  loadProductModules() {
+    this.stimulate("Comparison#product_modules", this.productTarget.value);
   }
 
   /* Reflex specific lifecycle methods.
