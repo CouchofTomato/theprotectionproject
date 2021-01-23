@@ -1,0 +1,59 @@
+<table class="table">
+  <tbody class="table__tbody--hidden">
+    <tr data-comparison-target="productDetails" data-comparison-product-target="productDetailsJSON" data-comparison-export-target="productDetailsJSON">
+      <td></td>
+      <% @comparison_products.map do |comparison_product| %>
+        <td class="table--fixed-col-width" data-product-details=<%= {insurer: comparison_product.insurer, product: comparison_product.product, product_modules: comparison_product.product_modules.map(&:id) }.to_json %>></td>
+        <% end.join("\n") %>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <th class="table--sticky-col table--fixed-col-width">Product Details</th>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr data-comparison-product-target="insurerTableRow">
+      <th class="table--sticky-col table--fixed-col-width">Insurer</th>
+      <% @comparison_products.map do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.insurer.name %></td>
+        <% end.join("\n") %>
+    </tr>
+    <tr data-comparison-product-target="productTableRow">
+      <th class="table--sticky-col table--fixed-col-width">Product</th>
+      <% @comparison_products.map do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.product.name %></td>
+        <% end.join("\n") %>
+    </tr>
+    <tr data-comparison-product-target="chosenCoverRow">
+      <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
+      <% @comparison_products.map do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.product_module_names %></td>
+        <% end.join("\n") %>
+    </tr>
+    <tr data-comparison-product-target="overallSumAssured">
+      <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
+      <% @comparison_products.map do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.overall_sum_assured %></td>
+        <% end.join("\n") %>
+    </tr>
+  </tbody>
+  <% @benefit_categories.each do |category| %>
+    <tbody>
+      <tr>
+        <th class="table--sticky-col table--fixed-col-width"><%= category.titleize %></th>
+      </tr>
+    </tbody>
+    <tbody>
+      <% @grouped_benefits[category].each do |benefit| %>
+        <tr data-comparison-product-target="benefitRow" id=<%= benefit.id %>>
+          <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
+          <% @comparison_products.map do |comparison_product| %>
+            <td class="table--fixed-col-width"><%= (comparison_product.module_benefits.find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new).benefit_limit %></td>
+            <% end.join("\n") %>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+

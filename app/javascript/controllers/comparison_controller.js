@@ -21,7 +21,7 @@ export default class extends ApplicationController {
     // add your code here, if applicable
   }
 
-  static targets = ["insurer", "product"];
+  static targets = ["insurer", "product", "productModule"];
 
   loadProducts() {
     const params = new URLSearchParams(window.location.search);
@@ -35,6 +35,24 @@ export default class extends ApplicationController {
 
   loadProductModules() {
     this.stimulate("Comparison#product_modules", this.productTarget.value);
+  }
+
+  addSelectedProduct(event) {
+    event.preventDefault();
+    this.stimulate(
+      "Comparison#selected_product",
+      this.insurerTarget.value,
+      this.productTarget.value,
+      this.selectedModules()
+    );
+  }
+
+  selectedModules() {
+    const selectedModules = this.productModuleTargets.filter(
+      (radioButton) => radioButton.checked === true
+    );
+
+    return selectedModules.map((module) => module.value);
   }
 
   /* Reflex specific lifecycle methods.

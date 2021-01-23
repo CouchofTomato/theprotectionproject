@@ -2,102 +2,12 @@
   <div class="columns" data-controller="comparison comparison-product comparison-export">
     <div class="column is-one-fifth">
       <h3 class="title is-3">Product Picker</h3>
-      <div data-controller="health-comparison-product-select">
-        <%= form_with url: comparison_products_path, format: 'json' do |form| %>
-          <div class="field">
-            <div class="control">
-              <div class="select">
-                <%= form.select "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"),
-                    { prompt: 'Select Insurer...' },
-                    data: { comparison_product_target: 'insurer',
-                            comparison_target: 'insurer',
-                            action: 'change->comparison#loadProducts' },
-                    id: 'insurer-select' 
-                %>
-              </div>
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <div class="select product-select">
-                <%= form.select "comparison_product[product]", options_from_collection_for_select(@products || [], "id", "name"),
-                    { prompt: 'Select Product...' },
-                    data: { comparison_product_target: 'product',
-                            comparison_target: 'product',
-                            action: 'change->comparison#loadProductModules' },
-                    id: 'product-select'
-                %>
-              </div>
-            </div>
-          </div>
-          <div id="product-modules" data-comparison-product-target="productModules">
-            <% active_product_module_categories(@product_module_categories, @product_modules || []).each do |category| %>
-              <div class="field">
-                <h5 class="title is-5"><%= category.titleize %></h5>
-                <div class="control">
-                  <%= form.collection_radio_buttons "product_modules[#{category}]", @product_modules.group_by(&:category)[category], :id, :name do |button| %>
-                    <label class="radio">
-                      <%= button.radio_button %>
-                      <%= button.label %>
-                    </label>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-          <div class="field">
-            <div class="control">
-              <%= form.submit "Load Benefits", class: 'button is-primary',
-                  data: { health_comparison_product_select_target: 'comparisonProductSubmit',
-                          comparison_product_target: 'comparisonProductSubmit',
-                          action: 'click->comparison-product#addComparisonProduct' }
-              %>
-            </div>
-          </div>
-        <% end %>
+      <div id="product-select-form">
+        <%= render 'selection_form' %>
       </div>
     </div>
     <div class="table-container column columns__column--no-padding-left">
-      <table class="table">
-        <tbody class="table__tbody--hidden">
-          <tr data-comparison-product-target="productDetailsJSON" data-comparison-export-target="productDetailsJSON">
-            <td></td>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr>
-            <th class="table--sticky-col table--fixed-col-width">Product Details</th>
-          </tr>
-        </tbody>
-        <tbody>
-          <tr data-comparison-product-target="insurerTableRow">
-            <th class="table--sticky-col table--fixed-col-width">Insurer</th>
-          </tr>
-          <tr data-comparison-product-target="productTableRow">
-            <th class="table--sticky-col table--fixed-col-width">Product</th>
-          </tr>
-          <tr data-comparison-product-target="chosenCoverRow">
-            <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
-          </tr>
-          <tr data-comparison-product-target="overallSumAssured">
-            <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
-          </tr>
-        </tbody>
-          <% @benefit_categories.each do |category| %>
-            <tbody>
-              <tr>
-                <th class="table--sticky-col table--fixed-col-width"><%= category.titleize %></th>
-              </tr>
-            </tbody>
-            <tbody>
-              <% @grouped_benefits[category].each do |benefit| %>
-                <tr data-comparison-product-target="benefitRow" id=<%= benefit.id %>>
-                  <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          <% end %>
-      </table>
+      <%= render(partial: 'comparison_table') %>
     </div>
     <div class="column is-2 has-text-centered">
       <h3 class="subtitle is-3">Options</h3>

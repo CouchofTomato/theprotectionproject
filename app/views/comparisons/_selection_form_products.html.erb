@@ -1,0 +1,7 @@
+<%= select_tag "comparison_product[product]", options_from_collection_for_select(products || [], "id", "name"),
+               prompt: 'Select Product...',
+               data: { comparison_product_target: 'product',
+                       comparison_target: 'product',
+                       action: 'change->comparison#loadProductModules' },
+               id: 'product-select'
+%>
