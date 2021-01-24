@@ -4,41 +4,24 @@
       <div class="select">
         <%= select_tag "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"),
           include_blank: 'Select Insurer...',
-          data: { comparison_product_target: 'insurer',
-                  comparison_target: 'insurer',
-                  action: 'change->comparison#loadProducts' },
-                  id: 'insurer-select' 
-                %>
+          data: { comparison_target: 'insurer',
+                  action: 'change->comparison#loadProducts' }
+        %>
       </div>
     </div>
   </div>
   <div class="field">
     <div class="control">
-      <div class="select product-select">
-        <%= select_tag "comparison_product[product]", options_from_collection_for_select(@products || [], "id", "name"),
-          prompt: 'Select Product...',
-          data: { comparison_product_target: 'product',
-                  comparison_target: 'product',
-                  action: 'change->comparison#loadProductModules' },
-                  id: 'product-select'
-                %>
+      <div id="product-select" class="select">
+        <%= render(partial: 'selection_form_products', locals: { products: @products }) %>
       </div>
     </div>
   </div>
   <div id="product-modules" data-comparison-product-target="productModules">
-    <% active_product_module_categories(@product_module_categories, @product_modules || []).each do |category| %>
-      <div class="field">
-        <h5 class="title is-5"><%= category.titleize %></h5>
-        <div class="control">
-          <%= collection_radio_buttons "product_modules[#{category}]", @product_modules.group_by(&:category)[category], :id, :name do |button| %>
-            <label class="radio">
-              <%= button.radio_button(data: { comparison_target: 'productModule' }) %>
-              <%= button.label %>
-            </label>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+    <%= render(partial: 'selection_form_product_modules',
+               locals: { product_module_categories: @product_module_categories,
+                         product_modules: @product_modules })
+    %>
   </div>
   <div class="field">
     <div class="control">
