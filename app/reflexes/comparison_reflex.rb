@@ -14,9 +14,11 @@ class ComparisonReflex < ApplicationReflex
                                                product_modules: @product_modules })
   end
 
-  def selected_product(insurer, product, product_modules)
-    @comparison_products = [ComparisonProduct.new(Insurer.find(insurer), Product.find(product),
-                                                  ProductModule.includes(product_module_benefits: :benefit)
-      .find(product_modules))]
+  def selected_products(selection)
+    @comparison_products = selection.map do |product|
+      ComparisonProduct.new(Insurer.find(product['insurer']), Product.find(product['product']),
+                            ProductModule.includes(product_module_benefits: :benefit)
+      .find(product['product_modules']))
+    end
   end
 end

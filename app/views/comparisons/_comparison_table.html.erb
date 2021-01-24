@@ -3,7 +3,7 @@
     <tr data-comparison-target="productDetails" data-comparison-product-target="productDetailsJSON" data-comparison-export-target="productDetailsJSON">
       <td></td>
       <% @comparison_products.map do |comparison_product| %>
-        <td class="table--fixed-col-width" data-product-details=<%= {insurer: comparison_product.insurer, product: comparison_product.product, product_modules: comparison_product.product_modules.map(&:id) }.to_json %>></td>
+        <td class="table--fixed-col-width" data-comparison-target="selectedProduct" data-product-details=<%= {insurer: comparison_product.insurer.id, product: comparison_product.product.id, product_modules: comparison_product.product_modules.map(&:id) }.to_json %>></td>
         <% end.join("\n") %>
     </tr>
   </tbody>
