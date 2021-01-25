@@ -1,5 +1,7 @@
-<%= select_tag "comparison_product[product]", options_from_collection_for_select(products || [], "id", "name"),
-               include_blank: 'Select Product...',
-               data: { comparison_target: 'product',
-                       action: 'change->comparison#loadProductModules' }
-%>
+<div class="select">
+  <%= select_tag "comparison_product[product]", options_from_collection_for_select(products || [], "id", "name"),
+    include_blank: 'Select Product...',
+    data: { comparison_target: 'product',
+            action: 'change->comparison#loadProductModules' }
+  %>
+</div>
