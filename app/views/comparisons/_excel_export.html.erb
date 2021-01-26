@@ -1,0 +1,10 @@
+<%= link_to comparisons_show_path(
+  comparison_products: { selection:
+                         comparison_products.map { |comparison_product| { insurer: comparison_product.insurer, 
+                                                                           product: comparison_product.product, 
+                                                                           product_modules: comparison_product.product_modules }
+  }
+  }, options: options, format: :xlsx), class: 'button is-large' do %>
+  <span class="icon is-medium"><i class="fas fa-file-excel"></i></span>
+<% end %>
+

@@ -12,13 +12,18 @@
     <div class="column is-2 has-text-centered">
       <h3 class="subtitle is-3">Options</h3>
       <label class="checkbox">
-        <%= check_box_tag "covered_benefits", "covered_benefits", false, data: { "comparison-export-target": 'option' } %>
+        <%= check_box_tag "covered_benefits", "covered_benefits", false, data: {
+          "comparison-target": 'option', action: 'change->comparison#setOptions' 
+        } %>
         Show only covered benefits
       </label>
       <h3 class="subtitle is-3">Export</h3>
-      <button class="button is-large" data-action="click->comparison-export#excelExport">
-        <span class="icon is-medium"><i class="fas fa-file-excel"></i></span>
-      </button>
+      <div id="excel-export">
+        <%= render(
+          partial: 'excel_export',
+          locals: { comparison_products: @comparison_products, options: @options }
+        ) %>
+      </div>
     </div>
   </div>
 </section>

@@ -5,7 +5,13 @@ export default class extends ApplicationController {
     super.connect();
   }
 
-  static targets = ["insurer", "product", "productModule", "selectedProduct"];
+  static targets = [
+    "insurer",
+    "product",
+    "productModule",
+    "selectedProduct",
+    "option",
+  ];
 
   loadProducts() {
     const params = new URLSearchParams(window.location.search);
@@ -23,7 +29,19 @@ export default class extends ApplicationController {
 
   addSelectedProduct(event) {
     event.preventDefault();
-    this.stimulate("Comparison#selected_products", this.selectedProducts());
+    this.stimulate(
+      "Comparison#selected_products",
+      this.selectedProducts(),
+      this.exportOptions()
+    );
+  }
+
+  setOptions() {
+    this.stimulate(
+      "Comparison#set_options",
+      this.existingSelection(),
+      this.exportOptions()
+    );
   }
 
   selectedProducts() {
@@ -52,5 +70,11 @@ export default class extends ApplicationController {
     );
 
     return selectedModules.map((module) => module.value);
+  }
+
+  exportOptions() {
+    return this.optionTargets
+      .filter((option) => option.checked)
+      .map((option) => option.value);
   }
 }
