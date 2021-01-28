@@ -1,10 +1,10 @@
 <table class="table">
   <tbody class="table__tbody--hidden">
-    <tr data-comparison-target="productDetails" data-comparison-product-target="productDetailsJSON" data-comparison-export-target="productDetailsJSON">
+    <tr data-comparison-target="productDetails">
       <td></td>
-      <% @comparison_products.map do |comparison_product| %>
-        <td class="table--fixed-col-width" data-comparison-target="selectedProduct" data-product-details=<%= {insurer: comparison_product.insurer.id, product: comparison_product.product.id, product_modules: comparison_product.product_modules.map(&:id) }.to_json %>></td>
-        <% end.join("\n") %>
+      <% @comparison_products.each do |comparison_product| %>
+        <td class="table--fixed-col-width" data-comparison-target="selectedProduct" data-product-details=<%= comparison_product.product_details %>></td>
+      <% end %>
     </tr>
   </tbody>
   <tbody>
@@ -13,29 +13,29 @@
     </tr>
   </tbody>
   <tbody>
-    <tr data-comparison-product-target="insurerTableRow">
+    <tr>
       <th class="table--sticky-col table--fixed-col-width">Insurer</th>
-      <% @comparison_products.map do |comparison_product| %>
-        <td class="table--fixed-col-width"><%= comparison_product.insurer.name %></td>
-        <% end.join("\n") %>
+      <% @comparison_products.each do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.insurer_name %></td>
+      <% end %>
     </tr>
-    <tr data-comparison-product-target="productTableRow">
+    <tr>
       <th class="table--sticky-col table--fixed-col-width">Product</th>
-      <% @comparison_products.map do |comparison_product| %>
-        <td class="table--fixed-col-width"><%= comparison_product.product.name %></td>
-        <% end.join("\n") %>
+      <% @comparison_products.each do |comparison_product| %>
+        <td class="table--fixed-col-width"><%= comparison_product.product_name %></td>
+      <% end %>
     </tr>
-    <tr data-comparison-product-target="chosenCoverRow">
+    <tr>
       <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
-      <% @comparison_products.map do |comparison_product| %>
+      <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.product_module_names %></td>
-        <% end.join("\n") %>
+      <% end %>
     </tr>
-    <tr data-comparison-product-target="overallSumAssured">
+    <tr>
       <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
-      <% @comparison_products.map do |comparison_product| %>
+      <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.overall_sum_assured %></td>
-        <% end.join("\n") %>
+      <% end %>
     </tr>
   </tbody>
   <% @benefit_categories.each do |category| %>
@@ -46,14 +46,17 @@
     </tbody>
     <tbody>
       <% @grouped_benefits[category].each do |benefit| %>
-        <tr data-comparison-product-target="benefitRow" id=<%= benefit.id %>>
+        <tr>
           <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
-          <% @comparison_products.map do |comparison_product| %>
-            <td class="table--fixed-col-width"><%= (comparison_product.module_benefits.find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new).benefit_limit %></td>
-            <% end.join("\n") %>
+          <% @comparison_products.each do |comparison_product| %>
+            <td class="table--fixed-col-width">
+              <span class="icon">
+                <i class="<%= coverage_icon(comparison_product.module_benefit(benefit.id) || NullProductModuleBenefit.new) %>"></i>
+              </span>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
   <% end %>
 </table>
-

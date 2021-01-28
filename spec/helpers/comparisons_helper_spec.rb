@@ -27,4 +27,33 @@ RSpec.describe ComparisonsHelper, type: :helper do
       end
     end
   end
+
+  describe('#coverage_icon') do
+    context('when the product module benefit is paid in full') do
+      let(:product_module_benefit) { create(:product_module_benefit, benefit_status: 'paid_in_full') }
+      let(:paid_in_full_icon) { 'fa fa-check icon--full-cover' }
+
+      it('returns the paid in full icon') do
+        expect(helper.coverage_icon(product_module_benefit)).to eq paid_in_full_icon
+      end
+    end
+
+    context('when the product_module_benefit is a capped benefit') do
+      let(:product_module_benefit) { create(:product_module_benefit, benefit_status: 'capped_benefit') }
+      let(:capped_benefit_icon) { 'fa fa-circle-notch icon--capped-cover' }
+
+      it('returns the capped benefit icon') do
+        expect(helper.coverage_icon(product_module_benefit)).to eq capped_benefit_icon
+      end
+    end
+
+    context('when the product_module_benefit is not covered') do
+      let(:product_module_benefit) { NullProductModuleBenefit.new }
+      let(:not_covered_icon) { 'fa fa-times icon--not-covered' }
+
+      it('returns the capped benefit icon') do
+        expect(helper.coverage_icon(product_module_benefit)).to eq not_covered_icon
+      end
+    end
+  end
 end

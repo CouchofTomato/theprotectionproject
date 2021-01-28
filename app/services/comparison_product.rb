@@ -1,6 +1,9 @@
 class ComparisonProduct
   attr_reader :insurer, :product, :product_modules, :all_selected_benefits
 
+  delegate :name, prefix: 'insurer', to: :insurer
+  delegate :name, prefix: 'product', to: :product
+
   def initialize(insurer, product, product_modules)
     @insurer = insurer
     @product = product
@@ -19,6 +22,10 @@ class ComparisonProduct
 
   def module_benefits
     @module_benefits ||= all_selected_benefits.keep_if { benefit_with_maximum_weight(_1) == _1 }
+  end
+
+  def module_benefit(benefit_id)
+    module_benefits.find { _1.benefit_id == benefit_id }
   end
 
   private
