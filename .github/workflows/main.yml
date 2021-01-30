@@ -40,7 +40,8 @@ jobs:
         bundle config GITHUB__COM $GITHUB_ACCESS_TOKEN
         bundle install --jobs 4 --retry 3
       env:
-        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
 
     - name: Get Yarn cache directory
       id: yarn-cache-dir
