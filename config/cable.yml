@@ -4,7 +4,9 @@ development:
   channel_prefix: theprotectionproject_development
 
 test:
-  adapter: test
+  adapter: redis
+  url: <%= Rails.application.credentials.redis_url %>
+  channel_prefix: theprotectionproject_test
 
 production:
   adapter: redis

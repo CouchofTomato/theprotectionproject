@@ -5,13 +5,14 @@
         <%= select_tag "comparison_product[insurer]", options_from_collection_for_select(@insurers, "id", "name"),
           include_blank: 'Select Insurer...',
           data: { comparison_target: 'insurer',
-                  action: 'change->comparison#loadProducts' }
+                  action: 'change->comparison#loadProducts' },
+          id: 'insurer-select'
         %>
       </div>
     </div>
   </div>
   <div class="field">
-    <div id="product-select" class="control">
+    <div id="product-select-wrapper" class="control">
     </div>
   </div>
   <div id="product-modules" class="field">

@@ -20,7 +20,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -36,8 +36,10 @@ gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.3'
+gem 'hiredis'
 gem 'rails_admin', '~> 2.0'
 gem 'rubyzip'
+gem 'stimulus_reflex', '~> 3.4'
 gem 'undercover'
 
 group :development, :test do
@@ -78,5 +80,3 @@ group :test do
   gem 'simplecov-lcov'
   gem 'webdrivers', '~>4.4'
 end
-
-gem "stimulus_reflex", "~> 3.4"

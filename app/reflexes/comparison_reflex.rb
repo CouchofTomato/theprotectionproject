@@ -3,7 +3,7 @@
 class ComparisonReflex < ApplicationReflex
   def products(insurer_id, customer_type)
     @products = Insurer.find(insurer_id).products.where(customer_type: customer_type)
-    morph '#product-select', render(partial: 'selection_form_products', locals: { products: @products })
+    morph '#product-select-wrapper', render(partial: 'selection_form_products', locals: { products: @products })
   end
 
   def product_modules(product_id)

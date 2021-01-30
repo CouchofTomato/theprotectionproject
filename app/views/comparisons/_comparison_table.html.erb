@@ -13,25 +13,25 @@
     </tr>
   </tbody>
   <tbody>
-    <tr>
+    <tr id="insurer-name">
       <th class="table--sticky-col table--fixed-col-width">Insurer</th>
       <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.insurer_name %></td>
       <% end %>
     </tr>
-    <tr>
+    <tr id="product-name">
       <th class="table--sticky-col table--fixed-col-width">Product</th>
       <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.product_name %></td>
       <% end %>
     </tr>
-    <tr>
+    <tr id="chosen-cover">
       <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
       <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.product_module_names %></td>
       <% end %>
     </tr>
-    <tr>
+    <tr id="overall-sum-assured">
       <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
       <% @comparison_products.each do |comparison_product| %>
         <td class="table--fixed-col-width"><%= comparison_product.overall_sum_assured %></td>
