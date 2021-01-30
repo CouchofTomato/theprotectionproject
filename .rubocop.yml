@@ -23,6 +23,7 @@ Metrics/BlockLength:
 Layout/LineLength:
   Exclude:
     - 'db/migrate/*.rb'
+    - 'config/initializers/stimulus_reflex.rb'
 RSpec/ExampleLength:
   Exclude:
     - 'spec/system/**/*.rb'

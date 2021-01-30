@@ -5,10 +5,12 @@ class ComparisonsController < ApplicationController
     @insurers = Insurer
                 .offers_products_with_customer_type(params[:customer_type])
                 .order(:name)
+    @comparison_products ||= []
+    @product_module_categories = ProductModule.categories.keys
   end
 
   def show
-    @comparison_products = comparison_products(params[:selected_products])
+    @comparison_products = comparison_products(params[:comparison_products][:selection])
     @grouped_benefits = OrderedBenefitsQuery.all(covered_benefits).group_by(&:category)
     @benefit_categories = Benefit.categories.keys.select { @grouped_benefits.key? _1 }
 

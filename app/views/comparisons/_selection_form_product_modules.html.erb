@@ -1,0 +1,13 @@
+<% active_product_module_categories(product_module_categories, product_modules).each do |category| %>
+  <div class="field">
+    <h5 class="title is-5"><%= category.titleize %></h5>
+    <div class="control">
+      <%= collection_radio_buttons :product_modules, "product_modules[#{category}]", product_modules.group_by(&:category)[category], :id, :name do |button| %>
+        <label class="radio">
+          <%= button.radio_button(data: { comparison_target: 'productModule' }) %>
+          <%= button.label %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+<% end %>

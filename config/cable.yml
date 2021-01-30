@@ -1,8 +1,12 @@
 development:
-  adapter: async
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: theprotectionproject_development
 
 test:
-  adapter: test
+  adapter: redis
+  url: <%= Rails.application.credentials.redis_url %>
+  channel_prefix: theprotectionproject_test
 
 production:
   adapter: redis

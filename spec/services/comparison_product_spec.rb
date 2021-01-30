@@ -108,4 +108,16 @@ RSpec.describe ComparisonProduct do
       end
     end
   end
+
+  describe('#insurer_name') do
+    it 'delegates name to the insurer' do
+      expect(comparison_product.insurer_name).to eq 'BUPA Global'
+    end
+  end
+
+  describe('#product_name') do
+    it 'delegates name to the product' do
+      expect(comparison_product.product_name).to eq 'Lifeline'
+    end
+  end
 end
