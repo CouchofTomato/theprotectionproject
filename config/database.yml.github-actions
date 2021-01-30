@@ -4,5 +4,5 @@ test:
   encoding: unicode
   database: github-actions
   pool: 20
-  username: <%= Rails.application.credentials.pg_username %>
-  password: <%= Rails.application.credentials.pg_password %>
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
