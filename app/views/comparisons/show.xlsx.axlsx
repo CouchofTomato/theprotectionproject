@@ -2,10 +2,6 @@
 
 wb = xlsx_package.workbook
 
-category_start = 5
-category_end = nil
-category_positions = []
-
 # styles
 center_text = { alignment: { horizontal: :center, vertical: :center, wrap_text: true } }
 
@@ -28,24 +24,29 @@ benefit_category_styles = {
   'additional' => wb.styles.add_style(bg_color: 'cac9fa')
 }
 
-wb.add_worksheet(name: 'Comparison') do |sheet|
-  # headers
-  sheet.add_row [nil, nil, *@comparison_products.map { |product| product.insurer.name }]
-  sheet.add_row [nil, nil, *@comparison_products.map { |product| product.product.name }]
-  sheet.add_row [nil, nil, *@comparison_products.map(&:product_module_names)]
-  sheet.add_row [nil, nil, *@comparison_products.map(&:overall_sum_assured)]
+comparison_product_headers = {
+  insurer_names: @comparison_products.map(&:insurer_name),
+  product_names: @comparison_products.map(&:product_name),
+  product_modules_names: @comparison_products.map(&:product_module_names),
+  overall_sums_assured: @comparison_products.map(&:overall_sum_assured)
+}
 
-  # benefits
-  category_starting_row = category_start
+@benefit_categories.each do |category|
+  wb.add_worksheet(name: category.titleize) do |sheet|
+    # headers
+    sheet.add_row [nil, nil, *comparison_product_headers.fetch(:insurer_names)]
+    sheet.add_row [nil, nil, *comparison_product_headers.fetch(:product_names)]
+    sheet.add_row [nil, nil, *comparison_product_headers.fetch(:product_modules_names)]
+    sheet.add_row [nil, nil, *comparison_product_headers.fetch(:overall_sums_assured)]
 
-  @benefit_categories.each do |category|
+    # benefits
+    category_colour = benefit_category_styles[category]
     category_length = @grouped_benefits[category].length
+
     @grouped_benefits[category].each do |benefit|
-      category_colour = benefit_category_styles[category]
       row_styles = [category_colour, category_colour]
-      selected_product_benefits = @comparison_products.map do |product|
-        matched_benefit = product.module_benefits
-                                 .find { _1.benefit_id == benefit.id } || NullProductModuleBenefit.new
+      selected_product_benefits = @comparison_products.map do |comparison_product|
+        matched_benefit = comparison_product.module_benefit(benefit.id) || NullProductModuleBenefit.new
         row_styles << benefit_coverage_styles[matched_benefit.benefit_status]
 
         matched_benefit.benefit_limit
@@ -54,22 +55,22 @@ wb.add_worksheet(name: 'Comparison') do |sheet|
     end
 
     # merge category cells
-    next_category_start = category_starting_row + category_length
-    category_end = next_category_start - 1
-    category_cells = "A#{category_starting_row}:A#{category_end}"
-    category_positions << [category_starting_row, category_end]
+    category_start_row = 5
+    category_end_row = category_start_row + category_length - 1
+    category_cells = "A#{category_start_row}:A#{category_end_row}"
     sheet.merge_cells(category_cells)
-    category_starting_row = next_category_start
+
+    # columns widths
+    number_of_selected_products = @comparison_products.length
+    product_column_widths = Array.new(number_of_selected_products) { 40 }
+    sheet.column_widths 25, 25, *product_column_widths
+
+    # apply styles
+    last_col = Axlsx.col_ref(sheet.cols.size - 1)
+    sheet.add_style "A1:#{last_col}#{category_end_row}", center_text
+    sheet.add_style "A#{category_start_row}:#{last_col}#{category_end_row}",
+                    center_text,
+                    border: { style: :thin, color: '000000' }
+    sheet.add_style "C1:#{last_col}4", border: { style: :thin, color: '000000', edges: %i[left right] }, b: true
   end
-
-  # columns widths
-  number_of_selected_products = @comparison_products.length
-  product_column_widths = Array.new(number_of_selected_products) { 40 }
-  sheet.column_widths 25, 25, *product_column_widths
-
-  # apply styles
-  last_col = Axlsx.col_ref(sheet.cols.size - 1)
-  sheet.add_style "A1:#{last_col}#{category_end}", center_text
-  sheet.add_style "A#{category_start}:#{last_col}#{category_end}", center_text, border: { style: :thin, color: '000000' }
-  sheet.add_style "C1:#{last_col}4", border: { style: :thin, color: '000000', edges: %i[left right] }, b: true
 end
