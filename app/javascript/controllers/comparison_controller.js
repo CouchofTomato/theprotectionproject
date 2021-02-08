@@ -23,6 +23,21 @@ export default class extends ApplicationController {
     );
   }
 
+  loadCoreProductModules() {
+    this.stimulate("Comparison#core_modules", this.productTarget.value);
+  }
+
+  loadElectiveProductModules(event) {
+    if (event.target.dataset.category !== "core") return;
+
+    const productModuleId = event.target.value;
+    this.stimulate(
+      "Comparison#elective_modules",
+      productModuleId,
+      this.productTarget.value
+    );
+  }
+
   loadProductModules() {
     this.stimulate("Comparison#product_modules", this.productTarget.value);
   }

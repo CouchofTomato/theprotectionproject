@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_11_223759) do
+ActiveRecord::Schema.define(version: 2021_02_06_214208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 2020_12_11_223759) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_insurers_on_name", unique: true
+  end
+
+  create_table "linked_product_modules", force: :cascade do |t|
+    t.bigint "product_module_id", null: false
+    t.bigint "linked_module_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["linked_module_id"], name: "index_linked_product_modules_on_linked_module_id"
+    t.index ["product_module_id"], name: "index_linked_product_modules_on_product_module_id"
   end
 
   create_table "product_module_benefits", force: :cascade do |t|
@@ -90,6 +99,8 @@ ActiveRecord::Schema.define(version: 2020_12_11_223759) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "linked_product_modules", "product_modules"
+  add_foreign_key "linked_product_modules", "product_modules", column: "linked_module_id"
   add_foreign_key "product_module_benefits", "benefits"
   add_foreign_key "product_module_benefits", "product_modules"
   add_foreign_key "product_modules", "products"
