@@ -17,5 +17,7 @@ RSpec.describe ProductModule, type: :model do
   end
 
   it { expect(product_module).to have_many(:product_module_benefits).dependent(:destroy) }
+  it { expect(product_module).to have_many(:linked_product_modules).dependent(:destroy) }
+  it { expect(product_module).to have_many(:linked_modules).through(:linked_product_modules) }
   it { expect(product_module).to accept_nested_attributes_for(:product_module_benefits) }
 end

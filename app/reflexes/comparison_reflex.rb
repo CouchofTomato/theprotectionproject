@@ -3,15 +3,31 @@
 class ComparisonReflex < ApplicationReflex
   def products(insurer_id, customer_type)
     @products = Insurer.find(insurer_id).products.where(customer_type: customer_type)
+
     morph '#product-select-wrapper', render(partial: 'selection_form_products', locals: { products: @products })
   end
 
-  def product_modules(product_id)
+  def core_modules(product_id)
     @product_module_categories = ProductModule.categories.keys
-    @product_modules = Product.find(product_id).product_modules
+    @product_modules = Product.find(product_id).core_modules
+
     morph '#product-modules', render(partial: 'selection_form_product_modules',
                                      locals: { product_module_categories: @product_module_categories,
-                                               product_modules: @product_modules })
+                                               product_modules: @product_modules,
+                                               core_module: nil })
+  end
+
+  def elective_modules(core_module_id, product_id)
+    @product_module_categories = ProductModule.categories.keys
+    @core_module = ProductModule.find(core_module_id)
+    @core_modules = Product.find(product_id).core_modules
+    @elective_modules = @core_module.linked_modules
+    @product_modules = [*@core_modules].concat([*@elective_modules])
+
+    morph '#product-modules', render(partial: 'selection_form_product_modules',
+                                     locals: { product_module_categories: @product_module_categories,
+                                               product_modules: @product_modules,
+                                               core_module: @core_module })
   end
 
   def selected_products(selection, options)

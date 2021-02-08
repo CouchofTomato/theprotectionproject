@@ -12,6 +12,7 @@ RSpec.describe 'Add an individual plan to the comparison table', type: :system, 
                                 product: product,
                                 category: 'evacuation_and_repatriation') do |product_module|
           create_list(:product_module_benefit, 2, product_module: product_module)
+          create(:linked_product_module, product_module: ProductModule.find_by(name: 'Gold'), linked_module: product_module)
         end
       end
       create(:product, name: 'Company', customer_type: 'corporate', insurer: insurer)
@@ -35,13 +36,19 @@ RSpec.describe 'Add an individual plan to the comparison table', type: :system, 
     find('#insurer-select')
     expect(page).not_to have_select('insurer-select', with_options: ['Allianz'])
 
+    select 'BUPA Global', from: 'insurer-select'
+
     expect(page).not_to have_select('product-select', with_options: ['Company'])
 
-    select 'BUPA Global', from: 'insurer-select'
     select 'Lifeline', from: 'product-select'
+
     expect(page).to have_selector('h5', text: 'Core')
-    expect(page).to have_selector('h5', text: 'Evacuation And Repatriation')
+    expect(page).not_to have_selector('h5', text: 'Evacuation And Repatriation')
+
     page.choose 'Gold'
+
+    expect(page).to have_selector('h5', text: 'Evacuation And Repatriation')
+
     click_button 'Load Benefits'
 
     expect(find('tr#insurer-name > td:nth-of-type(1)')).to have_content 'BUPA Global'
