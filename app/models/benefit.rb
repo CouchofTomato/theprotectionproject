@@ -6,6 +6,4 @@ class Benefit < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :category, case_sensitive: false }
   validates :category, presence: true
-
-  scope :by_name, -> { order(name: :asc) }
 end

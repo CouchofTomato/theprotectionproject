@@ -31,7 +31,7 @@ comparison_product_headers = {
   overall_sums_assured: @comparison_products.map(&:overall_sum_assured)
 }
 
-@benefit_categories.each do |category|
+active_benefit_categories(@benefits).each do |category|
   wb.add_worksheet(name: category.titleize) do |sheet|
     # headers
     sheet.add_row [nil, nil, *comparison_product_headers.fetch(:insurer_names)]
@@ -41,12 +41,12 @@ comparison_product_headers = {
 
     # benefits
     category_colour = benefit_category_styles[category]
-    category_length = @grouped_benefits[category].length
+    category_length = benefits_grouped_by_category(@benefits)[category].length
 
-    @grouped_benefits[category].each do |benefit|
+    benefits_grouped_by_category(@benefits)[category].each do |benefit|
       row_styles = [category_colour, category_colour]
       selected_product_benefits = @comparison_products.map do |comparison_product|
-        matched_benefit = comparison_product.module_benefit(benefit.id) || NullProductModuleBenefit.new
+        matched_benefit = comparison_product.module_benefit(benefit.id)
         row_styles << benefit_coverage_styles[matched_benefit.benefit_status]
 
         matched_benefit.benefit_limit

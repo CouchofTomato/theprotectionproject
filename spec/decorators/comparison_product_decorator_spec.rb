@@ -3,7 +3,13 @@ require 'rails_helper'
 RSpec.describe ComparisonProductDecorator do
   subject(:comparison_product_decorator) { described_class.new(comparison_product) }
 
-  let(:comparison_product) { ComparisonProduct.new(insurer, product, product_modules) }
+  let(:comparison_product) do
+    ComparisonProduct.new(
+      insurer: insurer,
+      product: product,
+      product_modules: product_modules
+    )
+  end
   let(:insurer) { create(:insurer, name: 'BUPA Global', id: 5) }
   let(:product) { create(:product, name: 'Lifeline', insurer: insurer, id: 10) }
   let(:product_modules) { [create(:product_module, name: 'Gold', product: product, id: 15)] }
