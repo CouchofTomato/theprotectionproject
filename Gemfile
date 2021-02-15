@@ -68,6 +68,7 @@ group :development do
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
+  gem 'guard-rubycritic', '~> 2.9'
   gem 'guard-webpacker', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

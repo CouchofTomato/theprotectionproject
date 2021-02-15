@@ -119,3 +119,8 @@ guard :webpacker do
   watch('config/webpacker.yml')
   watch(%r{^config/webpacker/(.+)$})
 end
+
+guard 'rubycritic' do
+  watch(%r{^app/(.+)\.rb$})
+  watch(%r{^lib/(.+)\.rb$})
+end
