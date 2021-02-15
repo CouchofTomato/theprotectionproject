@@ -1,15 +1,10 @@
 class ComparisonProduct
-  attr_reader :insurer, :product, :product_modules, :all_selected_benefits
+  include ActiveModel::Model
+
+  attr_accessor :insurer, :product, :product_modules
 
   delegate :name, prefix: 'insurer', to: :insurer
   delegate :name, prefix: 'product', to: :product
-
-  def initialize(insurer, product, product_modules)
-    @insurer = insurer
-    @product = product
-    @product_modules = product_modules
-    @all_selected_benefits = selected_benefits
-  end
 
   def product_module_names
     product_modules.map(&:name).join(' + ')
@@ -21,11 +16,12 @@ class ComparisonProduct
   end
 
   def module_benefits
-    @module_benefits ||= all_selected_benefits.keep_if { benefit_with_maximum_weight(_1) == _1 }
+    @module_benefits ||= selected_benefits.keep_if { benefit_with_maximum_weight(_1) == _1 }
   end
 
   def module_benefit(benefit_id)
-    module_benefits.find { _1.benefit_id == benefit_id }
+    product_module_benefit = module_benefits.find { _1.benefit_id == benefit_id }
+    product_module_benefit || NullProductModuleBenefit.new
   end
 
   private
@@ -39,6 +35,6 @@ class ComparisonProduct
   end
 
   def matched_benefits(module_benefit)
-    all_selected_benefits.find_all { _1.benefit.name == module_benefit.benefit.name }
+    selected_benefits.find_all { _1.benefit.name == module_benefit.benefit.name }
   end
 end

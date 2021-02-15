@@ -9,13 +9,4 @@ Rails.application.routes.draw do
   get '/comparisons/show', to: 'comparisons#show'
 
   resources :comparisons, only: %i[new]
-  resources :comparison_products, only: %i[new create]
-
-  resources :insurers do
-    resources :products, only: [:index]
-  end
-
-  resources :products do
-    resources :product_modules, only: %i[index]
-  end
 end

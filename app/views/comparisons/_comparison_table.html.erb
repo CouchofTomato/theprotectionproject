@@ -38,20 +38,20 @@
       <% end %>
     </tr>
   </tbody>
-  <% @benefit_categories.each do |category| %>
+  <% active_benefit_categories(@benefits).each do |category| %>
     <tbody>
       <tr>
         <th class="table--sticky-col table--fixed-col-width"><%= category.titleize %></th>
       </tr>
     </tbody>
     <tbody>
-      <% @grouped_benefits[category].each do |benefit| %>
+      <% benefits_grouped_by_category(@benefits)[category].each do |benefit| %>
         <tr>
           <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
           <% @comparison_products.each do |comparison_product| %>
             <td class="table--fixed-col-width">
               <span class="icon">
-                <i class="<%= coverage_icon(comparison_product.module_benefit(benefit.id) || NullProductModuleBenefit.new) %>"></i>
+                <i class="<%= coverage_icon(comparison_product.module_benefit(benefit.id)) %>"></i>
               </span>
             </td>
           <% end %>

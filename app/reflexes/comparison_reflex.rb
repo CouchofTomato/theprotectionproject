@@ -8,25 +8,21 @@ class ComparisonReflex < ApplicationReflex
   end
 
   def core_modules(product_id)
-    @product_module_categories = ProductModule.categories.keys
     @product_modules = Product.find(product_id).core_modules
 
     morph '#product-modules', render(partial: 'selection_form_product_modules',
-                                     locals: { product_module_categories: @product_module_categories,
-                                               product_modules: @product_modules,
+                                     locals: { product_modules: @product_modules,
                                                core_module: nil })
   end
 
   def elective_modules(core_module_id, product_id)
-    @product_module_categories = ProductModule.categories.keys
     @core_module = ProductModule.find(core_module_id)
     @core_modules = Product.find(product_id).core_modules
     @elective_modules = @core_module.linked_modules
-    @product_modules = [*@core_modules].concat([*@elective_modules])
+    @product_modules = @core_modules + @elective_modules
 
     morph '#product-modules', render(partial: 'selection_form_product_modules',
-                                     locals: { product_module_categories: @product_module_categories,
-                                               product_modules: @product_modules,
+                                     locals: { product_modules: @product_modules,
                                                core_module: @core_module })
   end
 
@@ -56,9 +52,9 @@ class ComparisonReflex < ApplicationReflex
 
   def comparison_product(insurer, product, product_modules)
     ComparisonProduct.new(
-      Insurer.find(insurer),
-      Product.find(product),
-      ProductModule.includes(product_module_benefits: :benefit)
+      insurer: Insurer.find(insurer),
+      product: Product.find(product),
+      product_modules: ProductModule.includes(product_module_benefits: :benefit)
       .find(product_modules)
     )
   end

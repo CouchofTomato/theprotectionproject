@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ComparisonProduct do
-  subject(:comparison_product) { described_class.new(insurer, product, product_modules) }
+  subject(:comparison_product) do
+    described_class.new(insurer: insurer, product: product, product_modules: product_modules)
+  end
 
   let(:insurer) { create(:insurer, name: 'BUPA Global') }
   let(:product) { create(:product, name: 'Lifeline', insurer: insurer) }
@@ -105,6 +107,38 @@ RSpec.describe ComparisonProduct do
           an_object_having_attributes(benefit_status: 'paid_in_full',
                                       explanation_of_benefit: 'Paid in full')
         )
+      end
+    end
+  end
+
+  describe '#module_benefit' do
+    let(:product_modules) do
+      [
+        create(:product_module, name: 'Gold', product: product) do |product_module|
+          product_module.product_module_benefits << product_module_benefit
+        end
+      ]
+    end
+    let(:product_module_benefit) do
+      create(:product_module_benefit) do |product_module_benefit|
+        benefit = create(:benefit, id: 1)
+        product_module_benefit.benefit = benefit
+      end
+    end
+
+    context 'with a product module id containing a benefit id of the passed in argument' do
+      let(:benefit_id) { 1 }
+
+      it 'returns the product module' do
+        expect(comparison_product.module_benefit(benefit_id)).to eq product_module_benefit
+      end
+    end
+
+    context 'when there is no matching product module benefit' do
+      let(:benefit_id) { 2 }
+
+      it 'returns a NullProductModuleBenefit' do
+        expect(comparison_product.module_benefit(benefit_id)).to be_kind_of NullProductModuleBenefit
       end
     end
   end
