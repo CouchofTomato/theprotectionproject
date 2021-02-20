@@ -18,6 +18,7 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: "bundler"
+    vendor: true
     directory: "/"
     schedule:
       interval: "daily"
