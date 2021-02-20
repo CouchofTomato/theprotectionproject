@@ -33,19 +33,6 @@ jobs:
         ruby-version: 2.7
         bundler-cache: true
 
-    - name: Install Bundler and gems
-      run: |
-        gem install bundler --no-document
-        bundle config GITHUB__COM $GITHUB_ACCESS_TOKEN
-        bundle install --jobs 4 --retry 3
-      env:
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        REDIS_URL: redis://localhost:6379/0
-
-    - name: Get Yarn cache directory
-      id: yarn-cache-dir
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -113,14 +100,6 @@ jobs:
           bundler-cache: true
 
       - uses: actions/checkout@v2.3.4
-
-      - name: Install bundler and rubocop
-        run: |
-          gem install bundler --no-document
-          bundle config GITHUB__COM $GITHUB_ACCESS_TOKEN
-          bundle install --jobs 4 --retry 3 --with=test
-        env:
-          GITHUB_ACCESS_TOKEN: $
 
       - name: Run rubocop checks
         run: bundle exec rubocop -D
