@@ -7,6 +7,7 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "npm"
+    vendor: true
     directory: "/"
     allow:
       - dependency-type: "all"
@@ -18,6 +19,7 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: "bundler"
+    vendor: true
     directory: "/"
     schedule:
       interval: "daily"
