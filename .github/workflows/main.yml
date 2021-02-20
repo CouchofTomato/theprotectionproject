@@ -47,6 +47,9 @@ jobs:
     - name: yarn install
       run:  yarn install --dev
 
+    - name: Run rubocop checks
+      run: bundle exec rubocop -D
+
     - name: Run tests
       env:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
@@ -84,20 +87,20 @@ jobs:
 
   #   - name: Run tests
   #     run: yarn test --passWithNoTests
-  rubocop:
-    name: rubocop
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install libraries
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libpq-dev
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+  # rubocop:
+  #   name: rubocop
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Install libraries
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y libpq-dev
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
 
-      - uses: actions/checkout@v2.3.4
+  #     - uses: actions/checkout@v2.3.4
 
-      - name: Run rubocop checks
-        run: bundle exec rubocop -D
+  #     - name: Run rubocop checks
+  #       run: bundle exec rubocop -D
