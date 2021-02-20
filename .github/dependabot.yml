@@ -7,7 +7,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "npm"
-    vendor: true
     directory: "/"
     allow:
       - dependency-type: "all"
