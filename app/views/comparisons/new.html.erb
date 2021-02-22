@@ -3,19 +3,107 @@
     <div class="column is-one-fifth">
       <h3 class="title is-3">Product Picker</h3>
       <div id="product-select-form">
-        <%= render 'selection_form' %>
+        <form>
+          <div class="field">
+            <div class="control">
+              <div class="select">
+                <%= select_tag "comparison_product[insurer]",
+                  options_from_collection_for_select(@insurers, "id", "name"),
+                  include_blank: 'Select Insurer...',
+                  data: { comparison_target: 'insurer',
+                          action: 'change->comparison#loadProducts' },
+                          id: 'insurer-select' %>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div id="product-select-wrapper" class="control">
+            </div>
+          </div>
+          <div id="product-modules" class="field">
+          </div>
+          <div class="field">
+            <div class="control">
+              <%= submit_tag "Load Benefits", class: 'button is-primary',
+                data: { comparison_target: 'selectedProductSubmit',
+                        action: 'click->comparison#addSelectedProduct' }
+                      %>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-container column columns__column--no-padding-left">
-      <%= render(partial: 'comparison_table') %>
+      <table class="table">
+        <tbody class="table__tbody--hidden">
+          <tr data-comparison-target="productDetails">
+            <td></td>
+            <% @comparison_products.each do |comparison_product| %>
+              <td class="table--fixed-col-width" data-comparison-target="selectedProduct" data-product-details=<%= comparison_product.product_details %>></td>
+            <% end %>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th class="table--sticky-col table--fixed-col-width">Product Details</th>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr id="insurer-name">
+            <th class="table--sticky-col table--fixed-col-width">Insurer</th>
+            <% @comparison_products.each do |comparison_product| %>
+              <td class="table--fixed-col-width"><%= comparison_product.insurer_name %></td>
+            <% end %>
+          </tr>
+          <tr id="product-name">
+            <th class="table--sticky-col table--fixed-col-width">Product</th>
+            <% @comparison_products.each do |comparison_product| %>
+              <td class="table--fixed-col-width"><%= comparison_product.product_name %></td>
+            <% end %>
+          </tr>
+          <tr id="chosen-cover">
+            <th class="table--sticky-col table--fixed-col-width">Chosen Cover</th>
+            <% @comparison_products.each do |comparison_product| %>
+              <td class="table--fixed-col-width"><%= comparison_product.product_module_names %></td>
+            <% end %>
+          </tr>
+          <tr id="overall-sum-assured">
+            <th class="table--sticky-col table--fixed-col-width">Overall Sum Assured</th>
+            <% @comparison_products.each do |comparison_product| %>
+              <td class="table--fixed-col-width"><%= comparison_product.overall_sum_assured %></td>
+            <% end %>
+          </tr>
+        </tbody>
+        <% active_benefit_categories(@benefits).each do |category| %>
+          <tbody>
+            <tr>
+              <th class="table--sticky-col table--fixed-col-width"><%= category.titleize %></th>
+            </tr>
+          </tbody>
+          <tbody>
+            <% benefits_grouped_by_category(@benefits)[category].each do |benefit| %>
+              <tr>
+                <td class="table--sticky-col table--fixed-col-width"><%= benefit.name.titleize %></td>
+                <% @comparison_products.each do |comparison_product| %>
+                  <td class="table--fixed-col-width">
+                    <span class="icon">
+                      <i class="<%= coverage_icon(comparison_product.module_benefit(benefit.id)) %>"></i>
+                    </span>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        <% end %>
+      </table>
     </div>
     <div class="column is-2 has-text-centered">
       <h3 class="subtitle is-3">Options</h3>
       <label class="checkbox">
         <%= check_box_tag "covered_benefits", "covered_benefits", false, data: {
-          "comparison-target": 'option', action: 'change->comparison#setOptions' 
+          "comparison-target": 'option', action: 'change->comparison#setOptions'
         } %>
-        Show only covered benefits
+      Show only covered benefits
       </label>
       <h3 class="subtitle is-3">Export</h3>
       <div id="excel-export">
