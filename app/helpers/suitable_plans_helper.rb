@@ -1,0 +1,2 @@
+module SuitablePlansHelper
+end
