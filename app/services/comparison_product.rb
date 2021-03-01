@@ -24,6 +24,10 @@ class ComparisonProduct
     product_module_benefit || NullProductModuleBenefit.new
   end
 
+  def coverage_areas?(coverages)
+    (coverages - coverage_area_categories).empty?
+  end
+
   private
 
   def selected_benefits
@@ -36,5 +40,9 @@ class ComparisonProduct
 
   def matched_benefits(module_benefit)
     selected_benefits.find_all { _1.benefit.name == module_benefit.benefit.name }
+  end
+
+  def coverage_area_categories
+    product_modules.flat_map { |product_module| product_module.coverage_areas.map(&:category) }
   end
 end

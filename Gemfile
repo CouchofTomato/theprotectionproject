@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.3'
@@ -37,7 +37,7 @@ gem 'caxlsx_rails'
 gem 'devise'
 gem 'devise_invitable', '~> 2.0.3'
 gem 'hiredis'
-gem 'rails_admin', '~> 2.0'
+gem 'rails_admin', '~> 2.1'
 gem 'redis-session-store', '~> 0.11.3'
 gem 'rubyzip'
 gem 'stimulus_reflex', '~> 3.4'
@@ -51,7 +51,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~>4.0.2'
+  gem 'rspec-rails', '~>5.0.1'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
@@ -59,17 +59,18 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'listen', '~> 3.4'
+  gem 'listen', '~> 3.5'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'bullet', '~>6.1.3'
+  gem 'bullet', '~>6.1.4'
   gem 'guard'
-  gem 'guard-bundler', '~>2.2.1', require: false
+  gem 'guard-bundler', '~>3.0.0', require: false
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
   gem 'guard-rubycritic', '~> 2.9'
   gem 'guard-webpacker', require: false
+  gem 'seed_dump'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -80,5 +81,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-lcov'
-  gem 'webdrivers', '~>4.5'
+  gem 'webdrivers', '~>4.6'
 end

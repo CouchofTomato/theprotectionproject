@@ -51,3 +51,10 @@
     </div>
   </div>
 </section>
+<% if FeatureFlag.enabled?(:suitable_plan_form) %>
+  <section>
+    <div class="container has-text-centered">
+      <%= link_to 'Recommend A Plan To Me', new_suitable_plans_path, class: 'button is-link is-large', data: { test_id: 'plan-recommendation-btn' } %>
+    </div>
+  </section>
+<% end %>

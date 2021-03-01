@@ -42,7 +42,7 @@ jobs:
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - uses: actions/cache@v2.1.4
+    - uses: actions/cache@v2.1.5
       id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -58,7 +58,6 @@ jobs:
 
     - name: Run tests
       env:
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
         REDIS_URL: redis://localhost:6379/0

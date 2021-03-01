@@ -1,0 +1,166 @@
+<section class="section">
+  <div class="container">
+    <%= form_with url: suitable_plans_path, method: :get, local: true, data: { controller: 'suitable-plan-form' } do |f| %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="people-information-section">
+          <div class="field">
+            <%= f.label 'people[][name]', 'Name', class: 'label' %>
+            <div class="control">
+              <%= f.text_field 'people[][name]', data: { test_id: 'people-name-input' }, class: 'input' %>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label 'people[][date_of_birth]', 'Date of Birth', class: 'label' %>
+            <div class="control">
+              <%= f.date_select 'people[][date_of_birth]', { order: %i[day month year], start_year: 1900 } %>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label 'people[][nationality]', 'Nationality', class: 'label' %>
+            <div class="control">
+              <%= f.text_field 'people[][nationality]', data: { test_id: 'people-nationality-input' }, class: 'input' %>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label 'people[][country_of_residence]', 'Country of Residence', class: 'label' %>
+            <div class="control">
+              <%= f.text_field 'people[][country_of_residence]', data: { test_id: 'people-residency-input' }, class: 'input' %>
+            </div>
+          </div>
+          <div class="field">
+            <%= f.label 'people[][relationship]', 'Relationship', class: 'label' %>
+            <div class="control">
+              <div class="select">
+                <%= f.select 'people[][relationship]', %w[self spouse child sponsored_dependent], {}, data: { test_id: 'people-relationship-select' } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="coverage-areas-section">
+          <% @coverage_types.each do |coverage_type| %>
+            <%= check_box_tag 'coverages[]', coverage_type, false, id: coverage_type, data: { test_id: "#{coverage_type.dasherize}-checkbox" } %>
+            <%= label_tag coverage_type do %>
+              <span class="icon is-large"><i class="fa fa-2x <%= coverage_type_icon(coverage_type) %>"></i></span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="usa-cover-section">
+          <p>Do you require cover for elective treatment in the USA?</p>
+          <div class="control">
+            <label class="radio">
+              <%= f.radio_button :usa_cover, true, data: { test_id: 'usa-cover-yes-radio-btn' } %>
+              Yes
+            </label>
+            <label class="radio">
+              <%= f.radio_button :usa_cover, false %>
+              No
+            </label>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field", data-test-id="existing-conditions-section">
+          <p>Do you need a plan that will consider covering pre-existing conditions?</p>
+          <div class="control">
+            <label class="radio">
+              <%= f.radio_button :existing_conditions, true %>
+              Yes
+            </label>
+            <label class="radio">
+              <%= f.radio_button :existing_conditions, false, data: { test_id: 'existing-conditions-no-radio-btn' } %>
+              No
+            </label>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="deductibles-section">
+          <p>Choose all deductible options that apply</p>
+          <div class="control">
+            <% @deductibles.each do |deductible| %>
+              <label class="checkbox">
+                <%= check_box_tag 'deductible[]', deductible, false, data: { test_id: "#{deductible.dasherize}-checkbox" } %>
+                <%= deductible %>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="existing-cover-section">
+          <p>Is this policy to replace existing cover?</p>
+          <div class="control">
+            <label class="radio">
+              <%= f.radio_button :existing_cover, true %>
+              Yes
+            </label>
+            <label class="radio">
+              <%= f.radio_button :existing_cover, false, data: { test_id: 'existing-cover-no-radio-btn' } %>
+              No
+            </label>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="preferences-section">
+          <p>Please rank the following in the order of importance to you</p>
+          <%= f.label :brand_recognition %>
+          <div class="control">
+            <%= f.number_field :brand_recognition, in: 1..10, data: { test_id: 'brand-recognition-preference-input' } %>
+          </div>
+          <%= f.label :financial_strength %>
+          <div class="control">
+            <%= f.number_field :financial_strength, in: 1..10, data: { test_id: 'financial-strength-preference-input' } %>
+          </div>
+          <%= f.label :cost_of_cover %>
+          <div class="control">
+            <%= f.number_field :cost_of_cover, in: 1..10, data: { test_id: 'cost-of-cover-preference-input' } %>
+          </div>
+          <%= f.label :online_facilities %>
+          <div class="control">
+            <%= f.number_field :online_facilities, in: 1..10, data: { test_id: 'online-facilities-preference-input' } %>
+          </div>
+          <%= f.label :communication %>
+          <div class="control">
+            <%= f.number_field :communication, in: 1..10, data: { test_id: 'communication-preference-input' } %>
+          </div>
+          <%= f.label :direct_settlement %>
+          <div class="control">
+            <%= f.number_field :direct_settlement, in: 1..10, data: { test_id: 'direct-settlement-preference-input' } %>
+          </div>
+        </div>
+      <% end %>
+      <%= tag.div class: 'hidden', data: { suitable_plan_form_target: 'tab' } do %>
+        <div class="field" data-test-id="submit-section">
+          <div class="control">
+            <%= f.submit :submit, data: { test_id: 'suitable-plan-form-submit-btn' } %>
+          </div>
+        </div>
+      <% end %>
+      <div class="level">
+        <div class="level-left">
+          <button
+            class="button is-large is-fullwidth"
+            data-action="suitable-plan-form#previousTab"
+            data-suitable-plan-form-target="previousTabButton"
+            data-test-id="previous-tab-btn"
+          >Previous
+          </button>
+        </div>
+        <div class="level-right">
+          <button
+            class="button is-large is-fullwidth"
+            data-action="suitable-plan-form#nextTab"
+            data-suitable-plan-form-target="nextTabButton"
+            data-test-id="next-tab-btn"
+          >Next
+          </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>
