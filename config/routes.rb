@@ -14,5 +14,5 @@ Rails.application.routes.draw do
 
   # suitable plans match user provided responses to plans that meet the
   # criteria
-  resources :suitable_plans, only: %i[new]
+  resources :suitable_plans, only: %i[new create]
 end
