@@ -51,7 +51,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~>4.0.2'
+  gem 'rspec-rails', '~>5.0.1'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
@@ -64,7 +64,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'bullet', '~>6.1.4'
   gem 'guard'
-  gem 'guard-bundler', '~>2.2.1', require: false
+  gem 'guard-bundler', '~>3.0.0', require: false
   gem 'guard-rails', require: false
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
