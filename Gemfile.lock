@@ -217,7 +217,7 @@ GEM
     kwalify (0.7.2)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.4.1)
+    listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.9.0)
@@ -499,7 +499,7 @@ DEPENDENCIES
   guard-webpacker
   hiredis
   jbuilder (~> 2.11)
-  listen (~> 3.4)
+  listen (~> 3.5)
   pg (>= 0.18, < 2.0)
   pry
   pry-byebug
