@@ -51,7 +51,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~>4.0.2'
+  gem 'rspec-rails', '~>5.0.1'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
