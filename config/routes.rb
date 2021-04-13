@@ -8,5 +8,11 @@ Rails.application.routes.draw do
 
   get '/comparisons/show', to: 'comparisons#show'
 
+  # comparisons are used to manually choose which insurer, product and
+  # product_module options to add to the comparison table
   resources :comparisons, only: %i[new]
+
+  # suitable plans match user provided responses to plans that meet the
+  # criteria
+  resources :suitable_plans, only: %i[new create]
 end

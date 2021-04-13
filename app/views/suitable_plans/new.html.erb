@@ -1,0 +1,70 @@
+<section class="section">
+  <div class="container">
+    <%= form_with url: suitable_plans_path do |f| %>
+      <div class="field">
+        <%= f.label :name %>
+        <div class="control">
+          <%= f.text_field :name %>
+        </div>
+        <div class="control">
+          <%= f.label :age %>
+          <div class="select">
+            <%= f.select :age, 0..100 %>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <% @coverage_types.each do |coverage_type| %>
+          <%= f.check_box 'coverage_type[]', id: coverage_type %>
+          <%= f.label coverage_type do %>
+            <span class="icon is-large"><i class="fa fa-2x <%= coverage_type_icon(coverage_type) %>"></i></span>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="field">
+        <p>Do you require cover for elective treatment in the USA?</p>
+        <div class="control">
+          <label class="radio">
+            <%= f.radio_button :usa_cover, "yes" %>
+            Yes
+          </label>
+          <label class="radio">
+            <%= f.radio_button :usa_cover, "no" %>
+            No
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <p>Do you need a plan that will consider covering pre-existing conditions?</p>
+        <div class="control">
+          <label class="radio">
+            <%= f.radio_button :exisiting_conditions, "yes" %>
+            Yes
+          </label>
+          <label class="radio">
+            <%= f.radio_button :exisiting_conditions, "no" %>
+            No
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <p>Choose all deductible options that apply</p>
+        <div class="control">
+          <% @deductibles.each do |deductible| %>
+            <label class="checkbox">
+              <%= f.check_box 'deductible[]' %>
+              <%= deductible %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <p>The following questions will help us find out what you are looking for in a health insurance partner. There are no right or wrong answers, it's all about your preference</p>
+      </div>
+      <div class="field">
+        <p>How important is it that you are able to set up direct settlements directly with the providers you go to for inpatient treatment?</p>
+        <p>How important is it that you are able to set up direct settlements directly with the providers you go to for outpatient treatment?</p>
+      </div>
+    <% end %>
+  </div>
+</section>

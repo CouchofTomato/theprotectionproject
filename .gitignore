@@ -78,3 +78,6 @@ yarn-debug.log*
 .yarn-integrity
 
 /config/credentials/test.key
+
+# Ignore file to set local ruby version for asdf
+.tool-versions
