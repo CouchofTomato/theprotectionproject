@@ -44,7 +44,10 @@ FactoryBot.create_list(:benefit, 10, category: 'additional')
             FactoryBot.create(:linked_product_module, product_module: core_product_module, linked_module: product_module)
             Benefit.all.sample(20).each_slice(2) do |benefit1, benefit2|
               FactoryBot.create(:product_module_benefit, product_module: product_module, benefit: benefit1)
-              FactoryBot.create(:product_module_benefit, benefit_status: 'capped_benefit', product_module: product_module, benefit: benefit2)
+              FactoryBot.create(:product_module_benefit,
+                                benefit_status: 'capped_benefit',
+                                product_module: product_module,
+                                benefit: benefit2)
             end
           end
         end
@@ -64,7 +67,10 @@ end
             FactoryBot.create(:linked_product_module, product_module: core_product_module, linked_module: product_module)
             Benefit.all.sample(20).each_slice(2) do |benefit1, benefit2|
               FactoryBot.create(:product_module_benefit, product_module: product_module, benefit: benefit1)
-              FactoryBot.create(:product_module_benefit, benefit_status: 'capped_benefit', product_module: product_module, benefit: benefit2)
+              FactoryBot.create(:product_module_benefit,
+                                benefit_status: 'capped_benefit',
+                                product_module: product_module,
+                                benefit: benefit2)
             end
           end
         end
