@@ -9,7 +9,12 @@ module SuitablePlansHelper
     {
       'inpatient' => 'fa-hospital-user',
       'outpatient' => 'fa-stethoscope',
-      'wellness' => 'fa-spa'
+      'medicines_and_appliances' => 'fa-prescription-bottle',
+      'maternity' => 'fa-baby-carriage',
+      'evacuation_and_repatriation' => 'fa-plane-departure',
+      'wellness' => 'fa-spa',
+      'dental' => 'fa-tooth',
+      'optical' => 'fa-glasses'
     }
   end
 end
