@@ -126,7 +126,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise_invitable (2.0.3)
+    devise_invitable (2.0.4)
       actionmailer (>= 5.0)
       devise (>= 4.6)
     diff-lcs (1.4.4)
@@ -483,7 +483,7 @@ DEPENDENCIES
   caxlsx_rails
   database_cleaner
   devise
-  devise_invitable (~> 2.0.3)
+  devise_invitable (~> 2.0.4)
   factory_bot_rails
   faker
   guard
