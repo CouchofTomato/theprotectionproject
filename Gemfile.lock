@@ -86,7 +86,7 @@ GEM
     cable_ready (4.5.0)
       rails (>= 5.2)
       thread-local (>= 1.1.0)
-    cancancan (3.2.1)
+    cancancan (3.2.2)
     capybara (3.33.0)
       addressable
       mini_mime (>= 0.1.3)
