@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-CoverageArea = Struct.new(:category)
+CoverageAreaStruct = Struct.new(:category)
 
 RSpec.describe MatchedCoverageComparisonProducts do
   subject(:matched_coverage_comparison_products) { described_class.new(required_coverages, comparison_products) }
@@ -20,7 +20,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_inpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
 
       it 'includes those product modules' do
@@ -43,12 +43,12 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_inpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
       let!(:linked_outpatient_module) do
         instance_double(ProductModule,
                         category: 'outpatient',
-                        coverage_areas: [CoverageArea.new('outpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
       end
 
       it 'does not include the outpatient module in the returned comparison product\'s product modules' do
@@ -71,7 +71,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_outpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient'), CoverageArea.new('outpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient'), CoverageAreaStruct.new('outpatient')])
       end
 
       it 'does not return comparison products that include those core modules' do
@@ -99,7 +99,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_outpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient'), CoverageArea.new('outpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient'), CoverageAreaStruct.new('outpatient')])
       end
 
       it 'includes that comparison product in the returned list' do
@@ -122,7 +122,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_inpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
 
       it 'does not include that comparison product in the returned list' do
@@ -145,12 +145,12 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module_with_inpatient_cover) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
       let!(:linked_outpatient_module) do
         instance_double(ProductModule,
                         category: 'outpatient',
-                        coverage_areas: [CoverageArea.new('outpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
       end
 
       it 'includes that comparison product in the returned list' do
@@ -178,10 +178,10 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:module_with_multiple_coverage_areas) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient'),
-                                         CoverageArea.new('outpatient'),
-                                         CoverageArea.new('evacuation_and_repatriation'),
-                                         CoverageArea.new('dental')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient'),
+                                         CoverageAreaStruct.new('outpatient'),
+                                         CoverageAreaStruct.new('evacuation_and_repatriation'),
+                                         CoverageAreaStruct.new('dental')])
       end
 
       it 'selects a module that include those coverages' do
@@ -205,22 +205,22 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
       let!(:outpatient_module) do
         instance_double(ProductModule,
                         category: 'outpatient',
-                        coverage_areas: [CoverageArea.new('outpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
       end
       let!(:evacuation_module) do
         instance_double(ProductModule,
                         category: 'evacuation_and_repatriation',
-                        coverage_areas: [CoverageArea.new('evacuation_and_repatriation')])
+                        coverage_areas: [CoverageAreaStruct.new('evacuation_and_repatriation')])
       end
       let!(:dental_module) do
         instance_double(ProductModule,
                         category: 'dental',
-                        coverage_areas: [CoverageArea.new('dental')])
+                        coverage_areas: [CoverageAreaStruct.new('dental')])
       end
 
       it 'selects all the linked modules that include those coverages' do
@@ -249,7 +249,8 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient'), CoverageArea.new('evacuation_and_repatriation')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient'),
+                                         CoverageAreaStruct.new('evacuation_and_repatriation')])
       end
 
       it 'includes the module' do
@@ -272,12 +273,13 @@ RSpec.describe MatchedCoverageComparisonProducts do
       let!(:core_module) do
         instance_double(ProductModule,
                         category: 'core',
-                        coverage_areas: [CoverageArea.new('inpatient')])
+                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
       end
       let!(:linked_module) do
         instance_double(ProductModule,
                         category: 'evacuation_and_repatriation',
-                        coverage_areas: [CoverageArea.new('wellness'), CoverageArea.new('evacuation_and_repatriation')])
+                        coverage_areas: [CoverageAreaStruct.new('wellness'),
+                                         CoverageAreaStruct.new('evacuation_and_repatriation')])
       end
 
       it 'includes the linked module' do

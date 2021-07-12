@@ -31,6 +31,7 @@ RSpec.describe 'Add an individual plan to the comparison table', type: :system, 
 
   it 'shows insurers and their individual products and adds selected plan details to the comparison table' do
     visit root_path
+    find(:test_id, 'user-navbar-dropdown').hover
     click_on 'New Individual Comparison'
 
     find('#insurer-select')

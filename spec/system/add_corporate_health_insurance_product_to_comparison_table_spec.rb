@@ -31,6 +31,7 @@ RSpec.describe 'Add a corporate plan to the comparison table', type: :system, js
 
   it 'shows insurers and their corporate products and adds selected plan details to the comparison table' do
     visit root_path
+    find(:test_id, 'user-navbar-dropdown').hover
     click_on 'New Corporate Comparison'
 
     find('#insurer-select')
