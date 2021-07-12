@@ -32,4 +32,17 @@ RSpec.describe Product, type: :model do
       ).to be true
     end
   end
+
+  describe '.individual_products' do
+    let(:individual_product) { create(:product, customer_type: 'individual') }
+    let(:corporate_product) { create(:product, customer_type: 'corporate') }
+
+    it 'returns a list of products with an individual customer type' do
+      expect(described_class.individual_products).to include individual_product
+    end
+
+    it 'does not include any products with a corporate customer type' do
+      expect(described_class.individual_products).not_to include corporate_product
+    end
+  end
 end

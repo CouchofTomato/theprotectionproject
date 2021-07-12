@@ -1,0 +1,7 @@
+<% @suitable_plans.each do |suitable_plan| %>
+  <div data-test-id="most-suitable-plan">
+    Insurer: <%= suitable_plan.insurer.name %>
+    Product: <%= suitable_plan.product.name %>
+    Modules: <%= suitable_plan.product_module_names %>
+  </div>
+<% end %>

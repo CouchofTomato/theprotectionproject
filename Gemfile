@@ -70,6 +70,7 @@ group :development do
   gem 'guard-rubocop'
   gem 'guard-rubycritic', '~> 2.9'
   gem 'guard-webpacker', require: false
+  gem 'seed_dump'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

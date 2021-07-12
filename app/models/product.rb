@@ -7,6 +7,8 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :insurer, presence: true
 
+  scope :individual_products, -> { where(customer_type: 'individual') }
+
   def core_modules
     product_modules.where(product_modules: { category: 'core' })
   end

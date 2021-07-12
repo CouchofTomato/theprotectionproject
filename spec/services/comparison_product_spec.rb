@@ -143,6 +143,36 @@ RSpec.describe ComparisonProduct do
     end
   end
 
+  describe('#coverage_areas?') do
+    let(:product_modules) do
+      [
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: :inpatient, product_module: product_module)
+          create(:coverage_area, category: :outpatient, product_module: product_module)
+        end,
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: :evacuation_and_repatriation, product_module: product_module)
+        end
+      ]
+    end
+
+    context 'when the product modules have coverage areas that have categories that match those passed in' do
+      let(:coverages) { %w[inpatient outpatient evacuation_and_repatriation] }
+
+      it 'returns true' do
+        expect(comparison_product.coverage_areas?(coverages)).to be true
+      end
+    end
+
+    context 'when the product modules have coverage areas that do not include all the categories of those passed in' do
+      let(:coverages) { %w[inpatient outpatient wellness] }
+
+      it 'returns false' do
+        expect(comparison_product.coverage_areas?(coverages)).to be false
+      end
+    end
+  end
+
   describe('#insurer_name') do
     it 'delegates name to the insurer' do
       expect(comparison_product.insurer_name).to eq 'BUPA Global'

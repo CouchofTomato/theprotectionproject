@@ -1,0 +1,10 @@
+/* Visibility utility classes */
+
+.hidden {
+  visibility: hidden;
+  max-height: 0;
+}
+
+.invisible {
+  visibility: hidden;
+}
