@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Site visitor completes questionnaire and is shown suitable plans', type: :system, js: true do
-  it 'takes questionnaire answers and shows the plans that most closely match' do
+  xit 'takes questionnaire answers and shows the plans that most closely match' do
     visit root_path
     find(:test_id, 'plan-recommendation-btn').click
 
