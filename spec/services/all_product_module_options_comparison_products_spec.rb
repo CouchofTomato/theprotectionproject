@@ -42,6 +42,7 @@ RSpec.describe AllProductModuleOptionsComparisonProducts do
         end
       end
 
+      # rubocop:disable RSpec/ExampleLength
       it 'creates separate comparison products for those linked modules' do
         expect(all_product_module_options_comparison_products.call).to include(
           an_object_having_attributes(
@@ -62,6 +63,7 @@ RSpec.describe AllProductModuleOptionsComparisonProducts do
           )
         )
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'with an individual customer' do
