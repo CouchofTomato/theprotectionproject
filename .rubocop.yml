@@ -33,3 +33,6 @@ RSpec/MultipleExpectations:
 RSpec/EmptyExampleGroup:
   Exclude:
     - 'spec/helpers/**/*.rb'
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - 'spec/**/*.rb'
