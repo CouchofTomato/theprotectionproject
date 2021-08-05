@@ -20,7 +20,7 @@ class MatchedCoverageComparisonProducts
 
   def filtered_comparison_products
     comparison_products.filter_map do |comparison_product|
-      if includable_comparison_product?(comparison_product)
+      if SuitableHealthProductPolicy.new(comparison_product, required_coverages).allowed?
         ComparisonProduct.new(
           insurer: comparison_product.insurer,
           product: comparison_product.product,
@@ -28,17 +28,6 @@ class MatchedCoverageComparisonProducts
         )
       end
     end
-  end
-
-  def includable_comparison_product?(comparison_product)
-    comparison_product.coverage_areas?(required_coverages) && core_module_outpatient_check_valid?(comparison_product)
-  end
-
-  def core_module_outpatient_check_valid?(match)
-    return true if required_coverages.include? 'outpatient'
-
-    core_module = match.product_modules.find { _1.category == 'core' }
-    core_module.coverage_areas.none? { _1.category == 'outpatient' }
   end
 
   def product_modules_with_required_coverage_areas(product_modules)

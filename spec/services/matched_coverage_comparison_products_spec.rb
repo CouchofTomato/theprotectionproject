@@ -1,29 +1,27 @@
 require 'rails_helper'
 
-CoverageAreaStruct = Struct.new(:category)
-
 RSpec.describe MatchedCoverageComparisonProducts do
   subject(:matched_coverage_comparison_products) { described_class.new(required_coverages, comparison_products) }
 
+  let(:comparison_products) { [comparison_product] }
+  let(:comparison_product) do
+    ComparisonProduct.new(insurer: insurer, product: product, product_modules: product_modules)
+  end
+  let(:insurer) { create(:insurer) }
+  let(:product) { create(:product, insurer: insurer) }
+
   context 'with only inpatient coverage required' do
     let(:required_coverages) { %w[inpatient] }
-    let(:comparison_products) { [comparison_product] }
 
     context 'with core modules that have inpatient coverage only' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_inpatient_cover],
-                        coverage_areas?: true)
-      end
+      let(:product_modules) { [core_module_with_inpatient_cover] }
       let!(:core_module_with_inpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
+        create(:product_module, product: product) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
 
-      it 'includes those product modules' do
+      it 'includes comparison products that include those product modules' do
         expect(matched_coverage_comparison_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module_with_inpatient_cover)
@@ -33,22 +31,17 @@ RSpec.describe MatchedCoverageComparisonProducts do
     end
 
     context 'with core modules with a linked outpatient module' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_inpatient_cover, linked_outpatient_module],
-                        coverage_areas?: true)
+      let(:product_modules) { [core_module_with_inpatient_cover, linked_outpatient_module] }
+      let(:core_module_with_inpatient_cover) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
-      let!(:core_module_with_inpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
-      end
-      let!(:linked_outpatient_module) do
-        instance_double(ProductModule,
-                        category: 'outpatient',
-                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
+      let(:linked_outpatient_module) do
+        create(:product_module, category: 'outpatient', product: product) do |product_module|
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+          create(:linked_product_module, product_module: core_module_with_inpatient_cover, linked_module: product_module)
+        end
       end
 
       it 'does not include the outpatient module in the returned comparison product\'s product modules' do
@@ -61,17 +54,12 @@ RSpec.describe MatchedCoverageComparisonProducts do
     end
 
     context 'with core modules that have outpatient coverage' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_outpatient_cover],
-                        coverage_areas?: true)
-      end
-      let!(:core_module_with_outpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient'), CoverageAreaStruct.new('outpatient')])
+      let(:product_modules) { [core_module_with_outpatient_cover] }
+      let(:core_module_with_outpatient_cover) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+        end
       end
 
       it 'does not return comparison products that include those core modules' do
@@ -86,20 +74,14 @@ RSpec.describe MatchedCoverageComparisonProducts do
 
   context 'with outpatient coverage required' do
     let(:required_coverages) { %w[inpatient outpatient] }
-    let(:comparison_products) { [comparison_product] }
 
     context 'with comparison products that include a product module with both inpatient and outpatient coverage' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_outpatient_cover],
-                        coverage_areas?: true)
-      end
-      let!(:core_module_with_outpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient'), CoverageAreaStruct.new('outpatient')])
+      let(:product_modules) { [core_module_with_outpatient_cover] }
+      let(:core_module_with_outpatient_cover) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+        end
       end
 
       it 'includes that comparison product in the returned list' do
@@ -112,17 +94,11 @@ RSpec.describe MatchedCoverageComparisonProducts do
     end
 
     context 'with comparison products with a product module with inpatient cover that has no linked outpatient module' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_inpatient_cover],
-                        coverage_areas?: false)
-      end
+      let(:product_modules) { [core_module_with_inpatient_cover] }
       let!(:core_module_with_inpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
+        create(:product_module, product: product) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
 
       it 'does not include that comparison product in the returned list' do
@@ -135,22 +111,17 @@ RSpec.describe MatchedCoverageComparisonProducts do
     end
 
     context 'with comparison products with a core product module with a link module with an outpatient coverage area' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module_with_inpatient_cover, linked_outpatient_module],
-                        coverage_areas?: true)
+      let(:product_modules) { [core_module_with_inpatient_cover, linked_outpatient_module] }
+      let(:core_module_with_inpatient_cover) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
-      let!(:core_module_with_inpatient_cover) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
-      end
-      let!(:linked_outpatient_module) do
-        instance_double(ProductModule,
-                        category: 'outpatient',
-                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
+      let(:linked_outpatient_module) do
+        create(:product_module, category: 'outpatient', product: product) do |product_module|
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+          create(:linked_product_module, product_module: core_module_with_inpatient_cover, linked_module: product_module)
+        end
       end
 
       it 'includes that comparison product in the returned list' do
@@ -165,23 +136,16 @@ RSpec.describe MatchedCoverageComparisonProducts do
 
   context 'with many required coverages' do
     let(:required_coverages) { %w[inpatient outpatient evacuation_and_repatriation dental] }
-    let(:comparison_products) { [comparison_product] }
 
     context 'when covered under a single module' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [module_with_multiple_coverage_areas],
-                        coverage_areas?: true)
-      end
-      let!(:module_with_multiple_coverage_areas) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient'),
-                                         CoverageAreaStruct.new('outpatient'),
-                                         CoverageAreaStruct.new('evacuation_and_repatriation'),
-                                         CoverageAreaStruct.new('dental')])
+      let(:product_modules) { [module_with_multiple_coverage_areas] }
+      let(:module_with_multiple_coverage_areas) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+          create(:coverage_area, category: 'dental', product_module: product_module)
+        end
       end
 
       it 'selects a module that include those coverages' do
@@ -193,34 +157,27 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
     end
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers
     context 'when covered under several modules' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module, outpatient_module, evacuation_module, dental_module],
-                        coverage_areas?: true)
-      end
+      let(:product_modules) { [core_module, outpatient_module, evacuation_module, dental_module] }
       let!(:core_module) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
+        create(:product_module, product: product) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
       let!(:outpatient_module) do
-        instance_double(ProductModule,
-                        category: 'outpatient',
-                        coverage_areas: [CoverageAreaStruct.new('outpatient')])
+        create(:product_module, category: 'outpatient', product: product) do |product_module|
+          create(:coverage_area, category: 'outpatient', product_module: product_module)
+        end
       end
       let!(:evacuation_module) do
-        instance_double(ProductModule,
-                        category: 'evacuation_and_repatriation',
-                        coverage_areas: [CoverageAreaStruct.new('evacuation_and_repatriation')])
+        create(:product_module, category: 'evacuation_and_repatriation', product: product) do |product_module|
+          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+        end
       end
       let!(:dental_module) do
-        instance_double(ProductModule,
-                        category: 'dental',
-                        coverage_areas: [CoverageAreaStruct.new('dental')])
+        create(:product_module, category: 'dental_and_optical', product: product) do |product_module|
+          create(:coverage_area, category: 'dental', product_module: product_module)
+        end
       end
 
       it 'selects all the linked modules that include those coverages' do
@@ -231,26 +188,18 @@ RSpec.describe MatchedCoverageComparisonProducts do
         )
       end
     end
-    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 
   context 'when a module has a coverage option which the user has not selected and is not outpatient' do
     let(:required_coverages) { %w[inpatient evacuation_and_repatriation] }
-    let(:comparison_products) { [comparison_product] }
 
     context 'when under the core module' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module],
-                        coverage_areas?: true)
-      end
-      let!(:core_module) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient'),
-                                         CoverageAreaStruct.new('evacuation_and_repatriation')])
+      let(:product_modules) { [core_module] }
+      let(:core_module) do
+        create(:product_module) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+        end
       end
 
       it 'includes the module' do
@@ -263,29 +212,22 @@ RSpec.describe MatchedCoverageComparisonProducts do
     end
 
     context 'when under a linked module' do
-      let(:comparison_product) do
-        instance_double(ComparisonProduct,
-                        insurer: 'insurer',
-                        product: 'product',
-                        product_modules: [core_module, linked_module],
-                        coverage_areas?: true)
-      end
+      let(:product_modules) { [core_module, evacuation_module] }
       let!(:core_module) do
-        instance_double(ProductModule,
-                        category: 'core',
-                        coverage_areas: [CoverageAreaStruct.new('inpatient')])
+        create(:product_module, product: product) do |product_module|
+          create(:coverage_area, category: 'inpatient', product_module: product_module)
+        end
       end
-      let!(:linked_module) do
-        instance_double(ProductModule,
-                        category: 'evacuation_and_repatriation',
-                        coverage_areas: [CoverageAreaStruct.new('wellness'),
-                                         CoverageAreaStruct.new('evacuation_and_repatriation')])
+      let!(:evacuation_module) do
+        create(:product_module, category: 'evacuation_and_repatriation', product: product) do |product_module|
+          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+        end
       end
 
       it 'includes the linked module' do
         expect(matched_coverage_comparison_products.match).to include(
           an_object_having_attributes(
-            product_modules: a_collection_including(core_module, linked_module)
+            product_modules: a_collection_including(core_module, evacuation_module)
           )
         )
       end
