@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe MatchedCoverageComparisonProducts do
-  subject(:matched_coverage_comparison_products) { described_class.new(required_coverages, comparison_products) }
+  subject(:matched_coverage_comparison_products) do
+    described_class.new(comparison_products,
+                        required_coverages: required_coverages,
+                        main_applicant_age: main_applicant_age,
+                        dependants_ages: dependants_ages)
+  end
 
   let(:comparison_products) { [comparison_product] }
   let(:comparison_product) do
@@ -9,6 +14,8 @@ RSpec.describe MatchedCoverageComparisonProducts do
   end
   let(:insurer) { create(:insurer) }
   let(:product) { create(:product, insurer: insurer) }
+  let(:main_applicant_age) { 18 }
+  let(:dependants_ages) { [18, 3, 2] }
 
   context 'with only inpatient coverage required' do
     let(:required_coverages) { %w[inpatient] }

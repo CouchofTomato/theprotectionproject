@@ -5,6 +5,8 @@ class ComparisonProduct
 
   delegate :name, prefix: 'insurer', to: :insurer
   delegate :name, prefix: 'product', to: :product
+  delegate :minimum_applicant_age, to: :product
+  delegate :maximum_applicant_age, to: :product
 
   def product_module_names
     product_modules.map(&:name).join(' + ')
