@@ -1,11 +1,12 @@
 class MatchedCoverageComparisonProducts
-  def self.match(required_coverages, comparison_products)
-    new(required_coverages, comparison_products).match
+  def self.match(comparison_products, **args)
+    new(comparison_products, **args).match
   end
 
-  def initialize(required_coverages, comparison_products)
-    @required_coverages = required_coverages
+  def initialize(comparison_products, **args)
     @comparison_products = comparison_products
+    @required_coverages = args[:required_coverages]
+    @args = args
   end
 
   def match
@@ -16,11 +17,11 @@ class MatchedCoverageComparisonProducts
 
   private
 
-  attr_reader :required_coverages, :comparison_products
+  attr_reader :required_coverages, :comparison_products, :args
 
   def filtered_comparison_products
     comparison_products.filter_map do |comparison_product|
-      if SuitableHealthProductPolicy.new(comparison_product, required_coverages).allowed?
+      if SuitableHealthProductPolicy.new(comparison_product, **args).allowed?
         ComparisonProduct.new(
           insurer: comparison_product.insurer,
           product: comparison_product.product,

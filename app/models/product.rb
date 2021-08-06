@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   has_many :product_modules, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :minimum_applicant_age, presence: true
+  validates :maximum_applicant_age, presence: true
   validates :insurer, presence: true
 
   scope :individual_products, -> { where(customer_type: 'individual') }

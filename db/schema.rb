@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_210748) do
+ActiveRecord::Schema.define(version: 2021_08_06_174318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(version: 2021_04_18_210748) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "customer_type"
+    t.integer "minimum_applicant_age", null: false
+    t.integer "maximum_applicant_age", null: false
     t.index ["insurer_id"], name: "index_products_on_insurer_id"
     t.index ["name"], name: "index_products_on_name", unique: true
   end
