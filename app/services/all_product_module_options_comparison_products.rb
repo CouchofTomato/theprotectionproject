@@ -3,8 +3,6 @@ class AllProductModuleOptionsComparisonProducts
     new.call
   end
 
-  attr_accessor :comparison_products
-
   def initialize
     @comparison_products = []
   end
@@ -13,6 +11,10 @@ class AllProductModuleOptionsComparisonProducts
     generate_comparison_products
     comparison_products
   end
+
+  private
+
+  attr_reader :comparison_products
 
   def generate_comparison_products
     insurers.each do |insurer|
