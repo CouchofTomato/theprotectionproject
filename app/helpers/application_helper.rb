@@ -5,6 +5,15 @@ module ApplicationHelper
     bulma_classes.fetch(type)
   end
 
+  # rubocop:disable Rails/OutputSafety
+  def svg_icon(filename)
+    file_path = Rails.root.join('app', 'assets', 'images', 'icons', "#{filename}.svg")
+    return unless File.exist?(file_path)
+
+    File.read(file_path).html_safe
+  end
+  # rubocop:enable Rails/OutputSafety
+
   private
 
   def bulma_classes

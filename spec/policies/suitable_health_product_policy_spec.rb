@@ -1,15 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe SuitableHealthProductPolicy do
-  let(:suitable_health_product_policy) do
-    described_class.new(health_product,
-                        required_coverages: required_coverages,
-                        main_applicant_age: main_applicant_age,
-                        dependants_ages: dependants_ages).allowed?
-  end
+  subject(:suitable_health_product_policy) { described_class.new(required_coverages, applicants) }
+
   let(:required_coverages) { %w[inpatient] }
-  let(:main_applicant_age) { 18 }
-  let(:dependants_ages) { [18, 5, 3] }
+  let(:applicants) do
+    [
+      ServiceModels::Applicant.new(name: 'Main Applicant',
+                                   date_of_birth: 40.years.ago,
+                                   relationship: 'self',
+                                   nationality: 'British',
+                                   country_of_residence: 'United Kingdom'),
+      ServiceModels::Applicant.new(name: 'Dependant',
+                                   date_of_birth: 39.years.ago,
+                                   relationship: 'spouse',
+                                   nationality: 'British',
+                                   country_of_residence: 'United Kingdom')
+    ]
+  end
   let(:health_product) do
     ComparisonProduct.new(insurer: insurer, product: product, product_modules: product_modules)
   end
@@ -33,7 +41,7 @@ RSpec.describe SuitableHealthProductPolicy do
       let(:required_coverages) { %w[inpatient wellness] }
 
       it 'returns false' do
-        expect(suitable_health_product_policy).to be false
+        expect(suitable_health_product_policy.allowed?(health_product)).to be false
       end
     end
 
@@ -48,7 +56,7 @@ RSpec.describe SuitableHealthProductPolicy do
       let(:required_coverages) { %w[inpatient wellness] }
 
       it 'returns true' do
-        expect(suitable_health_product_policy).to be true
+        expect(suitable_health_product_policy.allowed?(health_product)).to be true
       end
     end
 
@@ -63,7 +71,7 @@ RSpec.describe SuitableHealthProductPolicy do
       let(:required_coverages) { %w[inpatient outpatient] }
 
       it 'returns true when the required coverages includes outpatient' do
-        expect(suitable_health_product_policy).to be true
+        expect(suitable_health_product_policy.allowed?(health_product)).to be true
       end
     end
 
@@ -77,47 +85,97 @@ RSpec.describe SuitableHealthProductPolicy do
       let(:required_coverages) { %w[inpatient outpatient] }
 
       it 'returns false when the required coverages does not include outpatient' do
-        expect(suitable_health_product_policy).to be false
+        expect(suitable_health_product_policy.allowed?(health_product)).to be false
       end
     end
 
     context 'when the main applicnats age is between the health products minimum and maximum age' do
-      let(:main_applicant_age) { 30 }
-
       it 'returns true' do
-        expect(suitable_health_product_policy).to be true
+        expect(suitable_health_product_policy.allowed?(health_product)).to be true
       end
     end
 
     context 'when the main applicants age is less than the health products minimum age' do
-      let(:main_applicant_age) { 17 }
+      let(:applicants) do
+        [
+          ServiceModels::Applicant.new(name: 'Main Applicant',
+                                       date_of_birth: 17.years.ago,
+                                       relationship: 'self',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom')
+        ]
+      end
 
       it 'returns false' do
-        expect(suitable_health_product_policy).to be false
+        expect(suitable_health_product_policy.allowed?(health_product)).to be false
       end
     end
 
     context 'when the main applicants age is greater than the health products maximum age' do
-      let(:main_applicant_age) { 81 }
+      let(:applicants) do
+        [
+          ServiceModels::Applicant.new(name: 'Main Applicant',
+                                       date_of_birth: 81.years.ago,
+                                       relationship: 'self',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom')
+        ]
+      end
 
       it 'returns false' do
-        expect(suitable_health_product_policy).to be false
+        expect(suitable_health_product_policy.allowed?(health_product)).to be false
       end
     end
 
     context 'when all the dependants ages are below the health products maximum age' do
-      let(:dependants_ages) { [25, 5, 3] }
+      let(:applicants) do
+        [
+          ServiceModels::Applicant.new(name: 'Main Applicant',
+                                       date_of_birth: 40.years.ago,
+                                       relationship: 'self',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom'),
+          ServiceModels::Applicant.new(name: 'Dependant',
+                                       date_of_birth: 39.years.ago,
+                                       relationship: 'spouse',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom'),
+          ServiceModels::Applicant.new(name: 'Dependant',
+                                       date_of_birth: 39.years.ago,
+                                       relationship: 'child',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom')
+        ]
+      end
 
       it 'returns true' do
-        expect(suitable_health_product_policy).to be true
+        expect(suitable_health_product_policy.allowed?(health_product)).to be true
       end
     end
 
     context 'when any of the dependants ages are over the products maximum age' do
-      let(:dependants_ages) { [81, 5, 3] }
+      let(:applicants) do
+        [
+          ServiceModels::Applicant.new(name: 'Main Applicant',
+                                       date_of_birth: 80.years.ago,
+                                       relationship: 'self',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom'),
+          ServiceModels::Applicant.new(name: 'Dependant',
+                                       date_of_birth: 81.years.ago,
+                                       relationship: 'spouse',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom'),
+          ServiceModels::Applicant.new(name: 'Dependant',
+                                       date_of_birth: 39.years.ago,
+                                       relationship: 'child',
+                                       nationality: 'British',
+                                       country_of_residence: 'United Kingdom')
+        ]
+      end
 
       it 'returns false' do
-        expect(suitable_health_product_policy).to be false
+        expect(suitable_health_product_policy.allowed?(health_product)).to be false
       end
     end
   end

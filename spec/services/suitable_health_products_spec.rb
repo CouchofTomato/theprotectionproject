@@ -1,11 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe MatchedCoverageComparisonProducts do
-  subject(:matched_coverage_comparison_products) do
-    described_class.new(comparison_products,
-                        required_coverages: required_coverages,
-                        main_applicant_age: main_applicant_age,
-                        dependants_ages: dependants_ages)
+RSpec.describe SuitableHealthProducts do
+  subject(:suitable_health_products) do
+    described_class.new(comparison_products, applicants, required_coverages)
   end
 
   let(:comparison_products) { [comparison_product] }
@@ -14,8 +11,20 @@ RSpec.describe MatchedCoverageComparisonProducts do
   end
   let(:insurer) { create(:insurer) }
   let(:product) { create(:product, insurer: insurer) }
-  let(:main_applicant_age) { 18 }
-  let(:dependants_ages) { [18, 3, 2] }
+  let(:applicants) do
+    [
+      ServiceModels::Applicant.new(name: 'Main Applicant',
+                                   date_of_birth: 40.years.ago,
+                                   relationship: 'self',
+                                   nationality: 'British',
+                                   country_of_residence: 'United Kingdom'),
+      ServiceModels::Applicant.new(name: 'Dependant',
+                                   date_of_birth: 39.years.ago,
+                                   relationship: 'spouse',
+                                   nationality: 'British',
+                                   country_of_residence: 'United Kingdom')
+    ]
+  end
 
   context 'with only inpatient coverage required' do
     let(:required_coverages) { %w[inpatient] }
@@ -29,7 +38,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'includes comparison products that include those product modules' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module_with_inpatient_cover)
           )
@@ -52,7 +61,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'does not include the outpatient module in the returned comparison product\'s product modules' do
-        expect(matched_coverage_comparison_products.match).not_to include(
+        expect(suitable_health_products.match).not_to include(
           an_object_having_attributes(
             product_modules: a_collection_including(linked_outpatient_module)
           )
@@ -70,7 +79,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'does not return comparison products that include those core modules' do
-        expect(matched_coverage_comparison_products.match).not_to include(
+        expect(suitable_health_products.match).not_to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module_with_outpatient_cover)
           )
@@ -92,7 +101,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'includes that comparison product in the returned list' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module_with_outpatient_cover)
           )
@@ -109,7 +118,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'does not include that comparison product in the returned list' do
-        expect(matched_coverage_comparison_products.match).not_to include(
+        expect(suitable_health_products.match).not_to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module_with_inpatient_cover)
           )
@@ -132,7 +141,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'includes that comparison product in the returned list' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(linked_outpatient_module)
           )
@@ -156,7 +165,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'selects a module that include those coverages' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(module_with_multiple_coverage_areas)
           )
@@ -188,7 +197,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'selects all the linked modules that include those coverages' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module, outpatient_module, evacuation_module, dental_module)
           )
@@ -210,7 +219,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'includes the module' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module)
           )
@@ -232,7 +241,7 @@ RSpec.describe MatchedCoverageComparisonProducts do
       end
 
       it 'includes the linked module' do
-        expect(matched_coverage_comparison_products.match).to include(
+        expect(suitable_health_products.match).to include(
           an_object_having_attributes(
             product_modules: a_collection_including(core_module, evacuation_module)
           )
