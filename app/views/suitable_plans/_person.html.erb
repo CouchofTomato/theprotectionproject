@@ -20,7 +20,7 @@
           </div>
           <div class="sm:col-span-1">
             <%= f.label 'people[][relationship]', 'Relationship', class: 'form-label' %>
-            <%= f.select 'people[][relationship]', relationship_options.map(&:titleize), {}, data: { test_id: 'people-relationship-select' }, class: 'form-select--inline' %>
+            <%= f.select 'people[][relationship]', relationship_options.collect { [_1.titleize, _1] }, {}, data: { test_id: 'people-relationship-select' }, class: 'form-select--inline' %>
           </div>
         </div>
       </div>
