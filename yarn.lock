@@ -1555,9 +1555,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "16.7.13"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.13.tgz#86fae356b03b5a12f2506c6cf6cd9287b205973f"
-  integrity sha512-pLUPDn+YG3FYEt/pHI74HmnJOWzeR+tOIQzUx93pi9M7D8OE7PSLr97HboXwk5F+JS+TLtWuzCOW97AHjmOXXA==
+  version "16.9.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.1.tgz#0611b37db4246c937feef529ddcc018cf8e35708"
+  integrity sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -5925,17 +5925,17 @@ jest-matcher-utils@^27.1.0:
     pretty-format "^27.1.0"
 
 jest-message-util@^27.1.0:
-  version "27.1.0"
-  resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-27.1.0.tgz#e77692c84945d1d10ef00afdfd3d2c20bd8fb468"
-  integrity sha512-Eck8NFnJ5Sg36R9XguD65cf2D5+McC+NF5GIdEninoabcuoOfWrID5qJhufq5FB0DRKoiyxB61hS7MKoMD0trQ==
+  version "27.1.1"
+  resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-27.1.1.tgz#980110fb72fcfa711cd9a95e8f10d335207585c6"
+  integrity sha512-b697BOJV93+AVGvzLRtVZ0cTVRbd59OaWnbB2D75GRaIMc4I+Z9W0wHxbfjW01JWO+TqqW4yevT0aN7Fd0XWng==
   dependencies:
     "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^27.1.0"
+    "@jest/types" "^27.1.1"
     "@types/stack-utils" "^2.0.0"
     chalk "^4.0.0"
     graceful-fs "^4.2.4"
     micromatch "^4.0.4"
-    pretty-format "^27.1.0"
+    pretty-format "^27.1.1"
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
