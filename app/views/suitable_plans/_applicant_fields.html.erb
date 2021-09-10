@@ -1,0 +1,52 @@
+<div class="p-3 bg-gray-200 bg-opacity-30 rounded-lg" data-target-id="applicant-section" data-test-id="people-information-section">
+  <div class="flex flex-row">
+    <div class="flex flex-col justify-center">
+      <%= svg_icon 'icon-person' %>
+    </div>
+    <div class="w-full">
+      <div class="field">
+        <%= applicant.label :name, class: 'form-label' %>
+        <div class="control">
+          <%= applicant.text_field :name, data: { test_id: 'people-name-input' }, class: 'form-input' %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+          <div class="sm:col-span-1">
+            <%= applicant.label :date_of_birth, class: 'form-label' %>
+            <div class="grid grid-cols-1 sm:grid-cols-3">
+              <%= applicant.date_select :date_of_birth, { order: %i[day month year], start_year: 1900 }, class: 'form-select--inline' %>
+            </div>
+          </div>
+          <div class="sm:col-span-1">
+            <%= applicant.label :relationship, class: 'form-label' %>
+            <%= applicant.select :relationship, %w[self spouse child sponsored_dependant].collect { [_1.titleize, _1] }, {}, data: { test_id: 'people-relationship-select' }, class: 'form-select--inline' %>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+          <div class="field">
+            <%= applicant.label :nationality, class: 'form-label' %>
+            <div class="control">
+              <%= applicant.text_field :nationality, data: { test_id: 'people-nationality-input' }, class: 'form-input' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <div class="field">
+            <%= applicant.label :country_of_residence, 'Country of Residence', class: 'form-label' %>
+            <div class="control">
+              <%= applicant.text_field :country_of_residence, data: { test_id: 'people-residency-input' }, class: 'form-input' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col justify-center items-center">
+      <button type="button" data-action="click->nested-form#remove_association">
+        <%= svg_icon 'icon-remove-applicant' %>
+      </button>
+    </div>
+  </div>
+</div>
