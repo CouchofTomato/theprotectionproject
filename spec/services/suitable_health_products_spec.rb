@@ -151,7 +151,7 @@ RSpec.describe SuitableHealthProducts do
   end
 
   context 'with many required coverages' do
-    let(:required_coverages) { %w[inpatient outpatient evacuation_and_repatriation dental] }
+    let(:required_coverages) { %w[inpatient outpatient evacuation dental] }
 
     context 'when covered under a single module' do
       let(:product_modules) { [module_with_multiple_coverage_areas] }
@@ -159,7 +159,7 @@ RSpec.describe SuitableHealthProducts do
         create(:product_module) do |product_module|
           create(:coverage_area, category: 'inpatient', product_module: product_module)
           create(:coverage_area, category: 'outpatient', product_module: product_module)
-          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+          create(:coverage_area, category: 'evacuation', product_module: product_module)
           create(:coverage_area, category: 'dental', product_module: product_module)
         end
       end
@@ -187,7 +187,7 @@ RSpec.describe SuitableHealthProducts do
       end
       let!(:evacuation_module) do
         create(:product_module, category: 'evacuation_and_repatriation', product: product) do |product_module|
-          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+          create(:coverage_area, category: 'evacuation', product_module: product_module)
         end
       end
       let!(:dental_module) do
@@ -207,14 +207,14 @@ RSpec.describe SuitableHealthProducts do
   end
 
   context 'when a module has a coverage option which the user has not selected and is not outpatient' do
-    let(:required_coverages) { %w[inpatient evacuation_and_repatriation] }
+    let(:required_coverages) { %w[inpatient evacuation] }
 
     context 'when under the core module' do
       let(:product_modules) { [core_module] }
       let(:core_module) do
         create(:product_module) do |product_module|
           create(:coverage_area, category: 'inpatient', product_module: product_module)
-          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+          create(:coverage_area, category: 'evacuation', product_module: product_module)
         end
       end
 
@@ -236,7 +236,7 @@ RSpec.describe SuitableHealthProducts do
       end
       let!(:evacuation_module) do
         create(:product_module, category: 'evacuation_and_repatriation', product: product) do |product_module|
-          create(:coverage_area, category: 'evacuation_and_repatriation', product_module: product_module)
+          create(:coverage_area, category: 'evacuation', product_module: product_module)
         end
       end
 

@@ -151,13 +151,13 @@ RSpec.describe ComparisonProduct do
           create(:coverage_area, category: :outpatient, product_module: product_module)
         end,
         create(:product_module) do |product_module|
-          create(:coverage_area, category: :evacuation_and_repatriation, product_module: product_module)
+          create(:coverage_area, category: :evacuation, product_module: product_module)
         end
       ]
     end
 
     context 'when the product modules have coverage areas that have categories that match those passed in' do
-      let(:coverages) { %w[inpatient outpatient evacuation_and_repatriation] }
+      let(:coverages) { %w[inpatient outpatient evacuation] }
 
       it 'returns true' do
         expect(comparison_product.coverage_areas?(coverages)).to be true
