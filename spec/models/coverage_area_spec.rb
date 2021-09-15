@@ -9,6 +9,6 @@ RSpec.describe CoverageArea, type: :model do
   it do
     expect(coverage_area).to define_enum_for(:category)
       .with_values(inpatient: 0, outpatient: 1, medicines_and_appliances: 3, maternity: 4,
-                   evacuation_and_repatriation: 5, wellness: 6, dental: 7, optical: 8)
+                   evacuation: 5, wellness: 6, dental: 7, optical: 8, repatriation: 9)
   end
 end
