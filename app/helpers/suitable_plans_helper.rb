@@ -5,16 +5,19 @@ module SuitablePlansHelper
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def coverage_type_icons
     {
       'inpatient' => 'fa-hospital-user',
       'outpatient' => 'fa-stethoscope',
       'medicines_and_appliances' => 'fa-prescription-bottle',
       'maternity' => 'fa-baby-carriage',
-      'evacuation_and_repatriation' => 'fa-plane-departure',
+      'evacuation' => 'fa-plane-departure',
+      'repatriation' => 'fa-home',
       'wellness' => 'fa-spa',
       'dental' => 'fa-tooth',
       'optical' => 'fa-glasses'
     }
   end
+  # rubocop:enable Metrics/MethodLength
 end

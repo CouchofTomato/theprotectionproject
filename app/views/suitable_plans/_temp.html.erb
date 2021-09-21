@@ -1,0 +1,121 @@
+<%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
+  <ul class="grid grid-cols-1 gap-6 sm:grid-cols-4">
+    <% @coverage_types.each do |coverage_type| %>
+      <%= label_tag coverage_type do %>
+        <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+          <div class="relative flex items-start items-center pl-2 pr-2">
+            <div class="flex items-center h-5">
+              <%= check_box_tag 'coverages[]', coverage_type, false,
+                                                     id: coverage_type,
+                                                     class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded',
+                                                     data: { test_id: "#{coverage_type.dasherize}-checkbox" } %>
+            </div>
+            <div class="ml-3 text-sm">
+              <span class="icon is-large"><i class="fa fa-2x <%= coverage_type_icon(coverage_type) %>"></i></span>
+              <p id="comments-description" class="text-gray-500"><%= coverage_type.titleize %></p>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+<%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
+  <div class="field mt-4" data-test-id="usa-cover-section">
+    <span class="text-gray-700">Do you require cover for elective treatment in the USA?</span>
+    <div class="control">
+      <label class="inline-flex items-center">
+        <%= f.radio_button :usa_cover, true, class: 'form-radio text-green-500', data: { test_id: 'usa-cover-yes-radio-btn' } %>
+        <span class="ml-2">Yes</span>
+      </label>
+      <label class="inline-flex items-center ml-5">
+        <%= f.radio_button :usa_cover, false, class: 'form-radio text-pink-500' %>
+        <span class="ml-2">No</span>
+      </label>
+    </div>
+  </div>
+  <div class="field mt-4", data-test-id="existing-conditions-section">
+    <span class="text-gray-700">Do you need a plan that will consider covering pre-existing conditions?</span>
+    <div class="control">
+      <label class="inline-flex items-center">
+        <%= f.radio_button :existing_conditions, true, class: 'form-radio text-green-500' %>
+        <span class="ml-2">Yes</span>
+      </label>
+      <label class="inline-flex items-center ml-5">
+        <%= f.radio_button :existing_conditions, false, class: 'form-radio text-pink-500', data: { test_id: 'existing-conditions-no-radio-btn' } %>
+        <span class="ml-2">No</span>
+      </label>
+    </div>
+  </div>
+  <div class="field mt-4" data-test-id="deductibles-section">
+    <p>Choose all deductible options that apply</p>
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-6">
+      <% @deductibles.each do |deductible| %>
+        <%= label_tag deductible do %>
+          <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+            <div class="relative flex items-start items-center pl-2 pr-2">
+              <div class="flex items-center h-5">
+                <%= check_box_tag 'deductible[]', deductible, false, id: deductible,
+                                                                           class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded',
+                                                                           data: { test_id: "#{deductible.dasherize}-checkbox" } %>
+              </div>
+              <div class="ml-3 text-sm">
+                <span class="font-medium text-gray-700"><%= deductible %></span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="field mt-4" data-test-id="existing-cover-section">
+    <span class="text-gray-700">Is this policy to replace existing cover?</span>
+    <div class="control">
+      <label class="inline-flex items-center">
+        <%= f.radio_button :existing_cover, true, class: 'form-radio text-green-500' %>
+        <span class="ml-2">Yes</span>
+      </label>
+      <label class="inline-flex items-center ml-5">
+        <%= f.radio_button :existing_cover, false, class: 'form-radio text-pink-500', data: { test_id: 'existing-cover-no-radio-btn' } %>
+        <span class="ml-2">No</span>
+      </label>
+    </div>
+  </div>
+<% end %>
+<%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
+  <div class="field" data-test-id="preferences-section">
+    <p>Please rank the following in the order of importance to you</p>
+    <%= f.label :brand_recognition, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :brand_recognition, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'brand-recognition-preference-input' } %>
+    </div>
+    <%= f.label :financial_strength, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :financial_strength, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'financial-strength-preference-input' } %>
+    </div>
+    <%= f.label :cost_of_cover, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :cost_of_cover, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'cost-of-cover-preference-input' } %>
+    </div>
+    <%= f.label :online_facilities, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :online_facilities, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'online-facilities-preference-input' } %>
+    </div>
+    <%= f.label :communication, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :communication, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'communication-preference-input' } %>
+    </div>
+    <%= f.label :direct_settlement, class: 'text-gray-700 inline-block mt-3' %>
+    <div class="control">
+      <%= f.number_field :direct_settlement, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'direct-settlement-preference-input' } %>
+    </div>
+  </div>
+<% end %>
+<%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
+  <div class="field" data-test-id="submit-section">
+    <div class="control">
+      <%= f.submit :submit, class: 'inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                                  data: { test_id: 'tab-submit-btn' } %>
+    </div>
+  </div>
+<% end %>

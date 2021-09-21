@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ServiceModels::Applicant do
+RSpec.describe ServiceModels::Applicant, type: :model do
   subject(:applicant) do
     described_class.new(name: name,
                         date_of_birth: date_of_birth,
@@ -14,6 +14,12 @@ RSpec.describe ServiceModels::Applicant do
   let(:date_of_birth) { DateTime.new(1970, 1, 1) }
   let(:nationality) { 'British' }
   let(:country_of_residence) { 'United Kingdom' }
+
+  it { expect(applicant).to validate_presence_of :name }
+  it { expect(applicant).to validate_presence_of :date_of_birth }
+  it { expect(applicant).to validate_presence_of :relationship }
+  it { expect(applicant).to validate_presence_of :nationality }
+  it { expect(applicant).to validate_presence_of :country_of_residence }
 
   describe '#age' do
     context 'when the applicants birthday was earlier in the current year from the current date' do

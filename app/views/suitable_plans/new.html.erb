@@ -1,12 +1,19 @@
 <section class="section">
   <div class="container">
-    <%= form_with url: suitable_plans_path, method: :get, local: true, data: { controller: 'tab' } do |f| %>
-      <%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
-        <div id="people" class="flex flex-col space-y-8">
-          <%= render partial: 'person', locals: { f: f, icon_name: 'icon-person', relationship_options: %w[self] } %>
+    <%= form_with model: @suitable_plans_form, url: suitable_plans_path, method: :get, local: true, data: { controller: 'tab nested-form', tab_index_value: '0' } do |f| %>
+      <%= tag.div data: { tab_target: 'tab' } do %>
+        <div id="applicants" data-target="nested-form.add_item" class="flex flex-col space-y-8">
+          <template data-target="nested-form.template">
+            <%= f.fields_for :applicants, ServiceModels::Applicant.new, child_index: 'TEMPLATE_RECORD' do |applicant| %>
+              <%= render 'applicant_fields', applicant: applicant %>
+            <% end %>
+          </template>
+          <%= f.fields_for :applicants do |applicant| %>
+            <%= render 'applicant_fields', applicant: applicant %>
+          <% end %>
         </div>
         <div class="flex justify-center mt-3">
-          <button type="button" data-reflex="click->SuitablePlanForm#add_person" class="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button type="button" data-action="click->nested-form#add_association" class="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <!-- Heroicon name: outline/plus -->
             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -16,15 +23,19 @@
       <% end %>
       <%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
         <ul class="grid grid-cols-1 gap-6 sm:grid-cols-4">
-          <% @coverage_types.each do |coverage_type| %>
-            <%= label_tag coverage_type do %>
+          <% @suitable_plans_form.all_coverages.each do |coverage_type| %>
+            <%= label_tag "suitable_plans_form[coverages][#{coverage_type}]" do %>
               <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
                 <div class="relative flex items-start items-center pl-2 pr-2">
                   <div class="flex items-center h-5">
-                    <%= check_box_tag 'coverages[]', coverage_type, false,
-                                                     id: coverage_type,
-                                                     class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded',
-                                                     data: { test_id: "#{coverage_type.dasherize}-checkbox" } %>
+                    <%= check_box "suitable_plans_form",
+                                  "coverages",
+                                  { multiple: true,
+                                    id: "suitable_plans_form_coverages_#{coverage_type}",
+                                    class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded',
+                                    data: { test_id: "#{coverage_type.dasherize}-checkbox" } },
+                                  coverage_type,
+                                  nil %>
                   </div>
                   <div class="ml-3 text-sm">
                     <span class="icon is-large"><i class="fa fa-2x <%= coverage_type_icon(coverage_type) %>"></i></span>
@@ -37,97 +48,6 @@
         </ul>
       <% end %>
       <%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
-        <div class="field mt-4" data-test-id="usa-cover-section">
-          <span class="text-gray-700">Do you require cover for elective treatment in the USA?</span>
-          <div class="control">
-            <label class="inline-flex items-center">
-              <%= f.radio_button :usa_cover, true, class: 'form-radio text-green-500', data: { test_id: 'usa-cover-yes-radio-btn' } %>
-              <span class="ml-2">Yes</span>
-            </label>
-            <label class="inline-flex items-center ml-5">
-              <%= f.radio_button :usa_cover, false, class: 'form-radio text-pink-500' %>
-              <span class="ml-2">No</span>
-            </label>
-          </div>
-        </div>
-        <div class="field mt-4", data-test-id="existing-conditions-section">
-          <span class="text-gray-700">Do you need a plan that will consider covering pre-existing conditions?</span>
-          <div class="control">
-            <label class="inline-flex items-center">
-              <%= f.radio_button :existing_conditions, true, class: 'form-radio text-green-500' %>
-              <span class="ml-2">Yes</span>
-            </label>
-            <label class="inline-flex items-center ml-5">
-              <%= f.radio_button :existing_conditions, false, class: 'form-radio text-pink-500', data: { test_id: 'existing-conditions-no-radio-btn' } %>
-              <span class="ml-2">No</span>
-            </label>
-          </div>
-        </div>
-        <div class="field mt-4" data-test-id="deductibles-section">
-          <p>Choose all deductible options that apply</p>
-          <ul class="grid grid-cols-1 gap-6 sm:grid-cols-6">
-            <% @deductibles.each do |deductible| %>
-              <%= label_tag deductible do %>
-                <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
-                  <div class="relative flex items-start items-center pl-2 pr-2">
-                    <div class="flex items-center h-5">
-                      <%= check_box_tag 'deductible[]', deductible, false, id: deductible,
-                                                                           class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded',
-                                                                           data: { test_id: "#{deductible.dasherize}-checkbox" } %>
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <span class="font-medium text-gray-700"><%= deductible %></span>
-                    </div>
-                  </div>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
-        </div>
-        <div class="field mt-4" data-test-id="existing-cover-section">
-          <span class="text-gray-700">Is this policy to replace existing cover?</span>
-          <div class="control">
-            <label class="inline-flex items-center">
-              <%= f.radio_button :existing_cover, true, class: 'form-radio text-green-500' %>
-              <span class="ml-2">Yes</span>
-            </label>
-            <label class="inline-flex items-center ml-5">
-              <%= f.radio_button :existing_cover, false, class: 'form-radio text-pink-500', data: { test_id: 'existing-cover-no-radio-btn' } %>
-              <span class="ml-2">No</span>
-            </label>
-          </div>
-        </div>
-      <% end %>
-      <%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
-        <div class="field" data-test-id="preferences-section">
-          <p>Please rank the following in the order of importance to you</p>
-          <%= f.label :brand_recognition, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :brand_recognition, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'brand-recognition-preference-input' } %>
-          </div>
-          <%= f.label :financial_strength, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :financial_strength, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'financial-strength-preference-input' } %>
-          </div>
-          <%= f.label :cost_of_cover, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :cost_of_cover, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'cost-of-cover-preference-input' } %>
-          </div>
-          <%= f.label :online_facilities, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :online_facilities, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'online-facilities-preference-input' } %>
-          </div>
-          <%= f.label :communication, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :communication, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'communication-preference-input' } %>
-          </div>
-          <%= f.label :direct_settlement, class: 'text-gray-700 inline-block mt-3' %>
-          <div class="control">
-            <%= f.number_field :direct_settlement, in: 1..10, class: 'form-input mt-1 block', data: { test_id: 'direct-settlement-preference-input' } %>
-          </div>
-        </div>
-      <% end %>
-      <%= tag.div class: 'hidden', data: { tab_target: 'tab' } do %>
         <div class="field" data-test-id="submit-section">
           <div class="control">
             <%= f.submit :submit, class: 'inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
@@ -138,7 +58,7 @@
       <div class="level mt-5">
         <div class="level-left">
           <button
-            class="button is-large is-fullwidth"
+            class="button is-large is-fullwidth invisible"
             data-action="tab#previousTab"
             data-tab-target="previousTabButton"
             data-test-id="previous-tab-btn"

@@ -2,21 +2,21 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = ["tab", "previousTabButton", "nextTabButton"];
+  static values = { index: Number };
 
   initialize() {
-    this.currentTabIndex = 0;
     this.updateView();
   }
 
   nextTab(e) {
     e.preventDefault();
-    this.currentTabIndex += 1;
+    this.indexValue++
     this.updateView();
   }
 
   previousTab(e) {
     e.preventDefault();
-    this.currentTabIndex -= 1;
+    this.indexValue--
     this.updateView();
   }
 
@@ -28,7 +28,7 @@ export default class extends Controller {
   showCurrentTab() {
     const tabs = this.tabTargets;
     tabs.forEach((element, index) => {
-      if (index === this.currentTabIndex) {
+      if (index === this.indexValue) {
         tabs[index].classList.remove("hidden");
       } else {
         tabs[index].classList.add("hidden");
@@ -37,9 +37,9 @@ export default class extends Controller {
   }
 
   showRelevantTabButtons() {
-    if (this.currentTabIndex === 0) {
+    if (this.indexValue === 0) {
       this.hidePreviousTabButton();
-    } else if (this.currentTabIndex === this.tabTargets.length - 1) {
+    } else if (this.indexValue === this.tabTargets.length - 1) {
       this.hideNextTabButton();
     } else {
       this.showPreviousTabButton();
