@@ -11,7 +11,7 @@
     "autoprefixer": "9",
     "bulma": "^0.9.3",
     "postcss": "7",
-    "stimulus": "^2.0.0",
+    "stimulus": "^3.0.1",
     "stimulus_reflex": "3.4.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "turbolinks": "^5.2.0"
