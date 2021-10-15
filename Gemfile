@@ -74,5 +74,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'simplecov-lcov'
-  gem 'webdrivers', '~>4.6'
+  gem 'webdrivers', '~>4.7'
 end
